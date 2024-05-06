@@ -2,15 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Models\Feedback;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
+class FeedbackSeeder extends SeederProvider
 {
     public function run(): void
     {
-        $this->call([
-            FeedbackSeeder::class,
-        ]);
+        Feedback::factory(5)->create();
     }
 }
 
