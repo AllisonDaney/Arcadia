@@ -10,6 +10,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             FeedbackSeeder::class,
+            HomeSeeder::class,
+            AnimalSeeder::class,
         ]);
     }
 }
