@@ -42,7 +42,8 @@
                     </li>
                     <li>
                         <a href="{{ route('services') }}"
-                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Services</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'services' ? 'text-asparagus-500' : ''}}">Services</a>
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['services']) ? 'w-full' : '' }}" />
                     </li>
                     <li>
                         {{-- @TODO : change route with {{ route("contact") }} --}}
