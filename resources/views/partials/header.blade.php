@@ -33,11 +33,12 @@
                     <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('home') }}"
                             class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'home' ? 'text-asparagus-500' : ''}}">Habitats</a>
-                        <div class="h-1 duration-200 transition-all bg-asparagus-500 {{ in_array(Request::route()->getName(), ['home', 'home_show']) ? 'w-full' : '' }} absolute bottom-0" />
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['home', 'home_show']) ? 'w-full' : '' }}" />
                     </li>
-                    <li>
+                    <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('animals') }}"
-                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Animaux</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'animals' ? 'text-asparagus-500' : ''}}">Animaux</a>
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['animals']) ? 'w-full' : '' }}" />
                     </li>
                     <li>
                         <a href="{{ route('services') }}"

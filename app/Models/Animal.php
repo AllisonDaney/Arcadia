@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\belongsTo;
 
 class Animal extends Model
 {
@@ -15,8 +16,13 @@ class Animal extends Model
         return $this->hasMany(AnimalsPicture::class);
     }
 
-    public function veterinariansReports() : HasMany 
+    public function veterinariansReports(): HasMany
     {
         return $this->hasMany(VeterinariansReport::class);
+    }
+
+    public function home(): belongsTo
+    {
+        return $this->belongsTo(Home::class);
     }
 }
