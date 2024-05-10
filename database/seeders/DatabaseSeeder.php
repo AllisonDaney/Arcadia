@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             HomeSeeder::class,
             AnimalSeeder::class,
             ServiceSeeder::class,
+            HourSeeder::class,
         ]);
     }
 }

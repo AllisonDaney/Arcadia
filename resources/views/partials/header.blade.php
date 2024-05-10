@@ -40,21 +40,20 @@
                             class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'animals' ? 'text-asparagus-500' : ''}}">Animaux</a>
                         <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['animals']) ? 'w-full' : '' }}" />
                     </li>
-                    <li>
+                    <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('services') }}"
                             class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'services' ? 'text-asparagus-500' : ''}}">Services</a>
                         <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['services']) ? 'w-full' : '' }}" />
                     </li>
-                    <li>
-                        {{-- @TODO : change route with {{ route("contact") }} --}}
-                        <a href="{{ route('contact') }}"
-                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Contact</a>
+                    <li class="flex flex-row items-center relative h-full">
+                        <a href="{{ route('contacts') }}"
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'contacts' ? 'text-asparagus-500' : ''}}">Contact</a>
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['contacts']) ? 'w-full' : '' }}" />
                     </li>
-                    <li>
-                        {{-- @TODO : change route with {{ route("avis") }} --}}
+                    <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('infos') }}"
-                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Infos
-                            Utiles</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'infos' ? 'text-asparagus-500' : ''}}">Infos Utiles</a>
+                            <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['infos']) ? 'w-full' : '' }}" />
                     </li>
                     <!-- Dropdown menu -->
                     <div id="megamenu" aria-labelledby="megamenu"

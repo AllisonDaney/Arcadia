@@ -62,7 +62,7 @@
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault()
 
-        const rawResponse =  await fetch('/feedback', {
+        const rawResponse =  await fetch('/feedbacks', {
             method: 'POST',
             headers: {
             'Accept': 'application/json',
