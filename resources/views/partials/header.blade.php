@@ -1,54 +1,55 @@
-<nav class="py-5 lg:fixed w-full  bg-armadillo-100 transition-all duration-500 z-10 shadow-xl">
+<nav class="lg:fixed w-full bg-armadillo-100 transition-all duration-500 z-10 shadow-xl">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 ">
         <div class="w-full flex flex-col lg:flex-row">
-            <div class=" flex justify-between  lg:flex-row">
+            <div class="flex justify-between  lg:flex-row py-3">
                 <a href="{{ route('landing') }}" " class="flex items-center">
-            <img src="{{ asset('img/logo.png') }}" alt="logo arcadia">
-          </a>
-          <!--menu burger-->
-          <button data-collapse-toggle="navbar" type="button"
-            class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
-            aria-controls="navbar-authentication" aria-expanded="false">
-            <span class="sr-only">Menu</span>
-            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d=" M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3
-                    15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                    <img class="h-16" src="{{ asset('img/logo.png') }}" alt="logo arcadia">
+                </a>
+                <!--menu burger-->
+                <button data-collapse-toggle="navbar" type="button"
+                    class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                    aria-controls="navbar-authentication" aria-expanded="false">
+                    <span class="sr-only">Menu</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d=" M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3
+                                15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
                     </svg>
-                    </button>
+                </button>
             </div>
             <div class="hidden w-full lg:flex lg:pl-24 max-lg:py-4 lg:justify-between" id="navbar">
-                <ul class="flex lg:items-center flex-col max-lg:gap-4 mt-4 lg:mt-0 lg:flex-row max-lg:mb-4">
+                <ul class="flex gap-10 lg:items-center flex-col max-lg:gap-4 mt-4 lg:mt-0 lg:flex-row max-lg:mb-4">
                     <li
-                        class=" text-asparagus-500 cursor-pointer text-base text-center lg:text-base font-medium hover:text-asparagus-700 transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left ">
+                        class=" text-asparagus-500 cursor-pointer text-base text-center lg:text-base font-medium hover:text-asparagus-700 transition-all duration-500 mb-2 block md:mb-0">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-8 h-8">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                         </svg>
                     </li>
-                    <li>
+                    <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('home') }}"
-                            class="text-armadillo-900 text-lg font-medium hover:text-asparagus-600  transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left ">Habitats</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0 {{ Request::route()->getName() === 'home' ? 'text-asparagus-500' : ''}}">Habitats</a>
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 {{ in_array(Request::route()->getName(), ['home', 'home_show']) ? 'w-full' : '' }} absolute bottom-0" />
                     </li>
                     <li>
                         <a href="{{ route('animals') }}"
-                            class="text-armadillo-900 text-lg font-medium hover:text-asparagus-600  transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left ">Animaux</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Animaux</a>
                     </li>
                     <li>
                         <a href="{{ route('services') }}"
-                            class="text-armadillo-900 text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left">Services</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Services</a>
                     </li>
                     <li>
                         {{-- @TODO : change route with {{ route("contact") }} --}}
                         <a href="{{ route('contact') }}"
-                            class="text-armadillo-900 text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left">Contact</a>
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Contact</a>
                     </li>
                     <li>
                         {{-- @TODO : change route with {{ route("avis") }} --}}
                         <a href="{{ route('infos') }}"
-                            class="text-armadillo-900 text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block lg:mr-10 md:mb-0 lg:text-left">Infos
+                            class="text-armadillo-900 text-center text-lg font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 block md:mb-0">Infos
                             Utiles</a>
                     </li>
                     <!-- Dropdown menu -->

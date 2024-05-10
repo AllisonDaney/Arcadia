@@ -14,7 +14,7 @@
 <body class="flex flex-col h-screen bg-armadillo-50">
     @include("partials.header")
 
-    <section class="mt-[120px]">
+    <section class="hidden sm:block lg:mt-[60px]">
         <img class="w-full" src="{{ asset('img/lion_header.png') }}" alt="logo arcadia">
     </section>
 
@@ -22,10 +22,9 @@
 
     @include("partials.footer")
 
-    <div class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30 hidden"></div>
+    <div class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-30 hidden overflow-hidden"></div>
     @yield("js")
     @yield("js-1")
     <script src="https://flowbite.com/docs/flowbite.min.js"></script>
 </body>
 </html>
-

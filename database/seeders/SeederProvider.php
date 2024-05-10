@@ -9,10 +9,10 @@ class SeederProvider extends Seeder
     protected $homes = [
         [
             "label" => "Savane",
-            "content" => "Une savane est un type de biome caractérisé par des herbes hautes et des arbres dispersés. 
-                        Elle se trouve généralement dans les régions tropicales et subtropicales, où il y a une saison 
-                        sèche prolongée suivie d'une saison des pluies. Les savanes abritent une grande diversité de vie sauvage, 
-                        notamment des herbivores tels que les zèbres, les girafes et les éléphants, ainsi que des prédateurs tels 
+            "content" => "Une savane est un type de biome caractérisé par des herbes hautes et des arbres dispersés.
+                        Elle se trouve généralement dans les régions tropicales et subtropicales, où il y a une saison
+                        sèche prolongée suivie d'une saison des pluies. Les savanes abritent une grande diversité de vie sauvage,
+                        notamment des herbivores tels que les zèbres, les girafes et les éléphants, ainsi que des prédateurs tels
                         que les lions et les léopards. ",
             "homes_pictures" => [
                 [
@@ -22,9 +22,9 @@ class SeederProvider extends Seeder
         ],
         [
             "label" => "Jungle",
-            "content" => "Une jungle est un type de biome forestier dense, souvent situé dans les régions tropicales et subtropicales. 
-                            Elle se caractérise par une végétation luxuriante, comprenant de grands arbres à feuillage dense, une canopée 
-                            épaisse et une diversité d'espèces végétales et animales. Les jungles abritent une grande variété de vie sauvage, 
+            "content" => "Une jungle est un type de biome forestier dense, souvent situé dans les régions tropicales et subtropicales.
+                            Elle se caractérise par une végétation luxuriante, comprenant de grands arbres à feuillage dense, une canopée
+                            épaisse et une diversité d'espèces végétales et animales. Les jungles abritent une grande variété de vie sauvage,
                             notamment des singes, des serpents, des oiseaux exotiques. ",
             "homes_pictures" => [
                 [
@@ -34,9 +34,9 @@ class SeederProvider extends Seeder
         ],
         [
             "label" => "Marais",
-            "content" => "Un marais est un type d'écosystème terrestre humide caractérisé par des sols saturés d'eau, ce qui crée des conditions 
-                            favorables à la croissance de plantes adaptées à un milieu humide. Les marais se trouvent généralement dans des zones 
-                            où l'eau s'accumule naturellement, comme le long des cours d'eau, des lacs, des estuaires ou des zones côtières. 
+            "content" => "Un marais est un type d'écosystème terrestre humide caractérisé par des sols saturés d'eau, ce qui crée des conditions
+                            favorables à la croissance de plantes adaptées à un milieu humide. Les marais se trouvent généralement dans des zones
+                            où l'eau s'accumule naturellement, comme le long des cours d'eau, des lacs, des estuaires ou des zones côtières.
                             Les marais abritent également une grande variété d'animaux, notamment des oiseaux aquatiques, des poissons, des amphibiens",
             "homes_pictures" => [
                 [
@@ -53,7 +53,7 @@ class SeederProvider extends Seeder
                 "breed" => "Zèbre ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/zebre.jpeg"
+                        "url" => "img/uploads/animals/zebre.jpeg"
                     ]
                 ],
             ],
@@ -62,7 +62,7 @@ class SeederProvider extends Seeder
                 "breed" => "Lion ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/lion.jpeg"
+                        "url" => "img/uploads/animals/lion.jpeg"
                     ]
                 ],
             ],
@@ -71,7 +71,7 @@ class SeederProvider extends Seeder
                 "breed" => "Girafe ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/girafe.jpeg"
+                        "url" => "img/uploads/animals/girafe.jpeg"
                     ]
                 ],
             ],
@@ -80,7 +80,7 @@ class SeederProvider extends Seeder
                 "breed" => "Elephant ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/elephant.jpeg"
+                        "url" => "img/uploads/animals/elephant.jpeg"
                     ]
                 ],
             ],
@@ -89,7 +89,7 @@ class SeederProvider extends Seeder
                 "breed" => "Hippopotame ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/hippopotame.jpeg"
+                        "url" => "img/uploads/animals/hippopotame.jpeg"
                     ]
                 ],
             ],
@@ -100,103 +100,103 @@ class SeederProvider extends Seeder
                 "breed" => "Paresseux",
                 "animals_pictures" => [
                     [
-                        "url" => "img/paresseux.jpeg"
+                        "url" => "img/uploads/animals/paresseux.jpeg"
                     ]
-                ],   
-            ],  
+                ],
+            ],
              [
                 "name" => "Erik",
                 "breed" => "Tamarin ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/tamarin.jpeg"
+                        "url" => "img/uploads/animals/tamarin.jpeg"
                     ]
-                ],   
+                ],
             ],
             [
                 "name" => "Alfy",
                 "breed" => "Ara rouge ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/ara.jpeg"
+                        "url" => "img/uploads/animals/ara.jpeg"
                     ]
-                ],   
-            ], 
+                ],
+            ],
             [
                 "name" => "Odie",
                 "breed" => "Okapi ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/okapi.jpeg"
+                        "url" => "img/uploads/animals/okapi.jpeg"
                     ]
-                ],   
-            ], 
+                ],
+            ],
             [
                 "name" => "Charly",
                 "breed" => "Chimpanzé ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/chinpanze.jpeg"
+                        "url" => "img/uploads/animals/chinpanze.jpeg"
                     ]
-                ],   
-            ], 
-        ] ,   
+                ],
+            ],
+        ] ,
         "Marais" => [
             [
                 "name" => "Basile",
                 "breed" => "Buffle d'Afrique",
                 "animals_pictures" => [
                     [
-                        "url" => "img/buffle.jpeg"
+                        "url" => "img/uploads/animals/buffle.jpeg"
                     ]
-                ],   
-            ],  
+                ],
+            ],
              [
                 "name" => "Ava",
                 "breed" => "Alligator ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/aligator.jpeg"
+                        "url" => "img/uploads/animals/aligator.jpeg"
                     ]
-                ],   
+                ],
             ],
             [
                 "name" => "Caty",
                 "breed" => "Caïman noir ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/caiman.jpeg"
+                        "url" => "img/uploads/animals/caiman.jpeg"
                     ]
-                ],   
-            ], 
+                ],
+            ],
             [
                 "name" => "Chloe",
                 "breed" => "Couleuvre à collier ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/couleuvre.jpeg"
+                        "url" => "img/uploads/animals/couleuvre.jpeg"
                     ]
-                ],   
-            ], 
+                ],
+            ],
             [
                 "name" => "Sarah",
                 "breed" => "Salamandre ",
                 "animals_pictures" => [
                     [
-                        "url" => "img/salamandre.jpeg"
+                        "url" => "img/uploads/animals/salamandre.jpeg"
                     ]
-                ],   
-            ], 
-        ]            
-                
+                ],
+            ],
+        ]
+
     ];
-    
+
     protected $services = [
         [
             "label" => "Restauration",
-            "content" => " Bienvenue aux restaurants de notre zoo, où la gastronomie rencontre la nature ! 
-            Nous sommes enchantés de vous présenter une sélection diversifiée de lieux de 
-            restauration conçus pour satisfaire tous les goûts et toutes les envies, 
+            "content" => " Bienvenue aux restaurants de notre zoo, où la gastronomie rencontre la nature !
+            Nous sommes enchantés de vous présenter une sélection diversifiée de lieux de
+            restauration conçus pour satisfaire tous les goûts et toutes les envies,
             tout en vous offrant une expérience culinaire unique au cœur de notre parc animalier.
             Bon appétit !",
             "url" => "img/restaurant.jpeg",
@@ -210,9 +210,9 @@ class SeederProvider extends Seeder
         ],
         [
             "label" => "Visite guidée",
-            "content" => "Bienvenue à la visite guidée de notre zoo ! 
-            Nous sommes enchantés de vous offrir une expérience immersive et éducative au cœur de notre parc animalier. 
-            Notre visite guidée est conçue pour vous plonger dans le monde fascinant de la faune tout en vous fournissant 
+            "content" => "Bienvenue à la visite guidée de notre zoo !
+            Nous sommes enchantés de vous offrir une expérience immersive et éducative au cœur de notre parc animalier.
+            Notre visite guidée est conçue pour vous plonger dans le monde fascinant de la faune tout en vous fournissant
             des informations précieuses sur nos pensionnaires et sur les efforts de conservation que nous menons.
             Bonne visite!",
             "url" => "img/guide_touristique.jpeg",
@@ -227,9 +227,9 @@ class SeederProvider extends Seeder
         [
             "label" => "Petit train",
             "content" => "Bienvenue à bord du service de petit train pour la visite de notre zoo !
-            Nous sommes ravis de vous présenter une façon pratique et agréable de découvrir tous les trésors de notre parc animalier. 
+            Nous sommes ravis de vous présenter une façon pratique et agréable de découvrir tous les trésors de notre parc animalier.
             Avec notre petit train, vous pourrez explorer chaque recoin de notre zoo en toute simplicité, confortablement installé et
-            prêt à vivre une aventure inoubliable. Notre petit train est spécialement conçu pour offrir une expérience unique à nos visiteurs.            
+            prêt à vivre une aventure inoubliable. Notre petit train est spécialement conçu pour offrir une expérience unique à nos visiteurs.
             Bon voyage ! ",
             "url" => "img/petit_train.jpeg",
             "options" => [
@@ -306,7 +306,7 @@ class SeederProvider extends Seeder
             "password" => "Allison69140.",
             "firstname" => "José",
             "lastname" => "Mendoza",
-        ],        
+        ],
         [
             "role" => "EMPLOYEE",
             "username" => "l.josette.arcadia@yopmail.com",
