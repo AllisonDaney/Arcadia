@@ -1,4 +1,4 @@
-<section class="mb-36">
+<section class="mb-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-24">
             <h2 class="font-title text-3xl text-center font-semibold  text-asparagus-500">A la découverte d'Arcadia </h2>

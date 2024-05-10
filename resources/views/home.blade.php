@@ -3,7 +3,7 @@
 @section('title', 'Arcadia - Habitat')
 
 @section('content')
-    <main class="py-20 px-4">
+    <main class="container mx-auto py-20 px-4">
         <h1 class="text-5xl font-bold text-center font-title text-asparagus-500">
             Nos habitats
         </h1>

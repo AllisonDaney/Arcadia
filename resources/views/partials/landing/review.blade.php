@@ -1,4 +1,4 @@
-<section class="mb-36 ">
+<section class="mb-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="mb-24 ">
             <span class="text-sm text-armadillo-900 font-medium text-center block mb-2"></span>

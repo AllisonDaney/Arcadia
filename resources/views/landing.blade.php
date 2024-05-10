@@ -43,7 +43,7 @@
 @endsection
 
 @section('content')
-    <main class="container my-24 mx-auto md:px-6">
+    <main class="container mx-auto py-20 px-4">
         @include('partials.landing.description')
 
         @include('partials.landing.presentation')

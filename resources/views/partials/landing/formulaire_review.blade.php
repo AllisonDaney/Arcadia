@@ -24,7 +24,7 @@
 
 
 
-<section class="mb-36 ">
+<section class="mb-20">
 <div class=" sm:max-w-xl sm:mx-auto">
     <h2 class="text-3xl text-center font-semibold text-asparagus-500 font-title">Votre avis nous interesse</h2>
     <div class="px-12 py-5">
