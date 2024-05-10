@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             FeedbackSeeder::class,
             HomeSeeder::class,
             AnimalSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }

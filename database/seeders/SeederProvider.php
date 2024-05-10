@@ -199,7 +199,7 @@ class SeederProvider extends Seeder
             restauration conçus pour satisfaire tous les goûts et toutes les envies,
             tout en vous offrant une expérience culinaire unique au cœur de notre parc animalier.
             Bon appétit !",
-            "url" => "img/restaurant.jpeg",
+            "url" => "img/uploads/services/restaurant.jpeg",
             "options" => [
                 "Le Safari Café" => "Plongez dans une atmosphère exotique au Safari Café, situé à proximité de nos zones d'animaux africains. Dégustez des plats inspirés de la cuisine africaine et internationale, tout en profitant de vues panoramiques sur nos savanes et nos habitats africains. Le Safari Café propose une variété de plats savoureux, des sandwichs et salades rafraîchissantes aux plats chauds copieux, ainsi qu'une sélection de desserts délicieux.",
                 "La Jungle Grill" => "Pour une expérience de restauration en plein air, rendez-vous à la Jungle Grill, nichée au cœur de notre zone tropicale luxuriante. Découvrez une ambiance détendue et décontractée tandis que vous savourez des grillades fraîches, des burgers juteux, des salades fraîches et des collations légères. La Jungle Grill offre également des options végétariennes et des menus pour enfants, ce qui en fait un choix idéal pour les familles.",
@@ -215,7 +215,7 @@ class SeederProvider extends Seeder
             Notre visite guidée est conçue pour vous plonger dans le monde fascinant de la faune tout en vous fournissant
             des informations précieuses sur nos pensionnaires et sur les efforts de conservation que nous menons.
             Bonne visite!",
-            "url" => "img/guide_touristique.jpeg",
+            "url" => "img/uploads/services/guide_touristique.jpeg",
             "options" => [
                 "Guides Experts" => "Nos guides sont des passionnés de la nature et des experts dans leur domaine. Ils partageront avec vous leurs connaissances approfondies sur chaque espèce animale, ainsi que des anecdotes intéressantes et des faits surprenants pour enrichir votre expérience.",
                 "Itinéraire Captivant" => "Notre visite guidée vous emmènera à travers les différentes zones de notre zoo, vous permettant de découvrir une grande variété d'animaux, des plus emblématiques aux plus insolites. Vous aurez l'occasion de vous approcher de près de ces créatures magnifiques et d'en apprendre davantage sur leur comportement, leur habitat et leurs habitudes alimentaires.",
@@ -231,7 +231,7 @@ class SeederProvider extends Seeder
             Avec notre petit train, vous pourrez explorer chaque recoin de notre zoo en toute simplicité, confortablement installé et
             prêt à vivre une aventure inoubliable. Notre petit train est spécialement conçu pour offrir une expérience unique à nos visiteurs.
             Bon voyage ! ",
-            "url" => "img/petit_train.jpeg",
+            "url" => "img/uploads/services/petit_train.jpeg",
             "options" => [
                 "Confort et Sécurité" => "Notre petit train est équipé de sièges confortables et sécurisés, assurant une balade plaisante pour toute la famille. Les normes de sécurité les plus strictes sont respectées pour garantir une expérience paisible.",
                 "Guidage Professionnel" => "Tout au long de votre trajet, notre personnel qualifié vous fournira des commentaires instructifs et divertissants sur les différents animaux et attractions que vous rencontrerez. Vous découvrirez des anecdotes fascinantes sur nos pensionnaires, enrichissant ainsi votre visite.",
