@@ -21,7 +21,7 @@
             <div class="hidden w-full lg:flex lg:pl-24 max-lg:py-4 lg:justify-between" id="navbar">
                 <ul class="flex gap-10 lg:items-center flex-col max-lg:gap-4 mt-4 lg:mt-0 lg:flex-row max-lg:mb-4">
                     <li
-                        class=" text-asparagus-500 cursor-pointer text-base text-center lg:text-base font-medium hover:text-asparagus-700 transition-all duration-500 mb-2 block md:mb-0">
+                        class=" flex flex-row items-center relative h-full cursor-pointer text-base text-center lg:text-base font-medium hover:text-asparagus-600 transition-all duration-500 mb-2 md:mb-0 {{ Request::route()->getName() === 'landing' ? 'text-asparagus-500' : ''}}">
                         <a href="{{ route('landing') }}">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-8 h-8">
@@ -29,6 +29,7 @@
                                     d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                             </svg>
                         </a>
+                        <div class="h-1 duration-200 transition-all bg-asparagus-500 absolute bottom-0 {{ in_array(Request::route()->getName(), ['landing']) ? 'w-full' : '' }}" />
                     </li>
                     <li class="flex flex-row items-center relative h-full">
                         <a href="{{ route('home') }}"
