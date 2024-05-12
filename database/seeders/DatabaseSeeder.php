@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
             AnimalSeeder::class,
             ServiceSeeder::class,
             HourSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
