@@ -40,7 +40,7 @@
         submitButton.addEventListener('click', async (e) => {
             e.preventDefault()
 
-            await fetch('/emails/send_contact', {
+            await fetch('/emails/send/2', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -49,13 +49,11 @@
                         '#form_contact input[name="_token"]').value
                 },
                 body: JSON.stringify({
-                    email: document.querySelector(
-                        '#form_contact input[name="email"]').value,
-                    subject: document.querySelector(
-                        '#form_contact input[name="subject"]').value,
-                    content: document.querySelector(
-                            '#form_contact textarea[name="content"]')
-                        .value
+                    to: document.querySelector('#form_contact input[name="email"]').value,
+                    params: {
+                        SUBJECT: document.querySelector('#form_contact input[name="subject"]').value,
+                        CONTENT: document.querySelector('#form_contact textarea[name="content"]').value
+                    }
                 })
             });
 

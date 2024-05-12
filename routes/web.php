@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnimalsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingController;
@@ -22,3 +23,5 @@ Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 Route::get('/infos', [LandingController::class, 'index_infos'])->name('infos');
 
 Route::post('/feedbacks', [FeedbackController::class, 'create']);
+
+Route::post('/emails/send/{templateId}', [EmailController::class, 'send']);
