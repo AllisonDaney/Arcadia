@@ -8,7 +8,7 @@
             Nos services
         </h1>
 
-        <div class="flex justify-center flex-wrap sm:flex-nowrap mt-14 gap-16">
+        <div class="flex justify-center flex-wrap mt-14 gap-16">
             @foreach ($services as $service)
                 <div
                     class="flex items-center flex-col gap-8 group cursor-pointer border-gray-400 shadow w-96"
@@ -17,7 +17,7 @@
                     data-drawer-placement="right"
                     aria-controls="drawer-service-{{ $service['id'] }}"
                 >
-                    <img class="rounded-t-lg" src="{{ asset($service['url']) }}" alt="" />
+                    <img class="rounded-t-lg h-[373px]" src="{{ asset($service['url']) }}" />
                     <div class="p-5">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-asparagus-500 text-center  ">
                             {{ $service['label'] }} <br></h5>

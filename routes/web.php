@@ -37,8 +37,12 @@ Route::get('/administration/administrator', [AdministrationController::class, 'a
 Route::post('/users', [UserController::class, 'create']);
 Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
 
+Route::post('/services', [ServiceController::class, 'create']);
+Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
+Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
+Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
 
-Route::get('/aa', [AdministrationController::class, 'admin_administrator'])->name('admin_services');
+
 Route::get('/aaa', [AdministrationController::class, 'admin_administrator'])->name('admin_hours');
 Route::get('/aaaa', [AdministrationController::class, 'admin_administrator'])->name('admin_homes');
 Route::get('/b', [AdministrationController::class, 'admin_administrator'])->name('admin_animals');

@@ -205,7 +205,7 @@ class SeederProvider extends Seeder
                 "La Jungle Grill" => "Pour une expérience de restauration en plein air, rendez-vous à la Jungle Grill, nichée au cœur de notre zone tropicale luxuriante. Découvrez une ambiance détendue et décontractée tandis que vous savourez des grillades fraîches, des burgers juteux, des salades fraîches et des collations légères. La Jungle Grill offre également des options végétariennes et des menus pour enfants, ce qui en fait un choix idéal pour les familles.",
                 "La Terrasse des Singes" => "Vivez une expérience unique en prenant place à la Terrasse des Singes, un restaurant en hauteur offrant une vue imprenable sur les habitats de nos primates. Dégustez une cuisine légère et raffinée, des salades fraîches aux plats de pâtes savoureux, tout en observant nos singes jouer et se balancer dans les arbres à proximité.",
                 "Le Bistro des Oiseaux" => "Pour une ambiance pittoresque et colorée, visitez le Bistro des Oiseaux, un café charmant situé près de notre volière. Détendez-vous en sirotant un café fraîchement moulu ou dégustez des pâtisseries artisanales tout en admirant la beauté et la diversité de nos oiseaux exotiques.",
-                "Le Kiosque des Glaces" => "Pour une pause rafraîchissante, arrêtez-vous au Kiosque des Glaces et découvrez une sélection de délices glacés, des cornets de crème glacée aux sorbets fruités. Parfait pour se rafraîchir lors d'une journée ensoleillée au zoo.",
+                //"Le Kiosque des Glaces" => "Pour une pause rafraîchissante, arrêtez-vous au Kiosque des Glaces et découvrez une sélection de délices glacés, des cornets de crème glacée aux sorbets fruités. Parfait pour se rafraîchir lors d'une journée ensoleillée au zoo.",
             ]
         ],
         [
@@ -221,8 +221,8 @@ class SeederProvider extends Seeder
                 "Itinéraire Captivant" => "Notre visite guidée vous emmènera à travers les différentes zones de notre zoo, vous permettant de découvrir une grande variété d'animaux, des plus emblématiques aux plus insolites. Vous aurez l'occasion de vous approcher de près de ces créatures magnifiques et d'en apprendre davantage sur leur comportement, leur habitat et leurs habitudes alimentaires.",
                 "Éducation et Sensibilisation" => "Nous croyons en l'importance de sensibiliser le public à la conservation de la biodiversité et au respect de l'environnement. Tout au long de la visite, nos guides mettront en lumière les défis auxquels sont confrontés les animaux sauvages dans la nature et les actions que nous pouvons prendre pour les protéger.",
                 "Interactivité" => "Notre visite guidée offre également des opportunités d'interaction avec certains animaux, sous la supervision de nos soigneurs qualifiés. Vous pourrez peut-être nourrir certains pensionnaires, assister à des démonstrations de comportements naturels ou poser des questions directement à nos experts.",
-                "Durée Adaptée" => "La visite guidée est adaptée à tous les âges et niveaux d'intérêt, avec une durée généralement d'une à deux heures pour couvrir les points forts de notre zoo tout en laissant du temps pour explorer librement par la suite.",
-                ]
+                //"Durée Adaptée" => "La visite guidée est adaptée à tous les âges et niveaux d'intérêt, avec une durée généralement d'une à deux heures pour couvrir les points forts de notre zoo tout en laissant du temps pour explorer librement par la suite.",
+            ]
         ],
         [
             "label" => "Petit train",
@@ -237,7 +237,7 @@ class SeederProvider extends Seeder
                 "Guidage Professionnel" => "Tout au long de votre trajet, notre personnel qualifié vous fournira des commentaires instructifs et divertissants sur les différents animaux et attractions que vous rencontrerez. Vous découvrirez des anecdotes fascinantes sur nos pensionnaires, enrichissant ainsi votre visite.",
                 "Accessibilité" => "Le petit train est accessible à tous, y compris aux personnes à mobilité réduite, garantissant que chacun puisse profiter pleinement de la beauté de notre zoo.",
                 "Parcours Scénique" => "Notre itinéraire a été soigneusement planifié pour vous offrir les meilleures vues sur nos enclos animaliers et nos paysages naturels. Vous aurez l'occasion de voir de près une variété d'animaux exotiques et indigènes dans leur habitat naturel reconstitué.",
-                "Flexibilité" => "Le petit train propose des départs réguliers tout au long de la journée, vous permettant de planifier votre visite à votre rythme. Vous pouvez monter et descendre à différents arrêts pour explorer à pied et prendre des photos souvenirs.",
+                //"Flexibilité" => "Le petit train propose des départs réguliers tout au long de la journée, vous permettant de planifier votre visite à votre rythme. Vous pouvez monter et descendre à différents arrêts pour explorer à pied et prendre des photos souvenirs.",
             ]
         ],
     ];
