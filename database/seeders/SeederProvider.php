@@ -16,7 +16,7 @@ class SeederProvider extends Seeder
                         que les lions et les léopards. ",
             "homes_pictures" => [
                 [
-                    "url" => "img/savane.jpeg"
+                    "url" => "img/uploads/homes/savane.jpeg"
                 ]
             ],
         ],
@@ -28,7 +28,7 @@ class SeederProvider extends Seeder
                             notamment des singes, des serpents, des oiseaux exotiques. ",
             "homes_pictures" => [
                 [
-                    "url" => "img/jungle.jpeg"
+                    "url" => "img/uploads/homes/jungle.jpeg"
                 ]
             ],
         ],
@@ -40,7 +40,7 @@ class SeederProvider extends Seeder
                             Les marais abritent également une grande variété d'animaux, notamment des oiseaux aquatiques, des poissons, des amphibiens",
             "homes_pictures" => [
                 [
-                    "url" => "img/marais.jpeg"
+                    "url" => "img/uploads/homes/marais.jpeg"
                 ]
             ],
         ],

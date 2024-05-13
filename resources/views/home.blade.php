@@ -11,7 +11,7 @@
         <div class="w-full flex items-center justify-center gap-16 mt-20 flex-wrap">
             @foreach ($homes as $home)
                 <a href="{{ route('home_show', ['homeId' => $home['id']]) }}" class="group">
-                    <img src="{{ asset($home['homePictures'][0]['url']) }}" class="w-60 rounded-xl mx-auto" alt="logo arcadia">
+                    <img src="{{ asset(isset($home['homePictures'][0]) ? $home['homePictures'][0]['url'] : '/img/notfound.png') }}" class="w-60 rounded-xl mx-auto" alt="logo arcadia" onerror="this.src = '/img/notfound.png'">
                     <div class="flex mt-4 justify-between items-center">
                         <h4 class="text-2xl font-manrope font-semibold text-gray-900 mx-auto">{{ $home['label'] }}</h4>
                         <div class="flex items-center border border-asparagus-500 p-2 px-3.5 rounded-full transition-all duration-300 group-hover:bg-asparagus-500">

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('homes_pictures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("home_id")->constrained();
+            $table->foreignId("home_id")->constrained()->onDelete('cascade');
             $table->text("url");
             $table->timestamps();
-            
+
         });
     }
 

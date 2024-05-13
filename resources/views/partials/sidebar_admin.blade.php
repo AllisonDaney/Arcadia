@@ -30,7 +30,7 @@
 
             <li>
                 <a href="{{ route('admin_homes') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_homes' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Habitats</span>
                 </a>
             </li>
