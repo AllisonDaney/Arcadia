@@ -23,7 +23,7 @@
             </li>
             <li>
                 <a href="{{ route('admin_hours') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_hours' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Horaires</span>
                 </a>
             </li>

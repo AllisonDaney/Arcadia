@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HourController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
@@ -42,8 +43,12 @@ Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
 Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
 Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
 
+Route::post('/hours', [HourController::class, 'create']);
+Route::put('/hours/{hourId}', [HourController::class, 'update']);
+Route::delete('/hours/{hourId}', [HourController::class, 'delete']);
+Route::get('/administration/hours', [HourController::class, 'index_admin'])->name('admin_hours');
 
-Route::get('/aaa', [AdministrationController::class, 'admin_administrator'])->name('admin_hours');
+
 Route::get('/aaaa', [AdministrationController::class, 'admin_administrator'])->name('admin_homes');
 Route::get('/b', [AdministrationController::class, 'admin_administrator'])->name('admin_animals');
 Route::get('/bb', [AdministrationController::class, 'admin_administrator'])->name('admin_feedbacks');
