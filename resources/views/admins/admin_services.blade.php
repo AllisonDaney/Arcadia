@@ -365,7 +365,7 @@
 
                     const serviceId = button.getAttribute('data-id')
 
-                    const rawResponse = await fetch(`/services/${serviceId}`, {
+                    await fetch(`/services/${serviceId}`, {
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json',
@@ -398,7 +398,21 @@
                         })
                     });
 
-                    await rawResponse.json();
+                    const file = document.querySelector(
+                        `#admin_services_update_form-${serviceId} input[name="file"]`).files[0]
+
+                        if (file) {
+                            const formData = new FormData()
+                            formData.append('file', file)
+
+                            await fetch(`/services/${serviceId}/image`, {
+                                method: 'POST',
+                                headers: {
+                                    "X-CSRF-Token": document.querySelector(`#admin_services_update_form-${serviceId} input[name="_token"]`)?.value
+                                },
+                                body: formData
+                            });
+                        }
 
                     window.location.reload()
                 })

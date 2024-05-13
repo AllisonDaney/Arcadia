@@ -76,6 +76,27 @@ class ServiceController extends Controller
         return ["data" => $service];
     }
 
+    public function update_image(Request $request, Int $serviceId) {
+        $file =  $request->file('file');
+
+        $service = Service::find($serviceId);
+
+        if ($file) {
+            $movedFile = Storage::disk('public_uploads')->put('/services', $file);
+
+            if (!$movedFile) {
+                return ["error" => 'fichier'];
+            }
+
+            Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $service->url));
+
+            $service->url = 'img/uploads/' . $movedFile;
+            $service->save();
+        }
+
+        return ["data" => $service];
+    }
+
     public function delete($serviceId) {
         $service = Service::find($serviceId);
 

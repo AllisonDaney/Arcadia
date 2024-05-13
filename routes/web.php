@@ -39,6 +39,7 @@ Route::post('/users', [UserController::class, 'create']);
 Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
 
 Route::post('/services', [ServiceController::class, 'create']);
+Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
 Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
 Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
 Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
