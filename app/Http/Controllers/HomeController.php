@@ -117,7 +117,8 @@ class HomeController extends Controller
 
             Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $home->url));
 
-            $homePicture = HomesPicture::first();
+            $homePicture = HomesPicture::where('home_id', $home->id)->first();
+            $homePicture->home_id = $home->id;
             $homePicture->url = 'img/uploads/' . $movedFile;
             $homePicture->save();
         }

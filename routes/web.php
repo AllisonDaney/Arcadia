@@ -55,6 +55,11 @@ Route::put('/homes/{homeId}', [HomeController::class, 'update']);
 Route::delete('/homes/{homeId}', [HomeController::class, 'delete']);
 Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
 
-Route::get('/b', [AdministrationController::class, 'admin_administrator'])->name('admin_animals');
+Route::post('/animals', [AnimalsController::class, 'create']);
+Route::post('/animals/{animalId}/image', [AnimalsController::class, 'update_image']);
+Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
+Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
+Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
+
 Route::get('/bb', [AdministrationController::class, 'admin_administrator'])->name('admin_feedbacks');
 Route::get('/bbb', [AdministrationController::class, 'admin_administrator'])->name('admin_report_veterinary');

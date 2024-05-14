@@ -36,19 +36,19 @@
             </li>
             <li>
                 <a href="{{ route('admin_animals') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_animals' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Animaux</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin_feedbacks') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_feedbacks' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Avis</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin_report_veterinary') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_report_veterinary' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Rapports vétérinaires</span>
                 </a>
             </li>
