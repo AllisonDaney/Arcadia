@@ -2,16 +2,19 @@
 
 use App\Http\Controllers\AdministrationController;
 use App\Http\Controllers\AnimalsController;
+use App\Http\Controllers\AnimalsReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\HomeCommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HourController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VeterinariansReportController;
+use App\Models\HomesComment;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -67,6 +70,12 @@ Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin
 
 Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
 Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
+
+Route::post('/homes_comments', [HomeCommentController::class, 'create']);
+Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
+
+Route::post('/animals_reports', [AnimalsReportController::class, 'create']);
+Route::get('/administration/animals_reports', [AnimalsReportController::class, 'index_admin'])->name('admin_animals_reports');
 
 
 
