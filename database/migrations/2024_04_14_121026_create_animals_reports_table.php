@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('animals', function (Blueprint $table) {
+        Schema::create('animals_reports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("home_id")->nullable()->constrained()->onDelete('set null');
-            $table->string("name");
-            $table->string("breed");
+            $table->foreignId("user_id")->constrained();
+            $table->foreignId("animal_id")->constrained();
+            $table->string("food")->nullable();
+            $table->integer("food_quantity")->nullable();
+            $table->dateTime("food_at")->nullable();
             $table->timestamps();
+
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('animals');
+        Schema::dropIfExists('animals_reports');
     }
 };
