@@ -11,6 +11,7 @@ use App\Http\Controllers\HourController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VeterinariansReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -63,6 +64,9 @@ Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])
 
 Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
 Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');
+
+Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
+Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
 
 
 

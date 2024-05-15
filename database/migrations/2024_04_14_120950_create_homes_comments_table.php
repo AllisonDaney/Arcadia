@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('veterinarians_reports', function (Blueprint $table) {
+        Schema::create('homes_comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained();
-            $table->foreignId("animal_id")->constrained();
-            $table->string("animal_condition");
-            $table->string("food");
-            $table->integer("food_quantity");
-            $table->text("details");
-            $table->dateTime("visit_at");
+            $table->foreignId("home_id")->constrained();
+            $table->text("content");
             $table->timestamps();
+            
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('veterinarians_reports');
+        Schema::dropIfExists('homes_comments');
     }
 };
