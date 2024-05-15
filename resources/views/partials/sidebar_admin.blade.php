@@ -11,44 +11,55 @@
             </li>
             <li>
                 <a href="{{ route('admin_users') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_users' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_users' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Utilisateurs</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin_services') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200  hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_services' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200  hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_services' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Services</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin_hours') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_hours' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_hours' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Horaires</span>
                 </a>
             </li>
-
             <li>
                 <a href="{{ route('admin_homes') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_homes' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_homes' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Habitats</span>
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin_homes_comments') }}"
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_homes_comments' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    <span class="flex-1 ms-3 whitespace-nowrap">Commentaires habitats</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin_animals') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_animals' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_animals' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Animaux</span>
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin_animals_reports') }}"
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_animals_reports' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    <span class="flex-1 ms-3 whitespace-nowrap">Rapports animaux</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin_feedbacks') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_feedbacks' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_feedbacks' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Avis</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('admin_veterinarians_reports') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg  hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_veterinarians_reports' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_veterinarians_reports' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
                     <span class="flex-1 ms-3 whitespace-nowrap">Rapports vétérinaires</span>
                 </a>
             </li>
