@@ -61,5 +61,9 @@ Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
 Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
 Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
 
-Route::get('/bb', [AdministrationController::class, 'admin_administrator'])->name('admin_feedbacks');
+Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
+Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');
+
+
+
 Route::get('/bbb', [AdministrationController::class, 'admin_administrator'])->name('admin_report_veterinary');
