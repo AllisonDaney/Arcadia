@@ -250,7 +250,7 @@
                                         class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure</label>
                                         <input name="food_at_time" id="food_at_time" type="time"
                                             class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                            placeholder="Date" value="{{ isset($animal['food_at']) ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $animal['food_at'])->format('H:i') : date('H:i') }}">
+                                            placeholder="Heure" value="{{ isset($animal['food_at']) ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $animal['food_at'])->format('H:i') : date('H:i') }}">
                                 </div>
                             </div>
                             <div>
