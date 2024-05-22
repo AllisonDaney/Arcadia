@@ -9,12 +9,14 @@
                     <span class="ms-3">Dashboard</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('admin_users') }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_users' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
-                    <span class="flex-1 ms-3 whitespace-nowrap">Utilisateurs</span>
-                </a>
-            </li>
+            @if (in_array(Auth::user()->role->id, [1]))
+                <li>
+                    <a href="{{ route('admin_users') }}"
+                        class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_users' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                        <span class="flex-1 ms-3 whitespace-nowrap">Utilisateurs</span>
+                    </a>
+                </li>
+            @endif
             <li>
                 <a href="{{ route('admin_services') }}"
                     class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200  hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_services' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">

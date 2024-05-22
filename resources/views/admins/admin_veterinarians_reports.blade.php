@@ -7,15 +7,36 @@
         <h1 class="text-4xl font-bold text-center font-title text-asparagus-500">
             Rapport vétérinaire
         </h1>
-        <div class="mt-10 flex justify-end">
-            <button
+        <div class="mt-10 flex md:flex-row flex-col lg:flex-nowrap flex-wrap items-center justify-between gap-4">
+            <div class="sm:ml-4 md:flex-row flex-col md:flex-nowrap flex-wrap flex items-center gap-4 lg:w-2/3 w-full">
+                <div class="w-full">
+                    <select id="filter_animal_id" name="filter_animal_id"
+                        class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
+                        <option value="none">-- Sélectionner un animal --</option>
+                        @foreach($animals as $animal)
+                            <option value="{{ $animal['id'] }}" {{ $filterAnimalId === $animal['id'] ? 'selected' : '' }}>{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full">
+                    <input type="search"
+                        placeholder="-- Selectionner une date --"
+                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
+                        name="daterange"
+                        value="{{ $filterDate }}"
+                    />
+                </div>
+            </div>
+            <div class="flex justify-end lg:w-1/3 w-full">
+                <button
                 type="button"
                 data-modal-target="admin-veterinariansReports-create-modal"
                 data-modal-toggle="admin-veterinariansReports-create-modal"
-                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
             >
                 Créer un nouveau rapport
             </button>
+            </div>
         </div>
         <div class="mt-10 relative overflow-x-auto shadow-md sm:rounded-lg sm:ml-4">
             <table class="w-full text-sm text-left rtl:text-right text-armadillo-500 ">
@@ -155,6 +176,24 @@
 
     <script>
         window.addEventListener('load', function() {
+            const buildFilterQuery = ({ filterAnimalId, filterStartDate, filterEndDate }) => {
+                let query = ''
+
+                if (filterAnimalId !== 'none') {
+                    query += `animalId=${filterAnimalId}&`
+                }
+
+                if (filterStartDate) {
+                    query += `startDate=${filterStartDate}&`
+                }
+
+                if (filterEndDate) {
+                    query += `endDate=${filterEndDate}&`
+                }
+
+                return query
+            }
+
             const submitButton = document.querySelector('#admin_veterinariansReports_create_button')
 
             submitButton.addEventListener('click', async (e) => {
@@ -181,6 +220,26 @@
                 });
 
                 window.location.reload()
+            })
+
+            const filterAnimalSelect = document.querySelector('#filter_animal_id')
+            const filterDate = $('input[name="daterange"]');
+
+            filterAnimalSelect.addEventListener('change', (e) => {
+                const [filterStartDate, filterEndDate] = filterDate.val().split(' - ')
+                const query = buildFilterQuery({ filterAnimalId: e.target.value, filterStartDate, filterEndDate })
+
+                window.location.href = `/administration/veterinarians_reports?${query}`
+            })
+
+            filterDate.daterangepicker({
+                opens: 'left',
+                autoApply: true,
+                autoUpdateInput: false,
+            }, (start, end) => {
+                const query = buildFilterQuery({ filterAnimalId: filterAnimalSelect.value, filterStartDate: start.format('YYYY-MM-DD'), filterEndDate: end.format('YYYY-MM-DD') })
+
+                window.location.href = `/administration/veterinarians_reports?${query}`
             })
         })
     </script>

@@ -40,6 +40,9 @@ Route::post('/auth/logout', [AuthController::class, 'logout']);
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:1'])->group(function () {
         Route::get('/administration/administrator', [AdministrationController::class, 'admin_administrator'])->name('admin_administrator');
+
+        Route::post('/users', [UserController::class, 'create']);
+        Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
     });
 
     Route::middleware(['role:1|2'])->group(function () {
@@ -48,10 +51,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:1|3'])->group(function () {
         Route::get('/administration/veterinary', [AdministrationController::class, 'admin_veterinary'])->name('admin_veterinary');
-    });
 
-    Route::post('/users', [UserController::class, 'create']);
-    Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
+        Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
+        Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
+    });
 
     Route::post('/services', [ServiceController::class, 'create']);
     Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
@@ -78,9 +81,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
     Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');
-
-    Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
-    Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
 
     Route::post('/homes_comments', [HomeCommentController::class, 'create']);
     Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
