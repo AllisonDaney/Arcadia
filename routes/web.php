@@ -37,46 +37,54 @@ Route::post('/emails/send/{templateId}', [EmailController::class, 'send']);
 Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-Route::get('/administration/administrator', [AdministrationController::class, 'admin_administrator'])->name('admin_administrator');
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:1'])->group(function () {
+        Route::get('/administration/administrator', [AdministrationController::class, 'admin_administrator'])->name('admin_administrator');
+    });
 
-Route::post('/users', [UserController::class, 'create']);
-Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
+    Route::middleware(['role:1|2'])->group(function () {
+        Route::get('/administration/employee', [AdministrationController::class, 'admin_employee'])->name('admin_employee');
+    });
 
-Route::post('/services', [ServiceController::class, 'create']);
-Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
-Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
-Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
-Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
+    Route::middleware(['role:1|3'])->group(function () {
+        Route::get('/administration/veterinary', [AdministrationController::class, 'admin_veterinary'])->name('admin_veterinary');
+    });
 
-Route::post('/hours', [HourController::class, 'create']);
-Route::put('/hours/{hourId}', [HourController::class, 'update']);
-Route::delete('/hours/{hourId}', [HourController::class, 'delete']);
-Route::get('/administration/hours', [HourController::class, 'index_admin'])->name('admin_hours');
+    Route::post('/users', [UserController::class, 'create']);
+    Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
 
-Route::post('/homes', [HomeController::class, 'create']);
-Route::post('/homes/{homeId}/image', [HomeController::class, 'update_image']);
-Route::put('/homes/{homeId}', [HomeController::class, 'update']);
-Route::delete('/homes/{homeId}', [HomeController::class, 'delete']);
-Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
+    Route::post('/services', [ServiceController::class, 'create']);
+    Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
+    Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
+    Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
+    Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
 
-Route::post('/animals', [AnimalsController::class, 'create']);
-Route::post('/animals/{animalId}/image', [AnimalsController::class, 'update_image']);
-Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
-Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
-Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
+    Route::post('/hours', [HourController::class, 'create']);
+    Route::put('/hours/{hourId}', [HourController::class, 'update']);
+    Route::delete('/hours/{hourId}', [HourController::class, 'delete']);
+    Route::get('/administration/hours', [HourController::class, 'index_admin'])->name('admin_hours');
 
-Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
-Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');
+    Route::post('/homes', [HomeController::class, 'create']);
+    Route::post('/homes/{homeId}/image', [HomeController::class, 'update_image']);
+    Route::put('/homes/{homeId}', [HomeController::class, 'update']);
+    Route::delete('/homes/{homeId}', [HomeController::class, 'delete']);
+    Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
 
-Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
-Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
+    Route::post('/animals', [AnimalsController::class, 'create']);
+    Route::post('/animals/{animalId}/image', [AnimalsController::class, 'update_image']);
+    Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
+    Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
+    Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
 
-Route::post('/homes_comments', [HomeCommentController::class, 'create']);
-Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
+    Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
+    Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');
 
-Route::post('/animals_reports', [AnimalsReportController::class, 'create']);
-Route::get('/administration/animals_reports', [AnimalsReportController::class, 'index_admin'])->name('admin_animals_reports');
+    Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
+    Route::get('/administration/veterinarians_reports', [VeterinariansReportController::class, 'index_admin'])->name('admin_veterinarians_reports');
 
+    Route::post('/homes_comments', [HomeCommentController::class, 'create']);
+    Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
 
-
-Route::get('/bbb', [AdministrationController::class, 'admin_administrator'])->name('admin_report_veterinary');
+    Route::post('/animals_reports', [AnimalsReportController::class, 'create']);
+    Route::get('/administration/animals_reports', [AnimalsReportController::class, 'index_admin'])->name('admin_animals_reports');
+});

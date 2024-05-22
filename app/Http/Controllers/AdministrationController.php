@@ -10,4 +10,14 @@ class AdministrationController extends Controller
     {
         return view('admins/administrator');
     }
+
+    public function admin_employee(): View
+    {
+        return view('admins/employee');
+    }
+
+    public function admin_veterinary(): View
+    {
+        return view('admins/veterinary');
+    }
 }
