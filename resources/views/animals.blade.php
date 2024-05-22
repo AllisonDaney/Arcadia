@@ -10,12 +10,15 @@
         <div class="grid grid-cols-1 md:grid-cols-3 mt-14 gap-8">
             @foreach ($animals as $animal)
                 <div
-                    class="cursor-pointer group"
+                    id="csrf_row_{{ $animal['id'] }}"
+                    class="animal_circle cursor-pointer group"
                     data-drawer-target="drawer-animal-{{ $animal['id'] }}"
                     data-drawer-show="drawer-animal-{{ $animal['id'] }}"
                     data-drawer-placement="right"
                     aria-controls="drawer-animal-{{ $animal['id'] }}"
+                    data-id="{{ $animal['id'] }}"
                 >
+                    @csrf
                     <img src="{{ asset($animal['animalsPictures'][0]['url']) }}" class="w-60 rounded-full mx-auto" alt="logo arcadia">
                     <p class="text-xl group-hover:text-asparagus-500 mb-2 text-center mt-4">{{ $animal['name'] }}</p>
                 </div>
@@ -93,4 +96,29 @@
             </div>
         @endforeach
     </main>
+
+    <script>
+        const animalElements = document.querySelectorAll('.animal_circle')
+
+        for (let animalElement of animalElements) {
+            animalElement.addEventListener('click', async (e) => {
+                e.preventDefault()
+
+                const animalId = animalElement.getAttribute('data-id')
+
+                await fetch('/metrics', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "X-CSRF-Token": document.querySelector(`#csrf_row_${animalId} input[name="_token"]`)?.value
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        model: 'Animal',
+                        tableId: animalId
+                    })
+                });
+            })
+        }
+    </script>
 @endsection

@@ -26,9 +26,9 @@ class AuthController extends Controller
             if ($user->role->label === 'ADMINISTRATOR') {
                 $redirectUrl = route('admin_administrator');
             } elseif ($user->role->label === 'EMPLOYEE') {
-                $redirectUrl = route('admin_employee');
+                $redirectUrl = route('admin_animals_reports');
             } elseif ($user->role->label === 'VETERINARY') {
-                $redirectUrl = route('admin_veterinary');
+                $redirectUrl = route('admin_veterinarians_reports');
             }
 
             return ['redirectUrl' => $redirectUrl];

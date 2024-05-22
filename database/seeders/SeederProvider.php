@@ -306,35 +306,6 @@ class SeederProvider extends Seeder
             "password" => "Allison69140.",
             "firstname" => "José",
             "lastname" => "Mendoza",
-        ],
-        [
-            "role" => "EMPLOYEE",
-            "username" => "l.josette.arcadia@yopmail.com",
-            "password" => "Allison69140.",
-            "firstname" => "Josette",
-            "lastname" => "Lamouette",
-        ],
-        [
-            "role" => "EMPLOYEE",
-            "username" => "l.martin.arcadia@yopmail.com",
-            "password" => "Allison69140.",
-            "firstname" => "Martin",
-            "lastname" => "Lapin",
-        ],
-        [
-            "role" => "VETERINARY",
-            "username" => "l.lucie.arcadia@yopmail.com",
-            "password" => "Allison69140.",
-            "firstname" => "Lucie",
-            "lastname" => "Lapy",
-        ],
-        [
-            "role" => "VETERINARY",
-            "username" => "l.arnaud.arcadia@yopmail.com",
-            "password" => "Allison69140.",
-            "firstname" => "Arnaud",
-            "lastname" => "Lagnot",
-        ],
-
+        ]
     ];
 }

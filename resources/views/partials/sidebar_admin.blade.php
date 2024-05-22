@@ -3,12 +3,14 @@
     aria-label="Sidebar">
     <div class="h-full px-3 pb-4 overflow-y-auto bg-armadillo-100 ">
         <ul class="space-y-2 font-medium">
-            <li>
-                <a href="{{ route('admin_' . strtolower(Auth::user()->role->label)) }}"
-                    class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_' . strtolower(Auth::user()->role->label) ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
-                    <span class="ms-3">Dashboard</span>
-                </a>
-            </li>
+            @if (in_array(Auth::user()->role->id, [1]))
+                <li>
+                    <a href="{{ route('admin_' . strtolower(Auth::user()->role->label)) }}"
+                        class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_' . strtolower(Auth::user()->role->label) ? 'bg-asparagus-200 text-asparagus-500' : '' }}">
+                        <span class="ms-3">Dashboard</span>
+                    </a>
+                </li>
+            @endif
             @if (in_array(Auth::user()->role->id, [1]))
                 <li>
                     <a href="{{ route('admin_users') }}"

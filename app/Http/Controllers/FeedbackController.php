@@ -19,7 +19,7 @@ class FeedbackController extends Controller
         $feedback->rating = $request->input('rating');
         $feedback->pseudo = $request->input('pseudo');
         $feedback->content = $request->input('content');
-        $feedback->status = 'accepted';
+        $feedback->status = 'pending';
 
         $feedback->save();
 

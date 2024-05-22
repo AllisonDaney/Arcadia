@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Metric;
 use App\Models\Service;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
@@ -41,6 +43,8 @@ class ServiceController extends Controller
         $service->content = $data['content'];
         $service->options = json_encode($options);
 
+
+        dd(json_encode($options));
         if ($file) {
             $movedFile = Storage::disk('public_uploads')->put('/services', $file);
 

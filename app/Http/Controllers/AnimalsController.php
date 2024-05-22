@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class AnimalsController extends Controller
 {
     public function index(): View {
-        $animals = Animal::with('home')->get();
+        $animals = Animal::with('home')->whereNotNull('home_id')->get();
 
         return view('animals', ["animals" => $animals]);
     }
