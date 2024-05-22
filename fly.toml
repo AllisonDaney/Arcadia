@@ -24,6 +24,8 @@ console_command = 'php /var/www/html/artisan tinker'
   DB_HOST = 'arcadia-postgres.flycast'
   DB_PORT = '5432'
   DB_DATABASE = 'arcadia'
+  BREVO_API_KEY = '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'
+  DB_URI = 'mongodb+srv://daneyallison69:QW1UPQm9zkvgAW75@arcadia-metrics.wcwejom.mongodb.net/?retryWrites=true&w=majority&appName=arcadia-metrics'
 
 [http_service]
   internal_port = 8080

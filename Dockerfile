@@ -13,6 +13,13 @@ ARG PHP_VERSION
 
 LABEL fly_launch_runtime="laravel"
 
+# Note we specify version 18 of SqlServer via package msodbcsql18
+RUN apt-get update && apt-get install --no-install-recommends -y php${PHP_VERSION}-dev php-pear make
+
+RUN pecl install mongodb install-php-extensions
+
+RUN echo "extension=mongodb.so" > /etc/php/${PHP_VERSION}/cli/conf.d/10-mongo.ini
+
 # copy application code, skipping files based on .dockerignore
 COPY . /var/www/html
 
