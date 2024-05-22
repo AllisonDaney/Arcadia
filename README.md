@@ -13,8 +13,6 @@ Afin de pouvoir lancer l'application, il sera nécessaire d'avoir une base de do
 ### Configuration
 
 -   Créer un fichier ".env" en se basant sur le fichier ".env.example"
--   Ajouter la variable qui permet l'envoie des email `BREVO_API_KEY=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`
--   Ajouter la variable qui permet la sauvegarde des visites sur les animaux avec mongodb `DB_URI=mongodb+srv://daneyallison69:QW1UPQm9zkvgAW75@arcadia-metrics.wcwejom.mongodb.net/?retryWrites=true&w=majority&appName=arcadia-metrics`
 -   Configurer les différentes variables pour mysql
 -   `DB_CONNECTION=mysql`
 -   `DB_HOST=127.0.0.1`
