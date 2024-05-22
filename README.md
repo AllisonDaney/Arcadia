@@ -13,13 +13,7 @@ Afin de pouvoir lancer l'application, il sera nécessaire d'avoir une base de do
 ### Configuration
 
 -   Créer un fichier ".env" en se basant sur le fichier ".env.example"
--   Configurer les différentes variables pour mysql
--   `DB_CONNECTION=mysql`
--   `DB_HOST=127.0.0.1`
--   `DB_PORT=3306`
--   `DB_DATABASE=arcadia`
--   `DB_USERNAME=root`
--   `DB_PASSWORD=`
+-   Configurer les différentes variables pour mysql (voir .env.example)
 
 ### Lancement
 
