@@ -25,6 +25,18 @@ class AnimalsController extends Controller
         return view('admins/admin_animals', ["animals" => $animals, "homes" => $homes]);
     }
 
+    public function show(Int $animalId) {
+        $animal = Animal::with([
+                'animalsReports' => function ($query) {
+                    $query->orderBy("created_at", "desc")
+                        ->first();
+                }
+            ])
+            ->find($animalId);
+
+        return $animal;
+    }
+
     public function create(Request $request) {
         $requestData = $request->all();
 

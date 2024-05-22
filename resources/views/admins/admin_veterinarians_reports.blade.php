@@ -27,16 +27,18 @@
                     />
                 </div>
             </div>
-            <div class="flex justify-end lg:w-1/3 w-full">
-                <button
-                type="button"
-                data-modal-target="admin-veterinariansReports-create-modal"
-                data-modal-toggle="admin-veterinariansReports-create-modal"
-                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
-            >
-                Créer un nouveau rapport
-            </button>
-            </div>
+            @if (in_array(Auth::user()->role->id, [3]))
+                <div class="flex justify-end lg:w-1/3 w-full">
+                    <button
+                        type="button"
+                        data-modal-target="admin-veterinariansReports-create-modal"
+                        data-modal-toggle="admin-veterinariansReports-create-modal"
+                        class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
+                    >
+                        Créer un nouveau rapport
+                    </button>
+                </div>
+            @endif
         </div>
         <div class="mt-10 relative overflow-x-auto shadow-md sm:rounded-lg sm:ml-4">
             <table class="w-full text-sm text-left rtl:text-right text-armadillo-500 ">
@@ -114,10 +116,11 @@
                 <form id="admin_veterinariansReports_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
                     action="#">
                     @csrf
+                    <input type="hidden" name="hidden_animal_id">
                     <div>
                         <label for="animal_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Animal</label>
                         <select id="animal_id" name="animal_id"
-                        class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
+                            class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
                             @foreach($animals as $animal)
                                 <option value="{{ $animal['id'] }}">{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
                             @endforeach
@@ -175,7 +178,29 @@
     </div>
 
     <script>
-        window.addEventListener('load', function() {
+        window.addEventListener('load', async () => {
+            const setAnimalReportInformations = async (animalId) => {
+                const res = await fetch(`/animals/${animalId}`, {
+                    method: 'GET',
+                });
+
+                const animal = await res.json()
+
+                const hiddenAnimalIdInput = document.querySelector('input[name="hidden_animal_id"]')
+                const foodInput = document.querySelector('#food')
+                const foodQuantityInput = document.querySelector('#food_quantity')
+
+                if (hiddenAnimalIdInput !== animalId) {
+                    foodInput.value = animal.animals_reports[0] ? animal.animals_reports[0].food : ''
+                }
+
+                if (hiddenAnimalIdInput !== animalId) {
+                    foodQuantityInput.value = animal.animals_reports[0] ? animal.animals_reports[0].food_quantity : ''
+                }
+
+                hiddenAnimalIdInput.value = animalId
+            }
+
             const buildFilterQuery = ({ filterAnimalId, filterStartDate, filterEndDate }) => {
                 let query = ''
 
@@ -240,6 +265,14 @@
                 const query = buildFilterQuery({ filterAnimalId: filterAnimalSelect.value, filterStartDate: start.format('YYYY-MM-DD'), filterEndDate: end.format('YYYY-MM-DD') })
 
                 window.location.href = `/administration/veterinarians_reports?${query}`
+            })
+
+            const animalIdSelect = document.querySelector('#animal_id')
+
+            await setAnimalReportInformations(animalIdSelect.value)
+
+            animalIdSelect.addEventListener('change', async (e) => {
+                await setAnimalReportInformations(e.target.value)
             })
         })
     </script>

@@ -7,16 +7,18 @@
         <h1 class="text-4xl font-bold text-center font-title text-asparagus-500">
             Services
         </h1>
-        <div class="mt-10 flex justify-end">
-            <button
-                type="button"
-                data-modal-target="admin-services-create-modal"
-                data-modal-toggle="admin-services-create-modal"
-                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5"
-            >
-                Créer un nouveau service
-            </button>
-        </div>
+        @if (in_array(Auth::user()->role->id, [1]))
+            <div class="mt-10 flex justify-end">
+                <button
+                    type="button"
+                    data-modal-target="admin-services-create-modal"
+                    data-modal-toggle="admin-services-create-modal"
+                    class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                >
+                    Créer un nouveau service
+                </button>
+            </div>
+        @endif
 
         <div class="mt-10 relative overflow-x-auto shadow-md sm:rounded-lg sm:ml-4">
             <table class="w-full text-sm text-left rtl:text-right text-armadillo-500 ">
@@ -67,8 +69,10 @@
                                 >
                                     Modifier
                                 </button>
-                                <button type="button" data-id="{{ $service['id'] }}"
-                                    class="admin_services_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                @if (in_array(Auth::user()->role->id, [1]))
+                                    <button type="button" data-id="{{ $service['id'] }}"
+                                        class="admin_services_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

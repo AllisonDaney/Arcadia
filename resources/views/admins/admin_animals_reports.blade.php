@@ -7,16 +7,18 @@
         <h1 class="text-4xl font-bold text-center font-title text-asparagus-500">
             Rapport animaux
         </h1>
-        <div class="mt-10 flex justify-end">
-            <button
-                type="button"
-                data-modal-target="admin-animalsReports-create-modal"
-                data-modal-toggle="admin-animalsReports-create-modal"
-                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5"
-            >
-                Ajouter un rapport
-            </button>
-        </div>
+        @if (in_array(Auth::user()->role->id, [2]))
+            <div class="mt-10 flex justify-end">
+                <button
+                    type="button"
+                    data-modal-target="admin-animalsReports-create-modal"
+                    data-modal-toggle="admin-animalsReports-create-modal"
+                    class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                >
+                    Ajouter un rapport
+                </button>
+            </div>
+        @endif
         <div class="mt-10 relative overflow-x-auto shadow-md sm:rounded-lg sm:ml-4">
             <table class="w-full text-sm text-left rtl:text-right text-armadillo-500 ">
                 <thead class="text-xs text-asparagus-500 uppercase bg-armadillo-100 ">

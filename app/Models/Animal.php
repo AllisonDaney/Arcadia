@@ -25,4 +25,9 @@ class Animal extends Model
     {
         return $this->belongsTo(Home::class);
     }
+
+    public function animalsReports(): HasMany
+    {
+        return $this->HasMany(AnimalsReport::class);
+    }
 }

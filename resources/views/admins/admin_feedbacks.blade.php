@@ -23,9 +23,11 @@
                         <th scope="col" class="px-6 py-3">
                             Statut
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            Actions
-                        </th>
+                        @if (in_array(Auth::user()->role->id, [1]))
+                            <th scope="col" class="px-6 py-3">
+                                Actions
+                            </th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -43,23 +45,25 @@
                             <td class="px-6 py-4">
                                 {{ $feedback['status'] }}
                             </td>
-                            <td id="csrf_row_{{ $feedback['id'] }}" class="px-6 py-4 w-1/5">
-                                @if($feedback['status'] === 'pending')
-                                    @csrf
-                                    <button type="button"
-                                        data-id="{{ $feedback['id'] }}"
-                                        data-status="accepted"
-                                        class="admin_feedback_status_button focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                                    >
-                                        Valider
-                                    </button>
-                                    <button type="button" data-id="{{ $feedback['id'] }}"
-                                        data-status="refused"
-                                        class="admin_feedback_status_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                                        Refuser
-                                    </button>
-                                @endif
-                            </td>
+                            @if (in_array(Auth::user()->role->id, [1]))
+                                <td id="csrf_row_{{ $feedback['id'] }}" class="px-6 py-4 w-1/5">
+                                    @if($feedback['status'] === 'pending')
+                                        @csrf
+                                        <button type="button"
+                                            data-id="{{ $feedback['id'] }}"
+                                            data-status="accepted"
+                                            class="admin_feedback_status_button focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                                        >
+                                            Valider
+                                        </button>
+                                        <button type="button" data-id="{{ $feedback['id'] }}"
+                                            data-status="refused"
+                                            class="admin_feedback_status_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                                            Refuser
+                                        </button>
+                                    @endif
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
