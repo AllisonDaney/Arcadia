@@ -59,7 +59,7 @@
                 </a>
             </li>
             @endif
-            @if (in_array(Auth::user()->role->id, [1]))
+            @if (in_array(Auth::user()->role->id, [1, 2, 3]))
             <li>
                 <a href="{{ route('admin_animals_reports') }}"
                     class="flex items-center p-2 text-armadillo-900 rounded-lg hover:bg-asparagus-200 hover:text-asparagus-500 group {{ Request::route()->getName() === 'admin_animals_reports' ? 'bg-asparagus-200 text-asparagus-500' : '' }}">

@@ -36,3 +36,11 @@ npm run dev
 # Lance un serveur php sur localhost:8000
 php artisan serve
 ```
+
+## Liens utiles
+
+-   [Fichier création base de donnée](/docs/Create_tables.sql)
+-   [Fichier insertion des données en base de donnée](/docs/Insert_data.sql)
+-   [Manuel d'utilisation](/docs/Manuel_dutilisation.pdf)
+-   [Documentation technique](/docs/Documentation_technique.pdf)
+-   [Charte graphique](/docs/Charte_graphique__maquettes.pdf)

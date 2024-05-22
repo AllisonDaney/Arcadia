@@ -40,6 +40,12 @@ Route::post('/auth/login', [AuthController::class, 'login']);
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
+
+    Route::get('/administration/animals_reports', [AnimalsReportController::class, 'index_admin'])->name('admin_animals_reports');
+
+    Route::get('/animals/{animalId}', [AnimalsController::class, 'show']);
+
     Route::middleware(['role:1'])->group(function () {
         Route::get('/administration/administrator', [AdministrationController::class, 'admin_administrator'])->name('admin_administrator');
 
@@ -60,15 +66,11 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/homes/{homeId}', [HomeController::class, 'delete']);
         Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
 
-
-        Route::get('/animals/{animalId}', [AnimalsController::class, 'show']);
         Route::post('/animals', [AnimalsController::class, 'create']);
         Route::post('/animals/{animalId}/image', [AnimalsController::class, 'update_image']);
         Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
         Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
         Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
-
-        Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
     });
 
     Route::middleware(['role:1|2'])->group(function () {
@@ -87,6 +89,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/administration/employee', [AdministrationController::class, 'admin_employee'])->name('admin_employee');
 
         Route::post('/animals_reports', [AnimalsReportController::class, 'create']);
+
+        Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
     });
 
     Route::middleware(['role:3'])->group(function () {
@@ -96,8 +100,4 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/homes_comments', [HomeCommentController::class, 'create']);
     });
-
-    Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
-
-    Route::get('/administration/animals_reports', [AnimalsReportController::class, 'index_admin'])->name('admin_animals_reports');
 });

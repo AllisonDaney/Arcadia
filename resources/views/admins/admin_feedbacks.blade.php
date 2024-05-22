@@ -45,7 +45,7 @@
                             <td class="px-6 py-4">
                                 {{ $feedback['status'] }}
                             </td>
-                            @if (in_array(Auth::user()->role->id, [1]))
+                            @if (in_array(Auth::user()->role->id, [2]))
                                 <td id="csrf_row_{{ $feedback['id'] }}" class="px-6 py-4 w-1/5">
                                     @if($feedback['status'] === 'pending')
                                         @csrf
