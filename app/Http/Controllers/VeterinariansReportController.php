@@ -7,17 +7,37 @@ use App\Models\VeterinariansReport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request as FacadesRequest;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class VeterinariansReportController extends Controller
 {
     public function index_admin(): View {
-        $veterinariansReports = VeterinariansReport::get();
+        $filterAnimalId = FacadesRequest::query('animalId');
+        $filterStartDate = FacadesRequest::query('startDate');
+        $filterEndDate = FacadesRequest::query('endDate');
+        $filterDate = '';
+
+        $veterinariansReports = VeterinariansReport::select();
         $animals = Animal::get();
+
+        if($filterAnimalId) {
+            $veterinariansReports = $veterinariansReports->where('animal_id', $filterAnimalId);
+        }
+
+        if($filterStartDate && $filterEndDate) {
+            $filterDate = $filterStartDate . ' - ' . $filterEndDate;
+            $veterinariansReports = $veterinariansReports->whereBetween('visit_at', [$filterStartDate, $filterEndDate]);
+        }
+
+        $veterinariansReports = $veterinariansReports->get();
 
         return view('admins/admin_veterinarians_reports', [
             "veterinariansReports" => $veterinariansReports,
-            "animals" => $animals
+            "animals" => $animals,
+            "filterAnimalId" => +$filterAnimalId,
+            "filterDate" => $filterDate
         ]);
     }
 
