@@ -49,7 +49,7 @@
                         '#form_contact input[name="_token"]').value
                 },
                 body: JSON.stringify({
-                    to: document.querySelector('#form_contact input[name="email"]').value,
+                    to: 'contact.arcadiazoo@gmail.com',
                     params: {
                         SUBJECT: document.querySelector('#form_contact input[name="subject"]').value,
                         CONTENT: document.querySelector('#form_contact textarea[name="content"]').value
