@@ -3,10 +3,10 @@
        const stars = document.querySelectorAll('.review_stars')
 
         for(let i of stars.keys()) {
-            stars[i].addEventListener('click', (e) => handleClickStar(e, i))
+            stars[i].addEventListener('click', () => handleClickStar(i))
         }
 
-        const handleClickStar = (e, starIndex) => {
+        const handleClickStar = (starIndex) => {
             for(let i of stars.keys()) {
                 if (i <= starIndex) {
                     stars[i].classList.add("text-yellow-500")
@@ -26,9 +26,11 @@
 
 <section class="mb-20">
 <div class=" sm:max-w-xl sm:mx-auto">
-    <h2 class="text-3xl text-center font-semibold text-asparagus-500 font-title">Votre avis nous interesse</h2>
-    <div class="px-12 py-5">
+    <h2 class="text-3xl text-center font-semibold text-asparagus-500 font-title mb-10">Votre avis nous interesse</h2>
+    <div id="review-success-message" class="bg-green-400 text-white p-4 rounded-xl mb-6 hidden">
+        Avis enregistré avec succès
     </div>
+    <div id="review-error-message" class="bg-red-400 text-white p-4 rounded-xl mb-6 hidden"></div>
     <div class="bg-armadillo-100 w-full flex flex-col gap-8 items-center pt-8 rounded-xl shadow-lg">
         <div class="flex space-x-3">
             @csrf
@@ -43,11 +45,11 @@
         </div>
 
         <div class="w-3/4 flex flex-col">
-                <label for="email" class="text-sm font-medium text-armadillo-900 block mb-2 ">Pseudo</label>
+                <label for="email" class="text-sm font-medium text-armadillo-900 block mb-2 ">Pseudo <span class="text-red-500">*</span></label>
                 <input type="text" name="pseudo" class="p-4 rounded-xl resize-none outline-asparagus-600" placeholder="Pseudo"></input>
         </div>
         <div class="w-3/4 flex flex-col">
-            <label for="email" class="text-sm font-medium text-armadillo-900 block mb-2 ">Votre message</label>
+            <label for="email" class="text-sm font-medium text-armadillo-900 block mb-2 ">Votre message <span class="text-red-500">*</span></label>
                 <textarea name="content" rows="4" class="p-4 rounded-xl resize-none outline-asparagus-600" placeholder="Votre message" maxlength="160"></textarea>
                 <button id="create_review" type="submit" value="envoyer" class="py-3 my-8 text-lg bg-gradient-to-r from-asparagus-400 to-asparagus-600 rounded-xl text-asparagus-50">Envoyer</button>
         </div>
@@ -58,26 +60,48 @@
 
 <script>
     const submitButton = document.querySelector('#create_review')
+    const pseudoEl = document.querySelector('input[name="pseudo"]')
+    const contentEl = document.querySelector('textarea[name="content"]')
+    const ratingEl = document.querySelector('input[name="rating"]')
+    const errorEl = document.querySelector('#review-error-message')
+    const successEl = document.querySelector('#review-success-message')
 
     submitButton.addEventListener('click', async (e) => {
         e.preventDefault()
 
-        const rawResponse =  await fetch('/feedbacks', {
-            method: 'POST',
-            headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            "X-CSRF-Token": document.querySelector('input[name="_token"]').value
-            },
-            body: JSON.stringify({
-                rating: document.querySelector('input[name="rating"]').value,
-                pseudo: document.querySelector('input[name="pseudo"]').value,
-                content: document.querySelector('textarea[name="content"]').value
-            })
-        });
+        try {
+            if (!pseudoEl.value || !contentEl.value) {
+                if (!pseudoEl.value) {
+                    pseudoEl.classList.add(...['border', 'border-red-500'])
+                }
+                if (!contentEl.value) {
+                    contentEl.classList.add(...['border', 'border-red-500'])
+                }
+                throw new Error('Le formulaire est invalide')
+            }
 
-        await rawResponse.json();
+            await fetch('/feedbacks', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-CSRF-Token": document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({
+                    rating: ratingEl.value,
+                    pseudo: pseudoEl.value,
+                    content: contentEl.value
+                })
+            });
 
-        window.location.reload()
+            errorEl.classList.add('hidden')
+            successEl.classList.remove('hidden')
+            pseudoEl.value = ''
+            contentEl.value = ''
+            handleClickStar(2)
+        } catch (error) {
+            errorEl.classList.remove('hidden')
+            errorEl.textContent = error.message
+        }
     })
 </script>

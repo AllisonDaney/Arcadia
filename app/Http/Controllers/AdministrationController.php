@@ -15,16 +15,16 @@ class AdministrationController extends Controller
 
         foreach($homes as $home) {
             $dataSets[] = $home->animals->map(function($animal) {
-                $metrics = DB::connection('mongodb')
+                /* $metrics = DB::connection('mongodb')
                     ->collection('metrics')
                     ->where('model', 'Animal')
                     ->where('table_id', strval($animal['id']))
-                    ->get();
+                    ->get(); */
 
                 return [
                     'id' => $animal['id'],
                     'name' => $animal['name'],
-                    'data' => $metrics->map(function($metric) { return $metric['count']; })
+                    'data' => []//$metrics->map(function($metric) { return $metric['count']; })
                 ];
             });
         }

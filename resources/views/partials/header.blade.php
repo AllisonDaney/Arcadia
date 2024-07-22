@@ -130,17 +130,18 @@
                     </button>
                 </div>
                 <form id="login_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+                    <div id="login-error-message" class="bg-red-400 text-white p-4 rounded-xl mb-6 hidden"></div>  
                     @csrf
                     <h3 class="text-xl font-medium text-asparagus-500">Connectez-vous</h3>
                     <div>
-                        <label for="username" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
+                        <label for="username" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom <span class="text-red-500">*</span></label>
                         <input type="email" name="username" id="username"
                             class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
                             placeholder="Nom utilisateur" required="">
                     </div>
                     <div>
                         <label for="password" class="text-sm font-medium text-armadillo-900 block mb-2">Mot de
-                            passe</label>
+                            passe <span class="text-red-500">*</span></label>
                         <input type="password" name="password" id="password" placeholder="••••••••"
                             class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5 "
                             required="">
@@ -162,31 +163,51 @@
 <script>
     window.addEventListener('load', function() {
         const submitButton = document.querySelector('#login_button')
+        const usernameEl = document.querySelector('#login_form input[name="username"]')
+        const passwordEl = document.querySelector('#login_form input[name="password"]')
+        const errorEl = document.querySelector('#login-error-message')
 
         submitButton?.addEventListener('click', async (e) => {
             e.preventDefault()
 
-            const response = await fetch('/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector(
-                        '#login_form input[name="_token"]').value
-                },
-                body: JSON.stringify({
-                    username: document.querySelector(
-                        '#login_form input[name="username"]').value,
-                    password: document.querySelector(
-                        '#login_form input[name="password"]').value,
-                })
-            });
+            try {
+                if (!usernameEl.value || !passwordEl.value) {
+                    if (!usernameEl.value) {
+                        usernameEl.classList.add(...['border', 'border-red-500'])
+                    }
+                    if (!passwordEl.value) {
+                        passwordEl.classList.add(...['border', 'border-red-500'])
+                    }
+                    throw new Error('Le formulaire est invalide')
+                }
 
-            const {
-                redirectUrl
-            } = await response.json()
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "X-CSRF-Token": document.querySelector(
+                            '#login_form input[name="_token"]').value
+                    },
+                    body: JSON.stringify({
+                        username: usernameEl.value,
+                        password: passwordEl.value,
+                    })
+                });
 
-            window.location.href = redirectUrl
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la connexion')
+                }
+
+                const {
+                    redirectUrl
+                } = await response.json()
+
+                window.location.href = redirectUrl
+            } catch (error) {
+                errorEl.classList.remove('hidden')
+                errorEl.textContent = error.message
+            }
         })
 
 
