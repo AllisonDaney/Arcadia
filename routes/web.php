@@ -30,7 +30,7 @@ Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
 
 Route::get('/infos', [LandingController::class, 'index_infos'])->name('infos');
 
-Route::post('/feedbacks', [FeedbackController::class, 'create']);
+Route::post('/feedbacks', [FeedbackController::class, 'create'])->name('feedbacks_create');
 
 Route::post('/emails/send/{templateId}', [EmailController::class, 'send']);
 

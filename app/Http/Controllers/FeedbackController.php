@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Http\Requests\FeedbackFormRequest;
 
 class FeedbackController extends Controller
 {
@@ -14,16 +15,14 @@ class FeedbackController extends Controller
         return view('admins/admin_feedbacks', ["feedbacks" => $feedbacks]);
     }
 
-    public function create(Request $request) {
-        $feedback = new Feedback();
-        $feedback->rating = $request->input('rating');
-        $feedback->pseudo = $request->input('pseudo');
-        $feedback->content = $request->input('content');
-        $feedback->status = 'pending';
+    public function create(FeedbackFormRequest $request) {
+        try {
+            Feedback::create($request->validated());
+        } catch (\Throwable $th) {
+            return to_route('landing')->with('error', 'Une erreur est survenue');
+        }
 
-        $feedback->save();
-
-        return ["data" => $feedback];
+        return to_route('landing')->with('success', 'Votre avis a été envoyé');
     }
 
     public function update(Request $request, Int $feedbackId) {
