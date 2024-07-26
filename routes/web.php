@@ -27,6 +27,7 @@ Route::get('/animals', [AnimalsController::class, 'index'])->name('animals');
 Route::get('/services', [ServiceController::class, 'index'])->name('services');
 
 Route::get('/contacts', [ContactController::class, 'index'])->name('contacts');
+Route::post('/contacts', [ContactController::class, 'create'])->name('contacts_create');
 
 Route::get('/infos', [LandingController::class, 'index_infos'])->name('infos');
 

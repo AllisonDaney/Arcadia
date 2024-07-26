@@ -20,55 +20,7 @@
                 'required' => true,
                 'hasError' => !!$errors->first('content'),
             ])
-            <button id="create_review" type="submit" value="envoyer" class="w-3/4 py-3 my-8 text-lg bg-gradient-to-r from-asparagus-400 to-asparagus-600 rounded-xl text-asparagus-50">Envoyer</button>
+            <button class="w-3/4 py-3 my-8 text-lg bg-gradient-to-r from-asparagus-400 to-asparagus-600 rounded-xl text-asparagus-50">Envoyer</button>
         </form>
     </div>
 </section>
-
-<!-- <script>
-    const submitButton = document.querySelector('#create_review')
-    const pseudoEl = document.querySelector('input[name="pseudo"]')
-    const contentEl = document.querySelector('textarea[name="content"]')
-    const ratingEl = document.querySelector('input[name="rating"]')
-    const errorEl = document.querySelector('#review-error-message')
-    const successEl = document.querySelector('#review-success-message')
-
-    submitButton.addEventListener('click', async (e) => {
-        e.preventDefault()
-
-        try {
-            if (!pseudoEl.value || !contentEl.value) {
-                if (!pseudoEl.value) {
-                    pseudoEl.classList.add(...['border', 'border-red-500'])
-                }
-                if (!contentEl.value) {
-                    contentEl.classList.add(...['border', 'border-red-500'])
-                }
-                throw new Error('Le formulaire est invalide')
-            }
-
-            await fetch('/feedbacks', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector('input[name="_token"]').value
-                },
-                body: JSON.stringify({
-                    rating: ratingEl.value,
-                    pseudo: pseudoEl.value,
-                    content: contentEl.value
-                })
-            });
-
-            errorEl.classList.add('hidden')
-            successEl.classList.remove('hidden')
-            pseudoEl.value = ''
-            contentEl.value = ''
-            handleClickStar(2)
-        } catch (error) {
-            errorEl.classList.remove('hidden')
-            errorEl.textContent = error.message
-        }
-    })
-</script> -->
