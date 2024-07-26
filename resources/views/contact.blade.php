@@ -24,7 +24,7 @@
                     'label' => 'Sujet',
                     'name' => 'subject',
                     'required' => true, 
-                    'hasError' => !!$errors->first('subject'),
+                    'hpasError' => !!$errors->first('subject'),
                 ])
                 @include('partials.form.textarea', [
                     'class' => 'w-full',

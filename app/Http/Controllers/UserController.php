@@ -8,31 +8,34 @@ use Brevo\Client\Configuration;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use App\Models\Role;
+use App\Http\Requests\UserFormRequest;
 
 class UserController extends Controller
 {
     public function index_admin(): View {
         $users = User::get();
+        $roles = Role::where('label', '!=', 'ADMINISTRATOR')->get();
 
-        return view('admins/admin_users', ["users" => $users]);
+        return view('admins/admin_users', ["users" => $users, "roles" => $roles]);
     }
 
-    public function create(Request $request) {
-         $existUser = User::where('username', $request->input('username'))->first();
+    public function create(UserFormRequest $request) {
+        try {
+            $existUser = User::where('username', $request->input('username'))->first();
 
-        if ($existUser) {
-            return ["error" => 'Le mail est déjà utilisé'];
+            if ($existUser) {
+                return to_route('admin_users')->with('error', 'Le mail est déjà utilisé');
+            }
+
+            $user = User::create($request->validated());
+
+            $this->sendEmail(3, $user->username, [ "FIRSTNAME" => $user->firstname, "EMAIL" => $user->username ]);
+        } catch (\Throwable $th) {
+            dd($th);
+            return to_route('admin_users')->with('error', 'Une erreur est survenue');
         }
 
-        $user = new User();
-        $user->role_id = $request->input('role');
-        $user->firstname = $request->input('firstname');
-        $user->lastname = $request->input('lastname');
-        $user->username = $request->input('username');
-        $user->password = $request->input('password');
-
-        $user->save();
-
-        return ["data" => $user];
+        return to_route('admin_users')->with('success', "L'utilisateur a été créé avec succès");
     }
 }

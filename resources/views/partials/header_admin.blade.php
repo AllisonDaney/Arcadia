@@ -40,10 +40,13 @@
                     </div>
                     <ul class="py-1" role="none">
                         <li id="logout_button" class="cursor-pointer">
-                            @csrf
-                            <div class="block px-4 py-2 text-sm text-armadillo-900 hover:bg-armadillo-50">
-                                Deconnexion
-                            </div>
+                            <form action="{{ route('auth_logout') }}" method="post">
+                                @csrf
+                                <button
+                                    class="block text-left w-full px-4 py-2 text-sm text-armadillo-900 hover:bg-armadillo-50">
+                                    Déconnexion
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -52,27 +55,3 @@
     </div>
     </div>
 </nav>
-
-
-<script>
-    window.addEventListener('load', function() {
-        const logoutButton = document.querySelector('#logout_button')
-
-        logoutButton?.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            await fetch('/auth/logout', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector(
-                        '#logout_button input[name="_token"]').value
-                },
-                body: JSON.stringify({})
-            });
-
-            window.location.href = '/'
-        })
-    })
-</script>

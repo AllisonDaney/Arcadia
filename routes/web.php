@@ -37,8 +37,8 @@ Route::post('/emails/send/{templateId}', [EmailController::class, 'send']);
 
 Route::post('/metrics', [MetricController::class, 'create']);
 
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/logout', [AuthController::class, 'logout']);
+Route::post('/auth/login', [AuthController::class, 'login'])->name('auth_login');
+Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:1'])->group(function () {
         Route::get('/administration/administrator', [AdministrationController::class, 'admin_administrator'])->name('admin_administrator');
 
-        Route::post('/users', [UserController::class, 'create']);
+        Route::post('/users', [UserController::class, 'create'])->name('admin_users_create');
         Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
 
         Route::post('/services', [ServiceController::class, 'create']);

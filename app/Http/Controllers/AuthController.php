@@ -7,40 +7,42 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\AuthFormRequest;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(AuthFormRequest $request)
     {
-        $credentials = $request->validate([
-            'username' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            $redirectUrl = '/';
-            $user = User::with('role')->find(Auth::id());
-
-            if ($user->role->label === 'ADMINISTRATOR') {
-                $redirectUrl = route('admin_administrator');
-            } elseif ($user->role->label === 'EMPLOYEE') {
-                $redirectUrl = route('admin_animals_reports');
-            } elseif ($user->role->label === 'VETERINARY') {
-                $redirectUrl = route('admin_veterinarians_reports');
+        try {
+            if (!Auth::attempt($request->validated())) {
+                return to_route('landing')->with('error', 'Erreur lors de la connexion');
             }
-
-            return ['redirectUrl' => $redirectUrl];
+        } catch (\Throwable $th) {
+            return to_route('landing')->with('error', 'Une erreur est survenue');
         }
 
-        return 'error';
+        $redirectRoute = 'landing';
+        $user = User::with('role')->find(Auth::id());
+
+        if ($user->role->label === 'ADMINISTRATOR') {
+            $redirectRoute = 'admin_administrator';
+        } elseif ($user->role->label === 'EMPLOYEE') {
+            $redirectRoute = 'admin_animals_reports';
+        } elseif ($user->role->label === 'VETERINARY') {
+            $redirectRoute = 'admin_veterinarians_reports';
+        }
+
+        return to_route($redirectRoute)->with('success', 'Vous êtes connecté');
     }
 
     public function logout()
     {
-        Auth::logout();
-
-        return view('contact');
+        try {
+            Auth::logout();
+        } catch (\Throwable $th) {
+            return to_route('landing')->with('error', 'Une erreur est survenue');
+        }
+        
+        return to_route('landing')->with('success', 'Vous êtes déconnecté');
     }
 }

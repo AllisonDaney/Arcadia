@@ -70,43 +70,49 @@
                             </svg>
                         </button>
                     </div>
-                    <form id="admin_users_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+                    <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_users_create') }}" method="post">
                         @csrf
-                        <div>
-                            <label for="role" class="block mb-2 text-sm font-medium text-armadillo-900 ">Type
-                                d'utilisateur</label>
-                            <select id="role" name="role"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                <option value="2">Employé</option>
-                                <option value="3">Vétérinaire</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="firstname" class="text-sm font-medium text-armadillo-900 block mb-2 ">Prénom</label>
-                            <input name="firstname" id="firstname"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Prenom" required="">
-                        </div>
-                        <div>
-                            <label for="lastname" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                            <input name="lastname" id="lastname"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Nom" required="">
-                        </div>
-                        <div>
-                            <label for="username" class="text-sm font-medium text-armadillo-900 block mb-2 ">Adresse
-                                mail</label>
-                            <input type="email" name="username" id="username"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Adresse mail" required="">
-                        </div>
-                        <div>
-                            <label for="password" class="text-sm font-medium text-armadillo-900 block mb-2">Mot de
-                                passe</label>
-                            <input type="password" name="password" id="password" placeholder="••••••••"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5 "
-                                required="">
-                        </div>
+                        @include('partials.form.select', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Rôle',
+                            'name' => 'role_id',
+                            'options' => $roles,
+                            'required' => true, 
+                            'hasError' => !!$errors->first('role_id'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Prénom',
+                            'name' => 'firstname',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('firstname'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Nom',
+                            'name' => 'lastname',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('lastname'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Email',
+                            'name' => 'username',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('username'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Mot de passe',
+                            'name' => 'password',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('password'),
+                        ])
                         <div class="flex justify-between">
                             <div class="flex items-start">
                                 <button id="admin_users_button" type="submit"
@@ -116,61 +122,4 @@
             </div>
         </div>
     </main>
-
-    <script>
-        const submitButton = document.querySelector('#admin_users_button')
-
-        submitButton.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            const rawResponse = await fetch('/users', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector(
-                            '#admin_users_create_form input[name="_token"]')
-                        .value
-                },
-                body: JSON.stringify({
-                    role: document.querySelector(
-                        '#admin_users_create_form select[name="role"]').value,
-                    firstname: document.querySelector(
-                        '#admin_users_create_form input[name="firstname"]').value,
-                    lastname: document.querySelector(
-                        '#admin_users_create_form input[name="lastname"]').value,
-                    username: document.querySelector(
-                        '#admin_users_create_form input[name="username"]').value,
-                    password: document.querySelector(
-                        '#admin_users_create_form input[name="password"]').value,
-                })
-            });
-
-            const { data } = await rawResponse.json();
-
-            if (data) {
-                await fetch('/emails/send/3', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "X-CSRF-Token": document.querySelector(
-                            '#admin_users_create_form input[name="_token"]').value
-                    },
-                    body: JSON.stringify({
-                        to: document.querySelector(
-                            '#admin_users_create_form input[name="username"]').value,
-                        params: {
-                            FIRSTNAME: document.querySelector(
-                                '#admin_users_create_form input[name="firstname"]').value,
-                            EMAIL: document.querySelector(
-                                '#admin_users_create_form input[name="username"]').value,
-                        }
-                    })
-                });
-
-                window.location.reload()
-            }
-        })
-    </script>
 @endsection
