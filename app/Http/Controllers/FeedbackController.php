@@ -26,11 +26,15 @@ class FeedbackController extends Controller
     }
 
     public function update(Request $request, Int $feedbackId) {
-        $feedback = Feedback::find($feedbackId);
-        $feedback->status = $request->input('status');
+        try {
+            $feedback = Feedback::find($feedbackId);
+            $feedback->status = $request->input('status');
 
-        $feedback->save();
+            $feedback->save();
+        } catch (\Throwable $th) {
+            return to_route('admin_feedbacks')->with('error', 'Une erreur est survenue');
+        }
 
-        return ["data" => $feedback];
+        return to_route('admin_feedbacks')->with('success', 'Le statut a été mis à jour');
     }
 }

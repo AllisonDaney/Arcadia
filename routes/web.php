@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/animals_reports', [AnimalsReportController::class, 'create'])->name('admin_animals_reports_create');
 
-        Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
+        Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update'])->name('admin_feedbacks_update');
     });
 
     Route::middleware(['role:3'])->group(function () {
