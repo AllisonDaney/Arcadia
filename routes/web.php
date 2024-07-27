@@ -73,7 +73,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware(['role:1|2'])->group(function () {
-        Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
         Route::put('/services/{serviceId}', [ServiceController::class, 'update'])->name('admin_services_update');
         Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
 
@@ -95,7 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:3'])->group(function () {
         Route::get('/administration/veterinary', [AdministrationController::class, 'admin_veterinary'])->name('admin_veterinary');
 
-        Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
+        Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create'])->name('admin_veterinarians_reports_create');
 
         Route::post('/homes_comments', [HomeCommentController::class, 'create'])->name('admin_homes_comments_create');
     });

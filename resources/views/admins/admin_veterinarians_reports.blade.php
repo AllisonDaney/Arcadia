@@ -7,39 +7,58 @@
         <h1 class="text-4xl font-bold text-center font-title text-asparagus-500">
             Rapport vétérinaire
         </h1>
-        <div class="mt-10 flex md:flex-row flex-col lg:flex-nowrap flex-wrap items-center justify-between gap-4">
-            <div class="sm:ml-4 md:flex-row flex-col md:flex-nowrap flex-wrap flex items-center gap-4 lg:w-2/3 w-full">
-                <div class="w-full">
-                    <select id="filter_animal_id" name="filter_animal_id"
-                        class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                        <option value="none">-- Sélectionner un animal --</option>
-                        @foreach($animals as $animal)
-                            <option value="{{ $animal['id'] }}" {{ $filterAnimalId === $animal['id'] ? 'selected' : '' }}>{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-full">
-                    <input type="search"
-                        placeholder="-- Selectionner une date --"
-                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                        name="daterange"
-                        value="{{ $filterDate }}"
-                    />
-                </div>
-            </div>
+        <div class="mt-10 flex md:flex-row flex-col lg:flex-nowrap flex-wrap items-end justify-between gap-4">
             @if (in_array(Auth::user()->role->id, [3]))
-                <div class="flex justify-end lg:w-1/3 w-full">
+                <div class="flex justify-end h-full w-full">
                     <button
                         type="button"
                         data-modal-target="admin-veterinariansReports-create-modal"
                         data-modal-toggle="admin-veterinariansReports-create-modal"
-                        class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
+                        class="focus:outline-none text-white mb-1 bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
                     >
                         Créer un nouveau rapport
                     </button>
                 </div>
             @endif
         </div>
+        <form class="flex md:flex-row flex-col lg:flex-nowrap flex-wrap items-end justify-between gap-4" action="{{ route('admin_veterinarians_reports') }}" method="GET">
+            <div class="sm:ml-4 md:flex-row flex-col md:flex-nowrap flex-wrap flex items-center gap-4 w-full">
+                @include('partials.form.select', [
+                    'class' => 'w-full',
+                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                    'name' => 'animal_id',
+                    'options' => $animals,
+                    'itemValue' => 'id',
+                    'itemLabel' => 'name',
+                    'label' => 'Animal',
+                    'value' => $filterAnimalId,
+                    'placeholder' => '-- Sélectionner un animal --',
+                ])
+                @include('partials.form.input', [
+                    'class' => 'w-full',
+                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                    'name' => 'start_date',
+                    'value' => $filterStartDate,
+                    'type' => 'date',
+                    'label' => 'Date de début',
+                ])
+                @include('partials.form.input', [
+                    'class' => 'w-full',
+                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                    'name' => 'end_date',
+                    'value' => $filterEndDate,
+                    'type' => 'date',
+                    'label' => 'Date de fin',
+                ])
+            </div>
+            <div class="flex justify-end h-full w-fit">
+                <button
+                    class="focus:outline-none text-white mb-1 bg-asparagus-600 hover:bg-asparagus-800 font-medium rounded-lg text-sm px-5 py-2.5 w-full md:w-fit"
+                >
+                    Rechercher
+                </button>
+            </div>
+        </form>
         <div class="mt-10 relative overflow-x-auto shadow-md sm:rounded-lg sm:ml-4">
             <table class="w-full text-sm text-left rtl:text-right text-armadillo-500 ">
                 <thead class="text-xs text-asparagus-500 uppercase bg-armadillo-100 ">
@@ -113,62 +132,78 @@
                         </svg>
                     </button>
                 </div>
-                <form id="admin_veterinariansReports_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                    action="#">
+                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_veterinarians_reports_create') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="hidden_animal_id">
-                    <div>
-                        <label for="animal_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Animal</label>
-                        <select id="animal_id" name="animal_id"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                            @foreach($animals as $animal)
-                                <option value="{{ $animal['id'] }}">{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="animal_condition" class="text-sm font-medium text-armadillo-900 block mb-2 ">Condition</label>
-                        <input name="animal_condition" id="animal_condition"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Condition">
-                    </div>
-                    <div>
-                        <label for="food" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nouriture</label>
-                        <input name="food" id="food"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Nouriture">
-                    </div>
-                    <div>
-                        <label for="food_quantity" class="text-sm font-medium text-armadillo-900 block mb-2 ">Quantité</label>
-                        <input name="food_quantity" id="food_quantity" type="number"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Quantité">
-                    </div>
-                    <div>
-                        <label for="details" class="text-sm font-medium text-armadillo-900 block mb-2 ">Détail</label>
-                        <textarea name="details" id="details"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Détail"></textarea>
-                    </div>
+                    @include('partials.form.select', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Animal',
+                        'name' => 'animal_id',
+                        'options' => $animals,
+                        'itemValue' => 'id',
+                        'itemLabel' => 'name',
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Condition',
+                        'name' => 'animal_condition',
+                        'required' => true, 
+                        'hasError' => !!$errors->first('animal_condition'),
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Nourriture',
+                        'name' => 'food',
+                        'required' => true, 
+                        'hasError' => !!$errors->first('food'),
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Quantité',
+                        'name' => 'food_quantity',
+                        'required' => true, 
+                        'type' => 'number',
+                        'hasError' => !!$errors->first('food_quantity'),
+                    ])
+                    @include('partials.form.textarea', [
+                        'class' => 'w-full',
+                        'label' => 'Détails',
+                        'name' => 'details',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'required' => true,
+                        'rows' => 2,
+                        'hasError' => !!$errors->first('details'),
+                    ])
                     <div class="flex items-center w-full gap-4">
                         <div class="w-2/3">
-                            <label for="visit_at_date"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Date</label>
-                                <input name="visit_at_date" id="visit_at_date" type="date"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Date">
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Date',
+                                'name' => 'visit_at_date',
+                                'required' => true, 
+                                'type' => 'date',
+                                'hasError' => !!$errors->first('visit_at_date'),
+                            ])
                         </div>
                         <div class="w-1/3">
-                            <label for="visit_at_time"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure</label>
-                                <input name="visit_at_time" id="visit_at_time" type="time"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Heure">
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Heure',
+                                'name' => 'visit_at_time',
+                                'required' => true, 
+                                'type' => 'time',
+                                'hasError' => !!$errors->first('visit_at_time'),
+                            ])
                         </div>
                     </div>
                     <div class="flex justify-end">
                         <div class="flex items-start">
-                            <button type="submit" id="admin_veterinariansReports_create_button"
+                            <button
                                 class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Enregistrer</button>
                         </div>
                     </div>
@@ -176,104 +211,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('load', async () => {
-            const setAnimalReportInformations = async (animalId) => {
-                const res = await fetch(`/animals/${animalId}`, {
-                    method: 'GET',
-                });
-
-                const animal = await res.json()
-
-                const hiddenAnimalIdInput = document.querySelector('input[name="hidden_animal_id"]')
-                const foodInput = document.querySelector('#food')
-                const foodQuantityInput = document.querySelector('#food_quantity')
-
-                if (hiddenAnimalIdInput !== animalId) {
-                    foodInput.value = animal.animals_reports[0] ? animal.animals_reports[0].food : ''
-                }
-
-                if (hiddenAnimalIdInput !== animalId) {
-                    foodQuantityInput.value = animal.animals_reports[0] ? animal.animals_reports[0].food_quantity : ''
-                }
-
-                hiddenAnimalIdInput.value = animalId
-            }
-
-            const buildFilterQuery = ({ filterAnimalId, filterStartDate, filterEndDate }) => {
-                let query = ''
-
-                if (filterAnimalId !== 'none') {
-                    query += `animalId=${filterAnimalId}&`
-                }
-
-                if (filterStartDate) {
-                    query += `startDate=${filterStartDate}&`
-                }
-
-                if (filterEndDate) {
-                    query += `endDate=${filterEndDate}&`
-                }
-
-                return query
-            }
-
-            const submitButton = document.querySelector('#admin_veterinariansReports_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                await fetch('/veterinarians_reports', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_veterinariansReports_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: JSON.stringify({
-                        animal_id: document.querySelector('#admin_veterinariansReports_create_form select[name="animal_id"]').value,
-                        animal_condition: document.querySelector('#admin_veterinariansReports_create_form input[name="animal_condition"]').value,
-                        food: document.querySelector('#admin_veterinariansReports_create_form input[name="food"]').value,
-                        food_quantity: document.querySelector('#admin_veterinariansReports_create_form input[name="food_quantity"]').value,
-                        details: document.querySelector('#admin_veterinariansReports_create_form textarea[name="details"]').value,
-                        visit_at_date: document.querySelector('#admin_veterinariansReports_create_form input[name="visit_at_date"]').value,
-                        visit_at_time: document.querySelector('#admin_veterinariansReports_create_form input[name="visit_at_time"]').value,
-                    })
-                });
-
-                window.location.reload()
-            })
-
-            const filterAnimalSelect = document.querySelector('#filter_animal_id')
-            const filterDate = $('input[name="daterange"]');
-
-            filterAnimalSelect.addEventListener('change', (e) => {
-                const [filterStartDate, filterEndDate] = filterDate.val().split(' - ')
-                const query = buildFilterQuery({ filterAnimalId: e.target.value, filterStartDate, filterEndDate })
-
-                window.location.href = `/administration/veterinarians_reports?${query}`
-            })
-
-            filterDate.daterangepicker({
-                opens: 'left',
-                autoApply: true,
-                autoUpdateInput: false,
-            }, (start, end) => {
-                const query = buildFilterQuery({ filterAnimalId: filterAnimalSelect.value, filterStartDate: start.format('YYYY-MM-DD'), filterEndDate: end.format('YYYY-MM-DD') })
-
-                window.location.href = `/administration/veterinarians_reports?${query}`
-            })
-
-            const animalIdSelect = document.querySelector('#animal_id')
-
-            await setAnimalReportInformations(animalIdSelect.value)
-
-            animalIdSelect.addEventListener('change', async (e) => {
-                await setAnimalReportInformations(e.target.value)
-            })
-        })
-    </script>
 @endsection

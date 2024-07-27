@@ -10,6 +10,8 @@ class VeterinariansReport extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'animal_id', 'animal_condition', 'food', 'food_quantity', 'details', 'visit_at'];
+
     public function user(): BelongsTo
     {
         return $this->BelongsTo(User::class);
