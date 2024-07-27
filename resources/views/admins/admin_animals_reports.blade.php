@@ -80,51 +80,61 @@
                         </svg>
                     </button>
                 </div>
-                <form id="admin_animalsReports_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                    action="#">
+                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_animals_reports_create') }}" method="POST">
                     @csrf
-                    <div>
-                        <label for="animal_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Animal</label>
-                        <select id="animal_id" name="animal_id"
-                        class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                            @foreach($animals as $animal)
-                                <option value="{{ $animal['id'] }}">{{ $animal['name'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="food"
-                            class="text-sm font-medium text-armadillo-900 block mb-2 ">Nouriture</label>
-                            <input name="food" id="food"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Nouriture">
-                    </div>
-                    <div>
-                        <label for="food_quantity"
-                            class="text-sm font-medium text-armadillo-900 block mb-2 ">Quantité</label>
-                            <input name="food_quantity" id="food_quantity" type="number"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Quantité">
-                    </div>
+                    @include('partials.form.select', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Animal',
+                        'name' => 'animal_id',
+                        'options' => $animals,
+                        'itemValue' => 'id',
+                        'itemLabel' => 'name',
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Nourriture',
+                        'name' => 'food',
+                        'required' => true, 
+                        'hasError' => !!$errors->first('food'),
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Quantité',
+                        'name' => 'food_quantity',
+                        'required' => true, 
+                        'type' => 'number',
+                        'hasError' => !!$errors->first('food_quantity'),
+                    ])
                     <div class="flex items-center w-full gap-4">
                         <div class="w-2/3">
-                            <label for="food_at_date"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Date</label>
-                                <input name="food_at_date" id="food_at_date" type="date"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Date">
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Date',
+                                'name' => 'food_at_date',
+                                'required' => true, 
+                                'type' => 'date',
+                                'hasError' => !!$errors->first('food_at_date'),
+                            ])
                         </div>
                         <div class="w-1/3">
-                            <label for="food_at_time"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure</label>
-                                <input name="food_at_time" id="food_at_time" type="time"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Date">
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Heure',
+                                'name' => 'food_at_time',
+                                'required' => true, 
+                                'type' => 'time',
+                                'hasError' => !!$errors->first('food_at_time'),
+                            ])
                         </div>
                     </div>
                     <div class="flex justify-end">
                         <div class="flex items-start">
-                            <button type="submit" id="admin_animalsReports_create_button"
+                            <button
                                 class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Enregistrer</button>
                         </div>
                     </div>
@@ -132,34 +142,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('load', function() {
-            const submitButton = document.querySelector('#admin_animalsReports_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                await fetch('/animals_reports', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_animalsReports_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: JSON.stringify({
-                        animal_id: document.querySelector('#admin_animalsReports_create_form select[name="animal_id"]').value,
-                        food: document.querySelector('#admin_animalsReports_create_form input[name="food"]').value,
-                        food_quantity: document.querySelector('#admin_animalsReports_create_form input[name="food_quantity"]').value,
-                        food_at_date: document.querySelector('#admin_animalsReports_create_form input[name="food_at_date"]').value,
-                        food_at_time: document.querySelector('#admin_animalsReports_create_form input[name="food_at_time"]').value,
-                    })
-                });
-
-               window.location.reload()
-            })
-        })
-    </script>
 @endsection

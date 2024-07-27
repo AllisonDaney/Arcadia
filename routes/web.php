@@ -87,7 +87,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:2'])->group(function () {
         Route::get('/administration/employee', [AdministrationController::class, 'admin_employee'])->name('admin_employee');
 
-        Route::post('/animals_reports', [AnimalsReportController::class, 'create']);
+        Route::post('/animals_reports', [AnimalsReportController::class, 'create'])->name('admin_animals_reports_create');
 
         Route::put('/feedbacks/{feedbackId}', [FeedbackController::class, 'update']);
     });

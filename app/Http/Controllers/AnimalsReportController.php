@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Http\Requests\AnimalReportFormRequest;
 
 class AnimalsReportController extends Controller
 {
@@ -18,18 +19,18 @@ class AnimalsReportController extends Controller
         return view('admins/admin_animals_reports', ["animalsReports" => $animalsReports, 'animals' => $animals]);
     }
 
-    public function create(Request $request) {
-        $data = $request->all();
+    public function create(AnimalReportFormRequest $request) {
+        try {
+            $newAnimalReport = $request->validated();
+            $newAnimalReport['user_id'] = Auth::user()->id;
+            $newAnimalReport['food_at'] = Carbon::createFromFormat('Y-m-d H:i:s', $newAnimalReport['food_at_date'] . ' ' . $newAnimalReport['food_at_time'] . ':00')->format('Y-m-d H:i:s');
 
-        $animalsReport = new AnimalsReport();
-        $animalsReport->user_id = Auth::user()->id;
-        $animalsReport->animal_id = $data['animal_id'];
-        $animalsReport->food = $data['food'];
-        $animalsReport->food_quantity = $data['food_quantity'];
-        $animalsReport->food_at = Carbon::createFromFormat('Y-m-d H:i:s', $data['food_at_date'] . ' ' . $data['food_at_time'] . ':00')->format('Y-m-d H:i:s');
+            AnimalsReport::create($newAnimalReport);
+        } catch (\Throwable $th) {
+            dd($th);
+            return to_route('admin_animals_reports')->with('error', "Le rapport n'a pas été créé");
+        }
 
-        $animalsReport->save();
-
-        return ["data" => $animalsReport];
+        return to_route('admin_animals_reports')->with('success', "Le rapport a été créé");
     }
 }

@@ -119,47 +119,6 @@
                             'required' => true, 
                             'hasError' => !!$errors->first('breed'),
                         ])
-                        <!-- @include('partials.form.input', [
-                            'class' => 'w-full',
-                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                            'label' => 'Nouriture',
-                            'name' => 'food',
-                            'required' => true, 
-                            'hasError' => !!$errors->first('food'),
-                        ])
-                        @include('partials.form.input', [
-                            'class' => 'w-full',
-                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                            'label' => 'Quantité',
-                            'name' => 'food_quantity',
-                            'required' => true, 
-                            'type' => 'number',
-                            'hasError' => !!$errors->first('food_quantity'),
-                        ])
-                        <div class="flex items-center w-full gap-4">
-                            <div class="w-2/3">
-                                @include('partials.form.input', [
-                                    'class' => 'w-full',
-                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                                    'label' => 'Date',
-                                    'name' => 'food_at_date',
-                                    'required' => true, 
-                                    'type' => 'date',
-                                    'hasError' => !!$errors->first('food_at_date'),
-                                ])
-                            </div>
-                            <div class="w-1/3">
-                                @include('partials.form.input', [
-                                    'class' => 'w-full',
-                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                                    'label' => 'Heure',
-                                    'name' => 'food_at_time',
-                                    'required' => true, 
-                                    'type' => 'time',
-                                    'hasError' => !!$errors->first('food_at_time'),
-                                ])
-                            </div>
-                        </div> -->
                         @include('partials.form.input', [
                             'class' => 'w-full',
                             'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
