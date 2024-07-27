@@ -76,7 +76,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:1|2'])->group(function () {
         Route::post('/services/{serviceId}/image', [ServiceController::class, 'update_image']);
-        Route::put('/services/{serviceId}', [ServiceController::class, 'update']);
+        Route::put('/services/{serviceId}', [ServiceController::class, 'update'])->name('admin_services_update');
         Route::get('/administration/services', [ServiceController::class, 'index_admin'])->name('admin_services');
 
         Route::get('/administration/feedbacks', [FeedbackController::class, 'index_admin'])->name('admin_feedbacks');

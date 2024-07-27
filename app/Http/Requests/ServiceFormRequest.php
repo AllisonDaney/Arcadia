@@ -24,7 +24,7 @@ class ServiceFormRequest extends FormRequest
       return [
           'label'=> 'required',
           'content'=> 'required',
-          'file'=> 'mimes:jpeg,png,jpg',
+          'file'=> '',
           'options'=> '',
       ];
   }
@@ -34,7 +34,6 @@ class ServiceFormRequest extends FormRequest
       return [
           'label.required' => 'Le nom est requis.',
           'content.required' => 'Le contenu est requis.',
-          'file.mimes' => 'Le fichier doit être un fichier de type jpeg, png ou jpg.',
       ];
   }
 }

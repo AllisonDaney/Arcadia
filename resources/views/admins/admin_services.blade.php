@@ -114,6 +114,7 @@
                             'name' => 'content',
                             'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                             'required' => true,
+                            'rows' => 2,
                             'hasError' => !!$errors->first('content'),
                         ])
                         @include('partials.form.input', [
@@ -135,6 +136,7 @@
                                 'class' => 'w-full',
                                 'label' => 'Contenu',
                                 'name' => 'options[][content]',
+                                'rows' => 2,
                                 'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                             ])
                         </div>
@@ -149,6 +151,7 @@
                                 'class' => 'w-full',
                                 'label' => 'Contenu',
                                 'name' => 'options[][content]',
+                                'rows' => 2,
                                 'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                             ])
                         </div>
@@ -163,20 +166,7 @@
                                 'class' => 'w-full',
                                 'label' => 'Contenu',
                                 'name' => 'options[][content]',
-                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                            ])
-                        </div>
-                        <div class="flex gap-4">
-                            @include('partials.form.input', [
-                                'class' => 'w-full',
-                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
-                                'label' => 'Titre',
-                                'name' => 'options[][title]',
-                            ])
-                            @include('partials.form.textarea', [
-                                'class' => 'w-full',
-                                'label' => 'Contenu',
-                                'name' => 'options[][content]',
+                                'rows' => 2,
                                 'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                             ])
                         </div>
@@ -207,29 +197,36 @@
                                 </svg>
                             </button>
                         </div>
-                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                            action="#">
+                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_services_update', ['serviceId' => $service['id']]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div>
-                                <label for="label" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                                <input name="label" id="label"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Nom" value="{{ $service['label'] }}">
-                            </div>
-                            <div>
-                                <label for="description"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Description</label>
-                                <textarea name="content" id="content"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Description"rows="4">{{ $service['content'] }}</textarea>
-                            </div>
-                            <div>
-                                <label for="file"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                                <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="image">
-                            </div>
+                            @method('PUT')
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Nom',
+                                'name' => 'label',
+                                'required' => true,
+                                'value' => $service['label'],
+                                'hasError' => !!$errors->first('label'),
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Description',
+                                'name' => 'content',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'required' => true,
+                                'value' => $service['content'],
+                                'rows' => 2,
+                                'hasError' => !!$errors->first('content'),
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'label' => 'Image(s)',
+                                'name' => 'file',
+                                'type' => 'file',
+                                'accept' => 'image/png,image/jpeg,image/jpg',
+                                'hasError' => !!$errors->first('file'),
+                            ])
                             @php
                                 $options = [];
                                 foreach(json_decode($service['options'], true) as $title => $content) {
@@ -240,56 +237,55 @@
                                 }
                             @endphp
                             <div class="flex gap-4">
-                                <div class="w-2/5">
-                                    <label for="title1" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 1</label>
-                                    <input name="title1" id="title1" placeholder="Titre 1"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"
-                                        value="{{ isset($options[0]) ? $options[0]['title'] : '' }}"
-                                    >
-                                </div>
-                                <div class="w-full">
-                                    <label for="content1" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 1</label>
-                                    <textarea name="content1" id="content1" placeholder="Contenu 1" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">{{ isset($options[0]) ? $options[0]['content']  : '' }}</textarea>
-                                </div>
+                                @include('partials.form.input', [
+                                    'class' => 'w-full',
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                    'label' => 'Titre',
+                                    'value' => isset($options[0]['title']) ? $options[0]['title'] : '',
+                                    'name' => 'options[][title]',
+                                ])
+                                @include('partials.form.textarea', [
+                                    'class' => 'w-full',
+                                    'label' => 'Contenu',
+                                    'name' => 'options[][content]',
+                                    'rows' => 2,
+                                    'value' => isset($options[0]['content']) ? $options[0]['content'] : '',
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                ])
                             </div>
                             <div class="flex gap-4">
-                                <div class="w-2/5">
-                                    <label for="title2" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 2</label>
-                                    <input name="title2" id="title2" placeholder="Titre 2"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"
-                                        value="{{ isset($options[1]) ? $options[1]['title'] : '' }}"
-                                    >
-                                </div>
-                                <div class="w-full">
-                                    <label for="content2" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 2</label>
-                                    <textarea name="content2" id="content2" placeholder="Contenu 2" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">{{ isset($options[1]) ? $options[1]['content']  : '' }}</textarea>
-                                </div>
+                                @include('partials.form.input', [
+                                    'class' => 'w-full',
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                    'label' => 'Titre',
+                                    'value' => isset($options[1]['title']) ? $options[1]['title'] : '',
+                                    'name' => 'options[][title]',
+                                ])
+                                @include('partials.form.textarea', [
+                                    'class' => 'w-full',
+                                    'label' => 'Contenu',
+                                    'name' => 'options[][content]',
+                                    'rows' => 2,
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                    'value' => isset($options[1]['content']) ? $options[1]['content'] : '',
+                                ])
                             </div>
                             <div class="flex gap-4">
-                                <div class="w-2/5">
-                                    <label for="title3" class="text-sm font-medium text-armadillo-900 block mb-3">Titre 3</label>
-                                    <input name="title3" id="title3" placeholder="Titre 3"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-3.5"
-                                        value="{{ isset($options[2]) ? $options[2]['title'] : '' }}"
-                                    >
-                                </div>
-                                <div class="w-full">
-                                    <label for="content3" class="text-sm font-medium text-armadillo-900 block mb-3">Contenu 3</label>
-                                    <textarea name="content3" id="content3" placeholder="Contenu 3" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">{{ isset($options[2]) ? $options[2]['content']  : '' }}</textarea>
-                                </div>
-                            </div>
-                            <div class="flex gap-4">
-                                <div class="w-2/5">
-                                    <label for="title4" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 4</label>
-                                    <input name="title4" id="title4" placeholder="Titre 4"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"
-                                        value="{{ isset($options[3]) ? $options[3]['title'] : '' }}"
-                                    >
-                                </div>
-                                <div class="w-full">
-                                    <label for="content4" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 4</label>
-                                    <textarea name="content4" id="content4" placeholder="Contenu 4" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">{{ isset($options[3]) ? $options[3]['content'] : '' }}</textarea>
-                                </div>
+                                @include('partials.form.input', [
+                                    'class' => 'w-full',
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                    'label' => 'Titre',
+                                    'name' => 'options[][title]',
+                                    'value' => isset($options[2]['title']) ? $options[2]['title'] : '',
+                                ])
+                                @include('partials.form.textarea', [
+                                    'class' => 'w-full',
+                                    'label' => 'Contenu',
+                                    'name' => 'options[][content]',
+                                    'rows' => 2,
+                                    'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                    'value' => isset($options[2]['content']) ? $options[2]['content'] : '',
+                                ])
                             </div>
                             <div class="flex justify-end">
                                 <div class="flex items-start">
@@ -304,141 +300,4 @@
             </div>
         @endforeach
     </main>
-
-    <!-- <script>
-        window.addEventListener('load', function() {
-            const submitButton = document.querySelector('#admin_services_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                const formData = new FormData()
-
-                formData.append('file', document.querySelector(
-                    '#admin_services_create_form input[name="file"]').files[0])
-                formData.append('data', JSON.stringify({
-                    label: document.querySelector(
-                        '#admin_services_create_form input[name="label"]').value,
-                    content: document.querySelector(
-                        '#admin_services_create_form textarea[name="content"]').value,
-                    options: [
-                        {
-                            title: document.querySelector('#admin_services_create_form input[name="title1"]').value,
-                            content: document.querySelector('#admin_services_create_form textarea[name="content1"]').value
-                        },
-                        {
-                            title: document.querySelector('#admin_services_create_form input[name="title2"]').value,
-                            content: document.querySelector('#admin_services_create_form textarea[name="content2"]').value
-                        },
-                        {
-                            title: document.querySelector('#admin_services_create_form input[name="title3"]').value,
-                            content: document.querySelector('#admin_services_create_form textarea[name="content3"]').value
-                        },
-                        {
-                            title: document.querySelector('#admin_services_create_form input[name="title4"]').value,
-                            content: document.querySelector('#admin_services_create_form textarea[name="content4"]').value
-                        }
-                    ]
-                }))
-
-                const rawResponse = await fetch('/services', {
-                    method: 'POST',
-                    headers: {
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_services_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: formData
-                });
-
-                await rawResponse.json();
-
-                window.location.reload()
-            })
-
-            const deleteButtons = document.querySelectorAll('.admin_services_delete_button')
-
-            for (let button of deleteButtons) {
-                button.addEventListener('click', async (e) => {
-                    e.preventDefault()
-
-                    const serviceId = button.getAttribute('data-id')
-
-                    const rawResponse = await fetch(`/services/${serviceId}`, {
-                        headers: {
-                            "X-CSRF-Token": document.querySelector(
-                                    `#csrf_row_${serviceId} input[name="_token"]`)
-                                .value
-                        },
-                        method: 'DELETE',
-                    });
-
-                    await rawResponse.json();
-
-                    window.location.reload()
-                })
-            }
-
-            const updateButtons = document.querySelectorAll('.admin_services_update_button')
-
-            for (let button of updateButtons) {
-                button.addEventListener('click', async (e) => {
-                    e.preventDefault()
-
-                    const serviceId = button.getAttribute('data-id')
-
-                    await fetch(`/services/${serviceId}`, {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "X-CSRF-Token": document.querySelector(`#admin_services_update_form-${serviceId} input[name="_token"]`)?.value
-                        },
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            label: document.querySelector(
-                                `#admin_services_update_form-${serviceId} input[name="label"]`).value,
-                            content: document.querySelector(
-                                `#admin_services_update_form-${serviceId} textarea[name="content"]`).value,
-                            options: [
-                                {
-                                    title: document.querySelector(`#admin_services_update_form-${serviceId} input[name="title1"]`).value,
-                                    content: document.querySelector(`#admin_services_update_form-${serviceId} textarea[name="content1"]`).value,
-                                },
-                                {
-                                    title: document.querySelector(`#admin_services_update_form-${serviceId} input[name="title2"]`).value,
-                                    content: document.querySelector(`#admin_services_update_form-${serviceId} textarea[name="content2"]`).value,
-                                },
-                                {
-                                    title: document.querySelector(`#admin_services_update_form-${serviceId} input[name="title3"]`).value,
-                                    content: document.querySelector(`#admin_services_update_form-${serviceId} textarea[name="content3"]`).value,
-                                },
-                                {
-                                    title: document.querySelector(`#admin_services_update_form-${serviceId} input[name="title4"]`).value,
-                                    content: document.querySelector(`#admin_services_update_form-${serviceId} textarea[name="content4"]`).value,
-                                }
-                            ]
-                        })
-                    });
-
-                    const file = document.querySelector(
-                        `#admin_services_update_form-${serviceId} input[name="file"]`).files[0]
-
-                        if (file) {
-                            const formData = new FormData()
-                            formData.append('file', file)
-
-                            await fetch(`/services/${serviceId}/image`, {
-                                method: 'POST',
-                                headers: {
-                                    "X-CSRF-Token": document.querySelector(`#admin_services_update_form-${serviceId} input[name="_token"]`)?.value
-                                },
-                                body: formData
-                            });
-                        }
-
-                    window.location.reload()
-                })
-            }
-        })
-    </script> -->
 @endsection

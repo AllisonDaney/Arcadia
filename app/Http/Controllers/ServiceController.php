@@ -40,11 +40,11 @@ class ServiceController extends Controller
                 $newService['url'] = 'img/uploads/' . $movedFile;
             }
 
-            if (isset($newService['options'])) {
+            if (isset($newService['options']) && count($newService['options']) > 0) {
                 $options = [];
 
                 foreach($newService['options'] as $option) {
-                    if ($option['title'] && $option['content']) {
+                    if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
                         $options[$option['title']] = $option['content'];
                     }
                 }
@@ -60,80 +60,47 @@ class ServiceController extends Controller
         }
     
         return to_route('admin_services')->with('success', "Le service a été créé");
-
-        // $requestData = $request->all();
-
-        // $data = json_decode($requestData['data'], true);
-        // $file =  $request->file('file');
-
-        // $options = [];
-
-        // foreach($data['options'] as $option) {
-        //     if ($option['title'] && $option['content']) {
-        //         $options[$option['title']] = $option['content'];
-        //     }
-        // }
-
-        // $service = new Service();
-        // $service->label = $data['label'];
-        // $service->content = $data['content'];
-        // $service->options = json_encode($options);
-
-
-        // if ($file) {
-        //     $movedFile = Storage::disk('public_uploads')->put('/services', $file);
-
-        //     if (!$movedFile) {
-        //         return ["error" => 'fichier'];
-        //     }
-
-        //     $service->url = 'img/uploads/' . $movedFile;
-        // }
-
-        // $service->save();
-
-        // return ["data" => $service];
     }
 
-    public function update(Request $request, Int $serviceId) {
-        $data = $request->all();
+    public function update(ServiceFormRequest $request, Int $serviceId) {
+        try {
+            $service = Service::find($serviceId);
 
-        $options = [];
+            $service->label = $request->input('label');
+            $service->content = $request->input('content');
 
-        foreach($data['options'] as $option) {
-            if ($option['title'] && $option['content']) {
-                $options[$option['title']] = $option['content'];
-            }
-        }
+            $file = $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/services', $file);
 
-        $service = Service::find($serviceId);
-        $service->label = $data['label'];
-        $service->content = $data['content'];
-        $service->options = json_encode($options);
-        $service->save();
+                if (!$movedFile) {
+                    return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
+                }
 
-        return ["data" => $service];
-    }
-
-    public function update_image(Request $request, Int $serviceId) {
-        $file =  $request->file('file');
-
-        $service = Service::find($serviceId);
-
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/services', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                $service->url = 'img/uploads/' . $movedFile;
             }
 
-            Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $service->url));
+            if (isset($service->options) && count($service->options) > 0) {
+                $options = [];
 
-            $service->url = 'img/uploads/' . $movedFile;
+                foreach($service->options as $option) {
+                    if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
+                        $options[$option['title']] = $option['content'];
+                    }
+                }
+
+                $service->options = json_encode($options);
+            } else {
+                $service->options = json_encode([]);
+            }
+
             $service->save();
+        } catch (\Throwable $th) {
+            dd($th);
+            return to_route('admin_services')->with('error', "Le service n'a pas été modifié");
         }
-
-        return ["data" => $service];
+    
+        return to_route('admin_services')->with('success', "Le service a été modifié");
     }
 
     public function delete($serviceId) {
