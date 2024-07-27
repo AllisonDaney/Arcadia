@@ -66,10 +66,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/homes/{homeId}', [HomeController::class, 'delete'])->name('admin_homes_delete');
         Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
 
-        Route::post('/animals', [AnimalsController::class, 'create']);
-        Route::post('/animals/{animalId}/image', [AnimalsController::class, 'update_image']);
-        Route::put('/animals/{animalId}', [AnimalsController::class, 'update']);
-        Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete']);
+        Route::post('/animals', [AnimalsController::class, 'create'])->name('admin_animals_create');
+        Route::put('/animals/{animalId}', [AnimalsController::class, 'update'])->name('admin_animals_update');
+        Route::delete('/animals/{animalId}', [AnimalsController::class, 'delete'])->name('admin_animals_delete');
         Route::get('/administration/animals', [AnimalsController::class, 'index_admin'])->name('admin_animals');
     });
 

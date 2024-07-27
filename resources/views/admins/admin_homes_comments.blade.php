@@ -98,31 +98,4 @@
             </div>
         </div>
     </div>
-
-    <!-- <script>
-        window.addEventListener('load', function() {
-            const submitButton = document.querySelector('#admin_homesComments_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                await fetch('/homes_comments', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_homesComments_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: JSON.stringify({
-                        home_id: document.querySelector('#admin_homesComments_create_form select[name="home_id"]').value,
-                        content: document.querySelector('#admin_homesComments_create_form textarea[name="content"]').value,
-                    })
-                });
-
-                window.location.reload()
-            })
-        })
-    </script> -->
 @endsection

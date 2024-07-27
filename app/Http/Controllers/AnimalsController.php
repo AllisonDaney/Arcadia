@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Http\Requests\AnimalFormRequest;
 
 class AnimalsController extends Controller
 {
@@ -37,82 +38,82 @@ class AnimalsController extends Controller
         return $animal;
     }
 
-    public function create(Request $request) {
-        $requestData = $request->all();
+    public function create(AnimalFormRequest $request) {
+        try {
+            $animal = Animal::create($request->validated());
 
-        $data = json_decode($requestData['data'], true);
-        $file =  $request->file('file');
+            $file = $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
 
-        $animal = new Animal();
-        $animal->name = $data['name'];
-        $animal->home_id = $data['home_id'];
-        $animal->breed = $data['breed'];
-        $animal->food = $data['food'];
-        $animal->food_quantity = $data['food_quantity'];
-        $animal->food_at = Carbon::createFromFormat('Y-m-d H:i:s', $data['food_at_date'] . ' ' . $data['food_at_time'] . ':00')->format('Y-m-d H:i:s');
+                if (!$movedFile) {
+                    return to_route('admin_animals')->with('error', "Le fichier n'a pas été uploadé");
+                }
 
-        $animal->save();
-
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                $animalPicture = new AnimalsPicture();
+                $animalPicture->animal_id = $animal->id;
+                $animalPicture->url = 'img/uploads/' . $movedFile;
+                $animalPicture->save();
             }
-
-            $animalPicture = new AnimalsPicture();
-            $animalPicture->animal_id = $animal->id;
-            $animalPicture->url = 'img/uploads/' . $movedFile;
-            $animalPicture->save();
+        } catch (\Throwable $th) {
+            return to_route('admin_animals')->with('error', "L'animal n'a pas été créé");
         }
 
-        return ["data" => $animal];
+        return to_route('admin_animals')->with('success', "L'animal a été créé");
     }
 
     public function update(Request $request, Int $animalId) {
-        $data = $request->all();
+        try {
+            $animal = Animal::find($animalId);
 
-        $animal = Animal::find($animalId);
-        $animal->name = $data['name'];
-        $animal->home_id = $data['home_id'];
-        $animal->breed = $data['breed'];
-        $animal->food = $data['food'];
-        $animal->food_quantity = $data['food_quantity'];
-        $animal->food_at = Carbon::createFromFormat('Y-m-d H:i:s', $data['food_at_date'] . ' ' . $data['food_at_time'] . ':00')->format('Y-m-d H:i:s');
+            $animal->name = $request->input('name');
+            $animal->home_id = $request->input('home_id');
+            $animal->breed = $request->input('breed');
 
-        $animal->save();
+            $file = $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
 
-        return ["data" => $animal];
-    }
-
-    public function update_image(Request $request, Int $animalId) {
-        $file = $request->file('file');
-
-        $animal = Animal::find($animalId);
-
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                if (!$movedFile) {
+                    return ["error" => 'fichier'];
+                }
+    
+                Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $animal->url));
+    
+                $animalPicture = AnimalsPicture::where('animal_id', $animal->id)->first();
+                $animalPicture->animal_id = $animal->id;
+                $animalPicture->url = 'img/uploads/' . $movedFile;
+                $animalPicture->save();
             }
 
-            Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $animal->url));
-
-            $animalPicture = AnimalsPicture::where('animal_id', $animal->id)->first();
-            $animalPicture->animal_id = $animal->id;
-            $animalPicture->url = 'img/uploads/' . $movedFile;
-            $animalPicture->save();
+            $animal->save();
+        } catch (\Throwable $th) {
+            return to_route('admin_animals')->with('error', "L'animal n'a pas été modifié");
         }
 
-        return ["data" => $animal];
+        return to_route('admin_animals')->with('success', "L'animal a été modifié");
+        // $data = $request->all();
+
+        // $animal = Animal::find($animalId);
+        // $animal->name = $data['name'];
+        // $animal->home_id = $data['home_id'];
+        // $animal->breed = $data['breed'];
+        // $animal->food = $data['food'];
+        // $animal->food_quantity = $data['food_quantity'];
+        // $animal->food_at = Carbon::createFromFormat('Y-m-d H:i:s', $data['food_at_date'] . ' ' . $data['food_at_time'] . ':00')->format('Y-m-d H:i:s');
+
+        // $animal->save();
+
+        // return ["data" => $animal];
     }
 
     public function delete($animalId) {
-        $animal = Animal::find($animalId);
+        try {
+            Animal::find($animalId)->delete();
+        } catch (\Throwable $th) {
+            return to_route('admin_animals')->with('error', "L'animal n'a pas été supprimé");
+        }
 
-        $animal->delete();
-
-        return [];
+        return to_route('admin_animals')->with('success', "L'animal a été supprimé");
     }
 }

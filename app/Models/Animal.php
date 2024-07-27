@@ -11,6 +11,8 @@ class Animal extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'breed', 'home_id'];
+
     public function animalsPictures(): HasMany
     {
         return $this->hasMany(AnimalsPicture::class);

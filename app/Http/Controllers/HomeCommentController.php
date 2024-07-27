@@ -25,7 +25,6 @@ class HomeCommentController extends Controller
 
             HomesComment::create($newHomeComment);
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_homes_comments')->with('error', "Le commentaire n'a pas été créé");
         }
 

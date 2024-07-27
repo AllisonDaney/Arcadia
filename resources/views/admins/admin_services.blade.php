@@ -242,12 +242,12 @@
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                                     'label' => 'Titre',
                                     'value' => isset($options[0]['title']) ? $options[0]['title'] : '',
-                                    'name' => 'options[][title]',
+                                    'name' => 'options[0][title]',
                                 ])
                                 @include('partials.form.textarea', [
                                     'class' => 'w-full',
                                     'label' => 'Contenu',
-                                    'name' => 'options[][content]',
+                                    'name' => 'options[0][content]',
                                     'rows' => 2,
                                     'value' => isset($options[0]['content']) ? $options[0]['content'] : '',
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
@@ -259,12 +259,12 @@
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                                     'label' => 'Titre',
                                     'value' => isset($options[1]['title']) ? $options[1]['title'] : '',
-                                    'name' => 'options[][title]',
+                                    'name' => 'options[1][title]',
                                 ])
                                 @include('partials.form.textarea', [
                                     'class' => 'w-full',
                                     'label' => 'Contenu',
-                                    'name' => 'options[][content]',
+                                    'name' => 'options[1][content]',
                                     'rows' => 2,
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                                     'value' => isset($options[1]['content']) ? $options[1]['content'] : '',
@@ -275,13 +275,13 @@
                                     'class' => 'w-full',
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                                     'label' => 'Titre',
-                                    'name' => 'options[][title]',
+                                    'name' => 'options[2][title]',
                                     'value' => isset($options[2]['title']) ? $options[2]['title'] : '',
                                 ])
                                 @include('partials.form.textarea', [
                                     'class' => 'w-full',
                                     'label' => 'Contenu',
-                                    'name' => 'options[][content]',
+                                    'name' => 'options[2][content]',
                                     'rows' => 2,
                                     'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                                     'value' => isset($options[2]['content']) ? $options[2]['content'] : '',

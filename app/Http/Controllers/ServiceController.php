@@ -40,7 +40,7 @@ class ServiceController extends Controller
                 $newService['url'] = 'img/uploads/' . $movedFile;
             }
 
-            if (isset($newService['options']) && count($newService['options']) > 0) {
+            if (isset($newService['options']) && is_array($newService['options']) && count($newService['options']) > 0) {
                 $options = [];
 
                 foreach($newService['options'] as $option) {
@@ -79,11 +79,11 @@ class ServiceController extends Controller
 
                 $service->url = 'img/uploads/' . $movedFile;
             }
-
-            if (isset($service->options) && count($service->options) > 0) {
+            
+            if ($request->input('options') !== null && is_array($request->input('options')) && count($request->input('options')) > 0) {
                 $options = [];
 
-                foreach($service->options as $option) {
+                foreach($request->input('options') as $option) {
                     if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
                         $options[$option['title']] = $option['content'];
                     }
