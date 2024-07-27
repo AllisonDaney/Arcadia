@@ -98,6 +98,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/veterinarians_reports', [VeterinariansReportController::class, 'create']);
 
-        Route::post('/homes_comments', [HomeCommentController::class, 'create']);
+        Route::post('/homes_comments', [HomeCommentController::class, 'create'])->name('admin_homes_comments_create');
     });
 });

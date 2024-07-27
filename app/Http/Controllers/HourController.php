@@ -29,7 +29,6 @@ class HourController extends Controller
         try {
             Hour::create($request->validated());
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_hours')->with('error', "L'horaire n'a pas été créé");
         }
 
