@@ -56,9 +56,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/services', [ServiceController::class, 'create'])->name('admin_services_create');
         Route::delete('/services/{serviceId}', [ServiceController::class, 'delete'])->name('admin_services_delete');
 
-        Route::post('/hours', [HourController::class, 'create']);
-        Route::put('/hours/{hourId}', [HourController::class, 'update']);
-        Route::delete('/hours/{hourId}', [HourController::class, 'delete']);
+        Route::post('/hours', [HourController::class, 'create'])->name('admin_hours_create');
+        Route::put('/hours/{hourId}', [HourController::class, 'update'])->name('admin_hours_update');
+        Route::delete('/hours/{hourId}', [HourController::class, 'delete'])->name('admin_hours_delete');
         Route::get('/administration/hours', [HourController::class, 'index_admin'])->name('admin_hours');
 
         Route::post('/homes', [HomeController::class, 'create']);

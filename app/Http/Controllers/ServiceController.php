@@ -96,7 +96,6 @@ class ServiceController extends Controller
 
             $service->save();
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_services')->with('error', "Le service n'a pas été modifié");
         }
     

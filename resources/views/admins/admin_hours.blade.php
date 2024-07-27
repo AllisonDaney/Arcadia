@@ -57,8 +57,12 @@
                                 >
                                     Modifier
                                 </button>
-                                <button type="button" data-id="{{ $hour['id'] }}"
-                                    class="admin_hours_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                <form action="{{ route('admin_hours_delete', ['hourId' => $hour['id']]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -81,34 +85,37 @@
                             </svg>
                         </button>
                     </div>
-                    <form id="admin_hours_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                        action="#">
+                    <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_hours_create') }}" method="POST">
                         @csrf
-                        <div>
-                            <label for="day" class="text-sm font-medium text-armadillo-900 block mb-2 ">Jour</label>
-                            <select id="day" name="day"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                <option value="Lundi">Lundi</option>
-                                <option value="Mardi">Mardi</option>
-                                <option value="Mercredi">Mercredi</option>
-                                <option value="Jeudi">Jeudi</option>
-                                <option value="Vendredi">Vendredi</option>
-                                <option value="Samedi">Samedi</option>
-                                <option value="Dimanche">Dimanche</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="opening_time" class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure d'ouverture</label>
-                            <input name="opening_time" id="opening_time" type="time"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Heure d'ouverture" value="00:00">
-                        </div>
-                        <div>
-                            <label for="closing_time" class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure de fermeture</label>
-                            <input name="closing_time" id="closing_time" type="time"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Heure de fermeture" value="00:00">
-                        </div>
+                        @include('partials.form.select', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Jour',
+                            'name' => 'day',
+                            'options' => $days,
+                            'required' => true, 
+                            'hasError' => !!$errors->first('day'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => "Heure d'ouverture",
+                            'name' => 'opening_time',
+                            'required' => true, 
+                            'type' => 'time',
+                            'value' => '00:00',
+                            'hasError' => !!$errors->first('opening_time'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => "Heure de fermeture",
+                            'name' => 'closing_time',
+                            'required' => true, 
+                            'type' => 'time',
+                            'value' => '00:00',
+                            'hasError' => !!$errors->first('closing_time'),
+                        ])
                         <div class="flex justify-end">
                             <div class="flex items-start">
                                 <button type="submit" id="admin_hours_create_button"
@@ -136,34 +143,39 @@
                                 </svg>
                             </button>
                         </div>
-                        <form id="admin_hours_update_form-{{ $hour['id'] }}" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                            action="#">
+                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_hours_update', ['hourId' => $hour['id']]) }}" method="POST">
                             @csrf
-                            <div>
-                                <label for="day" class="text-sm font-medium text-armadillo-900 block mb-2 ">Jour</label>
-                                <select id="day" name="day" value="{{ $hour['day'] }}"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                    <option value="Lundi" {{ $hour['day'] === 'Lundi' ? 'selected' : '' }}>Lundi</option>
-                                    <option value="Mardi" {{ $hour['day'] === 'Mardi' ? 'selected' : '' }}>Mardi</option>
-                                    <option value="Mercredi" {{ $hour['day'] === 'Mercredi' ? 'selected' : '' }}>Mercredi</option>
-                                    <option value="Jeudi" {{ $hour['day'] === 'Jeudi' ? 'selected' : '' }}>Jeudi</option>
-                                    <option value="Vendredi" {{ $hour['day'] === 'Vendredi' ? 'selected' : '' }}>Vendredi</option>
-                                    <option value="Samedi" {{ $hour['day'] === 'Samedi' ? 'selected' : '' }}>Samedi</option>
-                                    <option value="Dimanche" {{ $hour['day'] === 'Dimanche' ? 'selected' : '' }}>Dimanche</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label for="opening_time" class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure d'ouverture</label>
-                                <input name="opening_time" id="opening_time" type="time"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Heure d'ouverture" value="{{ $hour['opening_time'] }}">
-                            </div>
-                            <div>
-                                <label for="closing_time" class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure de fermeture</label>
-                                <input name="closing_time" id="closing_time" type="time"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Heure de fermeture" value="{{ $hour['closing_time'] }}">
-                            </div>
+                            @method('PUT')
+                            @include('partials.form.select', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Jour',
+                                'name' => 'day',
+                                'options' => $days,
+                                'required' => true, 
+                                'value' => $hour['day'],
+                                'hasError' => !!$errors->first('day'),
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => "Heure d'ouverture",
+                                'name' => 'opening_time',
+                                'required' => true, 
+                                'type' => 'time',
+                                'value' => $hour['opening_time'],
+                                'hasError' => !!$errors->first('opening_time'),
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => "Heure de fermeture",
+                                'name' => 'closing_time',
+                                'required' => true, 
+                                'type' => 'time',
+                                'value' => $hour['closing_time'],
+                                'hasError' => !!$errors->first('closing_time'),
+                            ])
                             <div class="flex justify-end">
                                 <div class="flex items-start">
                                     <button type="submit"
@@ -178,7 +190,7 @@
         @endforeach
     </main>
 
-    <script>
+    <!-- <script>
         window.addEventListener('load', function() {
             const submitButton = document.querySelector('#admin_hours_create_button')
 
@@ -263,5 +275,5 @@
                 })
             }
         })
-    </script>
+    </script> -->
 @endsection
