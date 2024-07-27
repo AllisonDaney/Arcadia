@@ -61,8 +61,7 @@
                                 <img src="{{ asset($service['url']) }}" class="w-12 h-12">
                             </td>
                             <td id="csrf_row_{{ $service['id'] }}" class="px-6 py-4 w-1/5">
-                                @csrf
-                                <button type="button"
+                                <button type="submit"
                                     class="focus:outline-none text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                                     data-modal-target="admin-services-update-modal-{{ $service['id'] }}"
                                     data-modal-toggle="admin-services-update-modal-{{ $service['id'] }}"
@@ -70,8 +69,12 @@
                                     Modifier
                                 </button>
                                 @if (in_array(Auth::user()->role->id, [1]))
-                                    <button type="button" data-id="{{ $service['id'] }}"
-                                        class="admin_services_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                    <form method="POST" action="{{ route('admin_services_delete', ['serviceId' => $service['id']]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="admin_services_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                    </form>
                                 @endif
                             </td>
                         </tr>
@@ -95,72 +98,87 @@
                             </svg>
                         </button>
                     </div>
-                    <form id="admin_services_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                        action="#">
+                    <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_services_create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div>
-                            <label for="label" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                            <input name="label" id="label"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Nom">
-                        </div>
-                        <div>
-                            <label for="description"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Description</label>
-                            <textarea name="content" id="content"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Description"rows="4"></textarea>
-                        </div>
-                        <div>
-                            <label for="file"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="image">
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Nom',
+                            'name' => 'label',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('label'),
+                        ])
+                        @include('partials.form.textarea', [
+                            'class' => 'w-full',
+                            'label' => 'Description',
+                            'name' => 'content',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'required' => true,
+                            'hasError' => !!$errors->first('content'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'label' => 'Image(s)',
+                            'name' => 'file',
+                            'type' => 'file',
+                            'accept' => 'image/png,image/jpeg,image/jpg',
+                            'hasError' => !!$errors->first('file'),
+                        ])
+                        <div class="flex gap-4">
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Titre',
+                                'name' => 'options[][title]',
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Contenu',
+                                'name' => 'options[][content]',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            ])
                         </div>
                         <div class="flex gap-4">
-                            <div class="w-2/5">
-                                <label for="title1" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 1</label>
-                                <input name="title1" id="title1" placeholder="Titre 1"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">
-                            </div>
-                            <div class="w-full">
-                                <label for="content1" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 1</label>
-                                <textarea name="content1" id="content1" placeholder="Contenu 1" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"></textarea>
-                            </div>
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Titre',
+                                'name' => 'options[][title]',
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Contenu',
+                                'name' => 'options[][content]',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            ])
                         </div>
                         <div class="flex gap-4">
-                            <div class="w-2/5">
-                                <label for="title2" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 2</label>
-                                <input name="title2" id="title2" placeholder="Titre 2"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">
-                            </div>
-                            <div class="w-full">
-                                <label for="content2" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 2</label>
-                                <textarea name="content2" id="content2" placeholder="Contenu 2" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"></textarea>
-                            </div>
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Titre',
+                                'name' => 'options[][title]',
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Contenu',
+                                'name' => 'options[][content]',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            ])
                         </div>
                         <div class="flex gap-4">
-                            <div class="w-2/5">
-                                <label for="title3" class="text-sm font-medium text-armadillo-900 block mb-3">Titre 3</label>
-                                <input name="title3" id="title3" placeholder="Titre 3"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-3.5">
-                            </div>
-                            <div class="w-full">
-                                <label for="content3" class="text-sm font-medium text-armadillo-900 block mb-3">Contenu 3</label>
-                                <textarea name="content3" id="content3" placeholder="Contenu 3" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"></textarea>
-                            </div>
-                        </div>
-                        <div class="flex gap-4">
-                            <div class="w-2/5">
-                                <label for="title4" class="text-sm font-medium text-armadillo-900 block mb-2">Titre 4</label>
-                                <input name="title4" id="title4" placeholder="Titre 4"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5">
-                            </div>
-                            <div class="w-full">
-                                <label for="content4" class="text-sm font-medium text-armadillo-900 block mb-2">Contenu 4</label>
-                                <textarea name="content4" id="content4" placeholder="Contenu 4" class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5"></textarea>
-                            </div>
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Titre',
+                                'name' => 'options[][title]',
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Contenu',
+                                'name' => 'options[][content]',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            ])
                         </div>
                         <div class="flex justify-end">
                             <div class="flex items-start">
@@ -189,7 +207,7 @@
                                 </svg>
                             </button>
                         </div>
-                        <form id="admin_services_update_form-{{ $service['id'] }}" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
+                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
                             action="#">
                             @csrf
                             <div>
@@ -287,7 +305,7 @@
         @endforeach
     </main>
 
-    <script>
+    <!-- <script>
         window.addEventListener('load', function() {
             const submitButton = document.querySelector('#admin_services_create_button')
 
@@ -422,5 +440,5 @@
                 })
             }
         })
-    </script>
+    </script> -->
 @endsection

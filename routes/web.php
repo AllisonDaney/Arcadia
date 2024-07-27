@@ -53,8 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users', [UserController::class, 'create'])->name('admin_users_create');
         Route::get('/administration/users', [UserController::class, 'index_admin'])->name('admin_users');
 
-        Route::post('/services', [ServiceController::class, 'create']);
-        Route::delete('/services/{serviceId}', [ServiceController::class, 'delete']);
+        Route::post('/services', [ServiceController::class, 'create'])->name('admin_services_create');
+        Route::delete('/services/{serviceId}', [ServiceController::class, 'delete'])->name('admin_services_delete');
 
         Route::post('/hours', [HourController::class, 'create']);
         Route::put('/hours/{hourId}', [HourController::class, 'update']);

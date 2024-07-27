@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ServiceFormRequest;
 
 class ServiceController extends Controller
 {
@@ -24,40 +25,74 @@ class ServiceController extends Controller
         return view('admins/admin_services', ["services" => $services]);
     }
 
-    public function create(Request $request) {
-        $requestData = $request->all();
+    public function create(ServiceFormRequest $request) {
+        try {
+            $newService = $request->validated();
+            $file = $request->file('file');
 
-        $data = json_decode($requestData['data'], true);
-        $file =  $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/services', $file);
 
-        $options = [];
+                if (!$movedFile) {
+                    return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
+                }
 
-        foreach($data['options'] as $option) {
-            if ($option['title'] && $option['content']) {
-                $options[$option['title']] = $option['content'];
-            }
-        }
-
-        $service = new Service();
-        $service->label = $data['label'];
-        $service->content = $data['content'];
-        $service->options = json_encode($options);
-
-
-        dd(json_encode($options));
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/services', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                $newService['url'] = 'img/uploads/' . $movedFile;
             }
 
-            $service->url = 'img/uploads/' . $movedFile;
+            if (isset($newService['options'])) {
+                $options = [];
+
+                foreach($newService['options'] as $option) {
+                    if ($option['title'] && $option['content']) {
+                        $options[$option['title']] = $option['content'];
+                    }
+                }
+
+                $newService['options'] = json_encode($options);
+            } else {
+                $newService['options'] = json_encode([]);
+            }
+
+            Service::create($newService);
+        } catch (\Throwable $th) {
+            return to_route('admin_services')->with('error', "Le service n'a pas été créé");
         }
+    
+        return to_route('admin_services')->with('success', "Le service a été créé");
 
-        $service->save();
+        // $requestData = $request->all();
 
-        return ["data" => $service];
+        // $data = json_decode($requestData['data'], true);
+        // $file =  $request->file('file');
+
+        // $options = [];
+
+        // foreach($data['options'] as $option) {
+        //     if ($option['title'] && $option['content']) {
+        //         $options[$option['title']] = $option['content'];
+        //     }
+        // }
+
+        // $service = new Service();
+        // $service->label = $data['label'];
+        // $service->content = $data['content'];
+        // $service->options = json_encode($options);
+
+
+        // if ($file) {
+        //     $movedFile = Storage::disk('public_uploads')->put('/services', $file);
+
+        //     if (!$movedFile) {
+        //         return ["error" => 'fichier'];
+        //     }
+
+        //     $service->url = 'img/uploads/' . $movedFile;
+        // }
+
+        // $service->save();
+
+        // return ["data" => $service];
     }
 
     public function update(Request $request, Int $serviceId) {
@@ -102,10 +137,13 @@ class ServiceController extends Controller
     }
 
     public function delete($serviceId) {
-        $service = Service::find($serviceId);
+        try {
+            $service = Service::find($serviceId);
+            $service->delete();
+        } catch (\Throwable $th) {
+            return to_route('admin_services')->with('error', "Le service n'a pas été supprimé");
+        }
 
-        $service->delete();
-
-        return [];
+        return to_route('admin_services')->with('success', "Le service a été supprimé");
     }
 }
