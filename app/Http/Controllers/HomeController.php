@@ -8,6 +8,7 @@ use App\Models\HomesPicture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Http\Requests\HomeFormRequest;
 
 class HomeController extends Controller
 {
@@ -39,98 +40,118 @@ class HomeController extends Controller
         return view('admins/admin_homes', ["homes" => $homes, "animals" => $animals]);
     }
 
-    public function create(Request $request) {
-        $requestData = $request->all();
+    public function create(HomeFormRequest $request) {
+        try {
+            $home = Home::create($request->validated());
 
-        $data = json_decode($requestData['data'], true);
-        $file =  $request->file('file');
+            $file = $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/homes', $file);
 
-        $home = new Home();
-        $home->label = $data['label'];
-        $home->content = $data['content'];
+                if (!$movedFile) {
+                    return to_route('admin_homes')->with('error', "Le fichier n'a pas été uploadé");
+                }
 
-        $home->save();
-
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/homes', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                $homePicture = new HomesPicture();
+                $homePicture->home_id = $home->id;
+                $homePicture->url = 'img/uploads/' . $movedFile;
+                $homePicture->save();
             }
 
-            $homePicture = new HomesPicture();
-            $homePicture->home_id = $home->id;
-            $homePicture->url = 'img/uploads/' . $movedFile;
-            $homePicture->save();
-        }
-
-        if (count($data['animalIds'])) {
-            foreach($data['animalIds'] as $animalId) {
-                $animal = Animal::find($animalId);
-                $animal->home_id = $home->id;
-                $animal->save();
-            }
-        }
-
-        return ["data" => $home];
-    }
-
-    public function update(Request $request, Int $homeId) {
-        $data = $request->all();
-
-        $home = Home::find($homeId);
-        $home->label = $data['label'];
-        $home->content = $data['content'];
-        $home->save();
-
-        if (count($data['animalIds'])) {
-            $animals = Animal::where('home_id', $homeId)->get();
-
-            foreach($animals as $animal) {
-                if (!in_array($animal['id'], $data['animalIds'])) {
-                    $animal = Animal::find($animal['id']);
-                    $animal->home_id = null;
+            if (count($request->input('animals'))) {
+                foreach($request->input('animals') as $animalId) {
+                    $animal = Animal::find($animalId);
+                    $animal->home_id = $home->id;
                     $animal->save();
                 }
             }
-            foreach($data['animalIds'] as $animalId) {
-                $animal = Animal::find($animalId);
-                $animal->home_id = $home->id;
-                $animal->save();
-            }
+        } catch (\Throwable $th) {
+            return to_route('admin_homes')->with('error', "L'habitat n'a pas été créé");
         }
 
-        return ["data" => $home];
+        return to_route('admin_homes')->with('success', "L'habitat a été créé");
     }
 
-    public function update_image(Request $request, Int $homeId) {
-        $file =  $request->file('file');
+    public function update(HomeFormRequest $request, Int $homeId) {
+        try {
+            $home = Home::find($homeId);
 
-        $home = Home::find($homeId);
+            $home->label = $request->input('label');
+            $home->content = $request->input('content');
+            
+            $file = $request->file('file');
+            if ($file) {
+                $movedFile = Storage::disk('public_uploads')->put('/homes', $file);
 
-        if ($file) {
-            $movedFile = Storage::disk('public_uploads')->put('/homes', $file);
-
-            if (!$movedFile) {
-                return ["error" => 'fichier'];
+                if (!$movedFile) {
+                    return ["error" => 'fichier'];
+                }
+    
+                Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $home->url));
+    
+                $homePicture = HomesPicture::where('home_id', $home->id)->first();
+                $homePicture->home_id = $home->id;
+                $homePicture->url = 'img/uploads/' . $movedFile;
+                $homePicture->save();
             }
 
-            Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $home->url));
+            if (count($request->input('animals'))) {
+                $animals = Animal::where('home_id', $homeId)->get();
 
-            $homePicture = HomesPicture::where('home_id', $home->id)->first();
-            $homePicture->home_id = $home->id;
-            $homePicture->url = 'img/uploads/' . $movedFile;
-            $homePicture->save();
+                foreach($animals as $animal) {
+                    if (!in_array($animal['id'], $request->input('animals'))) {
+                        $animal = Animal::find($animal['id']);
+                        $animal->home_id = null;
+                        $animal->save();
+                    }
+                }
+                foreach($request->input('animals') as $animalId) {
+                    $animal = Animal::find($animalId);
+                    $animal->home_id = $home->id;
+                    $animal->save();
+                }
+            }
+
+            $home->save();
+        } catch (\Throwable $th) {
+            return to_route('admin_homes')->with('error', "L'habitat n'a pas été modifié");
         }
+        return to_route('admin_homes')->with('success', "L'habitat a été modifié");
+        // $data = $request->all();
 
-        return ["data" => $home];
+        // $home = Home::find($homeId);
+        // $home->label = $data['label'];
+        // $home->content = $data['content'];
+        // $home->save();
+
+        // if (count($data['animalIds'])) {
+        //     $animals = Animal::where('home_id', $homeId)->get();
+
+        //     foreach($animals as $animal) {
+        //         if (!in_array($animal['id'], $data['animalIds'])) {
+        //             $animal = Animal::find($animal['id']);
+        //             $animal->home_id = null;
+        //             $animal->save();
+        //         }
+        //     }
+        //     foreach($data['animalIds'] as $animalId) {
+        //         $animal = Animal::find($animalId);
+        //         $animal->home_id = $home->id;
+        //         $animal->save();
+        //     }
+        // }
+
+        // return ["data" => $home];
     }
 
     public function delete($homeId) {
-        $home = Home::find($homeId);
+        try {
+            $home = Home::find($homeId);
+            $home->delete();
+        } catch (\Throwable $th) {
+            return to_route('admin_homes')->with('error', "L'habitat n'a pas été supprimé");
+        }
 
-        $home->delete();
-
-        return [];
+        return to_route('admin_homes')->with('success', "L'habitat a été supprimé");
     }
 }

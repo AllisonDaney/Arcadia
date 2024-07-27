@@ -10,6 +10,8 @@ class Home extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['label', 'content'];
+
     public function homePictures(): HasMany
     {
         return $this->hasMany(HomesPicture::class);

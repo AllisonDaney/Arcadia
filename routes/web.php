@@ -61,10 +61,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/hours/{hourId}', [HourController::class, 'delete'])->name('admin_hours_delete');
         Route::get('/administration/hours', [HourController::class, 'index_admin'])->name('admin_hours');
 
-        Route::post('/homes', [HomeController::class, 'create']);
-        Route::post('/homes/{homeId}/image', [HomeController::class, 'update_image']);
-        Route::put('/homes/{homeId}', [HomeController::class, 'update']);
-        Route::delete('/homes/{homeId}', [HomeController::class, 'delete']);
+        Route::post('/homes', [HomeController::class, 'create'])->name('admin_homes_create');
+        Route::put('/homes/{homeId}', [HomeController::class, 'update'])->name('admin_homes_update');
+        Route::delete('/homes/{homeId}', [HomeController::class, 'delete'])->name('admin_homes_delete');
         Route::get('/administration/homes', [HomeController::class, 'index_admin'])->name('admin_homes');
 
         Route::post('/animals', [AnimalsController::class, 'create']);
