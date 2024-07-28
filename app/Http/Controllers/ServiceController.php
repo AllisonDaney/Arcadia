@@ -27,34 +27,36 @@ class ServiceController extends Controller
 
     public function create(ServiceFormRequest $request) {
         try {
-            $newService = $request->validated();
-            $file = $request->file('file');
+            DB::transaction(function () {
+                $newService = $request->validated();
+                $file = $request->file('file');
 
-            if ($file) {
-                $movedFile = Storage::disk('public_uploads')->put('/services', $file);
+                if ($file) {
+                    $movedFile = Storage::disk('public_uploads')->put('/services', $file);
 
-                if (!$movedFile) {
-                    return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
-                }
-
-                $newService['url'] = 'img/uploads/' . $movedFile;
-            }
-
-            if (isset($newService['options']) && is_array($newService['options']) && count($newService['options']) > 0) {
-                $options = [];
-
-                foreach($newService['options'] as $option) {
-                    if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
-                        $options[$option['title']] = $option['content'];
+                    if (!$movedFile) {
+                        return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
                     }
+
+                    $newService['url'] = 'img/uploads/' . $movedFile;
                 }
 
-                $newService['options'] = json_encode($options);
-            } else {
-                $newService['options'] = json_encode([]);
-            }
+                if (isset($newService['options']) && is_array($newService['options']) && count($newService['options']) > 0) {
+                    $options = [];
 
-            Service::create($newService);
+                    foreach($newService['options'] as $option) {
+                        if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
+                            $options[$option['title']] = $option['content'];
+                        }
+                    }
+
+                    $newService['options'] = json_encode($options);
+                } else {
+                    $newService['options'] = json_encode([]);
+                }
+
+                Service::create($newService);
+            });
         } catch (\Throwable $th) {
             return to_route('admin_services')->with('error', "Le service n'a pas été créé");
         }
@@ -64,37 +66,39 @@ class ServiceController extends Controller
 
     public function update(ServiceFormRequest $request, Int $serviceId) {
         try {
-            $service = Service::find($serviceId);
+            DB::transaction(function () {
+                $service = Service::find($serviceId);
 
-            $service->label = $request->input('label');
-            $service->content = $request->input('content');
+                $service->label = $request->input('label');
+                $service->content = $request->input('content');
 
-            $file = $request->file('file');
-            if ($file) {
-                $movedFile = Storage::disk('public_uploads')->put('/services', $file);
+                $file = $request->file('file');
+                if ($file) {
+                    $movedFile = Storage::disk('public_uploads')->put('/services', $file);
 
-                if (!$movedFile) {
-                    return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
-                }
-
-                $service->url = 'img/uploads/' . $movedFile;
-            }
-            
-            if ($request->input('options') !== null && is_array($request->input('options')) && count($request->input('options')) > 0) {
-                $options = [];
-
-                foreach($request->input('options') as $option) {
-                    if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
-                        $options[$option['title']] = $option['content'];
+                    if (!$movedFile) {
+                        return to_route('admin_services')->with('error', "Le fichier n'a pas été uploadé");
                     }
+
+                    $service->url = 'img/uploads/' . $movedFile;
+                }
+                
+                if ($request->input('options') !== null && is_array($request->input('options')) && count($request->input('options')) > 0) {
+                    $options = [];
+
+                    foreach($request->input('options') as $option) {
+                        if (isset($option['title']) && $option['title'] && isset($option['content']) && $option['content']) {
+                            $options[$option['title']] = $option['content'];
+                        }
+                    }
+
+                    $service->options = json_encode($options);
+                } else {
+                    $service->options = json_encode([]);
                 }
 
-                $service->options = json_encode($options);
-            } else {
-                $service->options = json_encode([]);
-            }
-
-            $service->save();
+                $service->save();   
+            });
         } catch (\Throwable $th) {
             return to_route('admin_services')->with('error', "Le service n'a pas été modifié");
         }

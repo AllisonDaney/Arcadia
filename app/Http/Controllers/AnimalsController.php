@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use App\Http\Requests\AnimalFormRequest;
+use Illuminate\Support\Facades\DB;
 
 class AnimalsController extends Controller
 {
@@ -40,21 +41,23 @@ class AnimalsController extends Controller
 
     public function create(AnimalFormRequest $request) {
         try {
-            $animal = Animal::create($request->validated());
+            DB::transaction(function () {
+                $animal = Animal::create($request->validated());
 
-            $file = $request->file('file');
-            if ($file) {
-                $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
+                $file = $request->file('file');
+                if ($file) {
+                    $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
 
-                if (!$movedFile) {
-                    return to_route('admin_animals')->with('error', "Le fichier n'a pas été uploadé");
+                    if (!$movedFile) {
+                        return to_route('admin_animals')->with('error', "Le fichier n'a pas été uploadé");
+                    }
+
+                    $animalPicture = new AnimalsPicture();
+                    $animalPicture->animal_id = $animal->id;
+                    $animalPicture->url = 'img/uploads/' . $movedFile;
+                    $animalPicture->save();
                 }
-
-                $animalPicture = new AnimalsPicture();
-                $animalPicture->animal_id = $animal->id;
-                $animalPicture->url = 'img/uploads/' . $movedFile;
-                $animalPicture->save();
-            }
+            });
         } catch (\Throwable $th) {
             return to_route('admin_animals')->with('error', "L'animal n'a pas été créé");
         }
@@ -64,47 +67,36 @@ class AnimalsController extends Controller
 
     public function update(Request $request, Int $animalId) {
         try {
-            $animal = Animal::find($animalId);
+            DB::transaction(function () {
+                $animal = Animal::find($animalId);
 
-            $animal->name = $request->input('name');
-            $animal->home_id = $request->input('home_id');
-            $animal->breed = $request->input('breed');
+                $animal->name = $request->input('name');
+                $animal->home_id = $request->input('home_id');
+                $animal->breed = $request->input('breed');
 
-            $file = $request->file('file');
-            if ($file) {
-                $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
+                $file = $request->file('file');
+                if ($file) {
+                    $movedFile = Storage::disk('public_uploads')->put('/animals', $file);
 
-                if (!$movedFile) {
-                    return ["error" => 'fichier'];
+                        if (!$movedFile) {
+                            return ["error" => 'fichier'];
+                        }
+        
+                    Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $animal->url));
+        
+                    $animalPicture = AnimalsPicture::where('animal_id', $animal->id)->first();
+                    $animalPicture->animal_id = $animal->id;
+                    $animalPicture->url = 'img/uploads/' . $movedFile;
+                    $animalPicture->save();
                 }
-    
-                Storage::disk('public_uploads')->delete(str_replace('img/uploads/', '', $animal->url));
-    
-                $animalPicture = AnimalsPicture::where('animal_id', $animal->id)->first();
-                $animalPicture->animal_id = $animal->id;
-                $animalPicture->url = 'img/uploads/' . $movedFile;
-                $animalPicture->save();
-            }
 
-            $animal->save();
+                $animal->save();
+            });
         } catch (\Throwable $th) {
             return to_route('admin_animals')->with('error', "L'animal n'a pas été modifié");
         }
 
         return to_route('admin_animals')->with('success', "L'animal a été modifié");
-        // $data = $request->all();
-
-        // $animal = Animal::find($animalId);
-        // $animal->name = $data['name'];
-        // $animal->home_id = $data['home_id'];
-        // $animal->breed = $data['breed'];
-        // $animal->food = $data['food'];
-        // $animal->food_quantity = $data['food_quantity'];
-        // $animal->food_at = Carbon::createFromFormat('Y-m-d H:i:s', $data['food_at_date'] . ' ' . $data['food_at_time'] . ':00')->format('Y-m-d H:i:s');
-
-        // $animal->save();
-
-        // return ["data" => $animal];
     }
 
     public function delete($animalId) {

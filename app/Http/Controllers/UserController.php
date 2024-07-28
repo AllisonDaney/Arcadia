@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\Role;
 use App\Http\Requests\UserFormRequest;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -22,17 +23,18 @@ class UserController extends Controller
 
     public function create(UserFormRequest $request) {
         try {
-            $existUser = User::where('username', $request->input('username'))->first();
+            DB::transaction(function () {
+                $existUser = User::where('username', $request->input('username'))->first();
 
-            if ($existUser) {
-                return to_route('admin_users')->with('error', 'Le mail est déjà utilisé');
-            }
+                if ($existUser) {
+                    return to_route('admin_users')->with('error', 'Le mail est déjà utilisé');
+                }
 
-            $user = User::create($request->validated());
+                $user = User::create($request->validated());
 
-            $this->sendEmail(3, $user->username, [ "FIRSTNAME" => $user->firstname, "EMAIL" => $user->username ]);
+                $this->sendEmail(3, $user->username, [ "FIRSTNAME" => $user->firstname, "EMAIL" => $user->username ]);
+            });
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_users')->with('error', 'Une erreur est survenue');
         }
 

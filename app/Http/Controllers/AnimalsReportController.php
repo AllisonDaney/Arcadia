@@ -27,7 +27,6 @@ class AnimalsReportController extends Controller
 
             AnimalsReport::create($newAnimalReport);
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_animals_reports')->with('error', "Le rapport n'a pas été créé");
         }
 

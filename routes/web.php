@@ -5,7 +5,6 @@ use App\Http\Controllers\AnimalsController;
 use App\Http\Controllers\AnimalsReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\HomeCommentController;
 use App\Http\Controllers\HomeController;
@@ -32,8 +31,6 @@ Route::post('/contacts', [ContactController::class, 'create'])->name('contacts_c
 Route::get('/infos', [LandingController::class, 'index_infos'])->name('infos');
 
 Route::post('/feedbacks', [FeedbackController::class, 'create'])->name('feedbacks_create');
-
-Route::post('/emails/send/{templateId}', [EmailController::class, 'send']);
 
 Route::post('/metrics', [MetricController::class, 'create']);
 

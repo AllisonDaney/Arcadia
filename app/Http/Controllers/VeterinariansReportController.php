@@ -57,7 +57,6 @@ class VeterinariansReportController extends Controller
 
             VeterinariansReport::create($newVeterinariansReport);
         } catch (\Throwable $th) {
-            dd($th);
             return to_route('admin_veterinarians_reports')->with('error', "Le rapport n'a pas été créé");
         }
 
