@@ -17,10 +17,12 @@ class ContactController extends Controller
 
     public function create(ContactFormRequest $request) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $contact = Contact::create($request->validated());
 
-                $this->sendEmail(2, 'contact.arcadiazoo@gmail.com', [ "EMAIL" => $contact->email, "SUBJECT" => $contact->subject, "CONTENT" => $contact->content ]);
+                if ($request->input('noEmail') === null || $request->input('noEmail') !== 'true') {
+                    $this->sendEmail(2, 'contact.arcadiazoo@gmail.com', [ "EMAIL" => $contact->email, "SUBJECT" => $contact->subject, "CONTENT" => $contact->content ]);
+                }
             });
         } catch (\Throwable $th) {
             return to_route('contacts')->with('error', 'Une erreur est survenue');
