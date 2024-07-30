@@ -45,5 +45,4 @@ web:
 
 runtime:
   extensions:
-    - mongo
     - mongodb
