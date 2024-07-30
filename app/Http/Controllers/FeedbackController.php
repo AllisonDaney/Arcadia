@@ -19,6 +19,7 @@ class FeedbackController extends Controller
         try {
             Feedback::create($request->validated());
         } catch (\Throwable $th) {
+            dd($th);
             return to_route('landing')->with('error', 'Une erreur est survenue');
         }
 

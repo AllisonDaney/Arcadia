@@ -95,7 +95,7 @@
                         </ul>
                     </div>
                 @else
-                    <div class="flex flex-col items-center justify-center  text-armadillo-900 hover:text-asparagus-600 cursor-pointer"data-modal-target="authentication-modal"
+                    <div id="login_button" class="flex flex-col items-center justify-center  text-armadillo-900 hover:text-asparagus-600 cursor-pointer" data-modal-target="authentication-modal"
                         data-modal-toggle="authentication-modal">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
