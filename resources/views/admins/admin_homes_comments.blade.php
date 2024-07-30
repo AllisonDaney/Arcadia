@@ -68,24 +68,26 @@
                         </svg>
                     </button>
                 </div>
-                <form id="admin_homesComments_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                    action="#">
+                <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_homes_comments_create') }}" method="POST">
                     @csrf
-                    <div>
-                        <label for="home_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Habitat</label>
-                        <select id="home_id" name="home_id"
-                        class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                            @foreach($homes as $home)
-                                <option value="{{ $home['id'] }}">{{ $home['label'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div>
-                        <label for="content" class="text-sm font-medium text-armadillo-900 block mb-2 ">Commentaire</label>
-                        <textarea name="content" id="content"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Commentaire"></textarea>
-                    </div>
+                    @include('partials.form.select', [
+                        'class' => 'w-full',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'label' => 'Habitat',
+                        'name' => 'home_id',
+                        'options' => $homes,
+                        'required' => true, 
+                        'hasError' => !!$errors->first('home_id'),
+                    ])
+                    @include('partials.form.textarea', [
+                        'class' => 'w-full',
+                        'label' => 'Description',
+                        'name' => 'content',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'required' => true,
+                        'rows' => 2,
+                        'hasError' => !!$errors->first('content'),
+                    ])
                     <div class="flex justify-end">
                         <div class="flex items-start">
                             <button type="submit" id="admin_homesComments_create_button"
@@ -96,31 +98,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('load', function() {
-            const submitButton = document.querySelector('#admin_homesComments_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                await fetch('/homes_comments', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_homesComments_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: JSON.stringify({
-                        home_id: document.querySelector('#admin_homesComments_create_form select[name="home_id"]').value,
-                        content: document.querySelector('#admin_homesComments_create_form textarea[name="content"]').value,
-                    })
-                });
-
-                window.location.reload()
-            })
-        })
-    </script>
 @endsection

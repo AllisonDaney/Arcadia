@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("label");
             $table->text("content");
-            $table->text("url");
+            $table->text("url")->nullable();
             $table->text("options");
             $table->timestamps();
         });

@@ -34,15 +34,6 @@
                             Race
                         </th>
                         <th scope="col" class="px-6 py-3">
-                            Nouriture
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Quantité
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Date
-                        </th>
-                        <th scope="col" class="px-6 py-3">
                             Actions
                         </th>
                     </tr>
@@ -67,15 +58,6 @@
                             <td class="px-6 py-4">
                                 {{ $animal['breed'] }}
                             </td>
-                            <td class="px-6 py-4">
-                                {{ $animal['food'] }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $animal['food_quantity'] }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $animal['food_at'] }}
-                            </td>
                             <td id="csrf_row_{{ $animal['id'] }}" class="px-6 py-4 w-1/5">
                                 @csrf
                                 <button type="button"
@@ -85,8 +67,11 @@
                                 >
                                     Modifier
                                 </button>
-                                <button type="button" data-id="{{ $animal['id'] }}"
-                                    class="admin_animals_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                <form action="{{ route('admin_animals_delete', $animal['id']) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -109,68 +94,39 @@
                             </svg>
                         </button>
                     </div>
-                    <form id="admin_animals_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                        action="#">
+                    <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_animals_create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div>
-                            <label for="name" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                            <input name="name" id="name"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Nom">
-                        </div>
-                        <div>
-                            <label for="home_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Habitat</label>
-                            <select id="home_id" name="home_id"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                @foreach($homes as $home)
-                                    <option value="{{ $home['id'] }}">{{ $home['label'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <label for="breed"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Race</label>
-                                <input name="breed" id="breed"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Race">
-                        </div>
-                        <div>
-                            <label for="food"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Nouriture</label>
-                                <input name="food" id="food"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Nouriture">
-                        </div>
-                        <div>
-                            <label for="food_quantity"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Quantité</label>
-                                <input name="food_quantity" id="food_quantity" type="number"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Quantité">
-                        </div>
-                        <div class="flex items-center w-full gap-4">
-                            <div class="w-2/3">
-                                <label for="food_at_date"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Date</label>
-                                    <input name="food_at_date" id="food_at_date" type="date"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                        placeholder="Date">
-                            </div>
-                            <div class="w-1/3">
-                                <label for="food_at_time"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure</label>
-                                    <input name="food_at_time" id="food_at_time" type="time"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                        placeholder="Date">
-                            </div>
-                        </div>
-                        <div>
-                            <label for="file"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="image">
-                        </div>
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Nom',
+                            'name' => 'name',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('name'),
+                        ])
+                        @include('partials.form.select', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Animaux',
+                            'name' => 'home_id',
+                            'options' => $homes,
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Race',
+                            'name' => 'breed',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('breed'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Image',
+                            'name' => 'file',
+                            'type' => 'file',
+                            'accept' => 'image/png,image/jpeg,image/jpg',
+                        ])
                         <div class="flex justify-end">
                             <div class="flex items-start">
                                 <button type="submit" id="admin_animals_create_button"
@@ -198,68 +154,43 @@
                                 </svg>
                             </button>
                         </div>
-                        <form id="admin_animals_update_form-{{ $animal['id'] }}" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                            action="#">
+                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_animals_update', $animal['id']) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div>
-                                <label for="name" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                                <input name="name" id="name"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Nom" value="{{ $animal['name'] }}">
-                            </div>
-                            <div>
-                                <label for="home_id" class="text-sm font-medium text-armadillo-900 block mb-2 ">Habitat</label>
-                                <select id="home_id" name="home_id"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                    @foreach($homes as $home)
-                                        <option value="{{ $home['id'] }}" {{ $animal['home_id'] === $home['id'] ? 'selected' : '' }}>{{ $home['label'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label for="breed"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Race</label>
-                                    <input name="breed" id="breed"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                        placeholder="Race" value="{{ $animal['breed'] }}">
-                            </div>
-                            <div>
-                                <label for="food"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Nouriture</label>
-                                    <input name="food" id="food"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                        placeholder="Nouriture" value="{{ $animal['food'] }}">
-                            </div>
-                            <div>
-                                <label for="food_quantity"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Quantité</label>
-                                    <input name="food_quantity" id="food_quantity" type="number"
-                                        class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                        placeholder="Quantité" value="{{ $animal['food_quantity'] }}">
-                            </div>
-                            <div class="flex items-center w-full gap-4">
-                                <div class="w-2/3">
-                                    <label for="food_at_date"
-                                        class="text-sm font-medium text-armadillo-900 block mb-2 ">Date</label>
-                                        <input name="food_at_date" id="food_at_date" type="date"
-                                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                            placeholder="Date" value="{{ isset($animal['food_at']) ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $animal['food_at'])->format('Y-m-d') : date('Y-m-d') }}">
-                                </div>
-                                <div class="w-1/3">
-                                    <label for="food_at_time"
-                                        class="text-sm font-medium text-armadillo-900 block mb-2 ">Heure</label>
-                                        <input name="food_at_time" id="food_at_time" type="time"
-                                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                            placeholder="Heure" value="{{ isset($animal['food_at']) ? Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $animal['food_at'])->format('H:i') : date('H:i') }}">
-                                </div>
-                            </div>
-                            <div>
-                                <label for="file"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                                <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="image">
-                            </div>
+                            @method('PUT')
+                                @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Nom',
+                                'name' => 'name',
+                                'required' => true, 
+                                'value' => $animal['name'],
+                                'hasError' => !!$errors->first('name'),
+                            ])
+                            @include('partials.form.select', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Animaux',
+                                'name' => 'home_id',
+                                'value' => $animal['home_id'],
+                                'options' => $homes,
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Race',
+                                'name' => 'breed',
+                                'required' => true, 
+                                'value' => $animal['breed'],
+                                'hasError' => !!$errors->first('breed'),
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Image',
+                                'name' => 'file',
+                                'type' => 'file',
+                                'accept' => 'image/png,image/jpeg,image/jpg',
+                            ])
                             <div class="flex justify-end">
                                 <div class="flex items-start">
                                     <button type="submit"
@@ -273,121 +204,4 @@
             </div>
         @endforeach
     </main>
-
-    <script>
-        window.addEventListener('load', function() {
-            const submitButton = document.querySelector('#admin_animals_create_button')
-
-            submitButton.addEventListener('click', async (e) => {
-                e.preventDefault()
-
-                const formData = new FormData()
-
-                formData.append('file', document.querySelector(
-                    '#admin_animals_create_form input[name="file"]').files[0])
-                formData.append('data', JSON.stringify({
-                    name: document.querySelector(
-                        '#admin_animals_create_form input[name="name"]').value,
-                    home_id: document.querySelector(
-                        '#admin_animals_create_form select[name="home_id"]').value,
-                    breed: document.querySelector(
-                        '#admin_animals_create_form input[name="breed"]').value,
-                    food: document.querySelector(
-                        '#admin_animals_create_form input[name="food"]').value,
-                    food_quantity: document.querySelector(
-                        '#admin_animals_create_form input[name="food_quantity"]').value,
-                    food_at_date: document.querySelector(
-                        '#admin_animals_create_form input[name="food_at_date"]').value,
-                    food_at_time: document.querySelector(
-                        '#admin_animals_create_form input[name="food_at_time"]').value,
-                }))
-
-                const rawResponse = await fetch('/animals', {
-                    method: 'POST',
-                    headers: {
-                        "X-CSRF-Token": document.querySelector(
-                                '#admin_animals_create_form input[name="_token"]')
-                            .value
-                    },
-                    body: formData
-                });
-
-                await rawResponse.json();
-
-                window.location.reload()
-            })
-
-            const deleteButtons = document.querySelectorAll('.admin_animals_delete_button')
-
-            for (let button of deleteButtons) {
-                button.addEventListener('click', async (e) => {
-                    e.preventDefault()
-
-                    const animalId = button.getAttribute('data-id')
-
-                    await fetch(`/animals/${animalId}`, {
-                        headers: {
-                            "X-CSRF-Token": document.querySelector(`#csrf_row_${animalId} input[name="_token"]`).value
-                        },
-                        method: 'DELETE',
-                    });
-
-                    window.location.reload()
-                })
-            }
-
-            const updateButtons = document.querySelectorAll('.admin_animals_update_button')
-
-            for (let button of updateButtons) {
-                button.addEventListener('click', async (e) => {
-                    e.preventDefault()
-
-                    const animalId = button.getAttribute('data-id')
-
-                    await fetch(`/animals/${animalId}`, {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "X-CSRF-Token": document.querySelector(`#admin_animals_update_form-${animalId} input[name="_token"]`)?.value
-                        },
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            name: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="name"]`).value,
-                            home_id: document.querySelector(
-                                `#admin_animals_update_form-${animalId} select[name="home_id"]`).value,
-                            breed: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="breed"]`).value,
-                            food: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="food"]`).value,
-                            food_quantity: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="food_quantity"]`).value,
-                            food_at_date: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="food_at_date"]`).value,
-                            food_at_time: document.querySelector(
-                                `#admin_animals_update_form-${animalId} input[name="food_at_time"]`).value,
-                        })
-                    });
-
-                    const file = document.querySelector(
-                        `#admin_animals_update_form-${animalId} input[name="file"]`).files[0]
-
-                    if (file) {
-                        const formData = new FormData()
-                        formData.append('file', file)
-
-                        const r = await fetch(`/animals/${animalId}/image`, {
-                            method: 'POST',
-                            headers: {
-                                "X-CSRF-Token": document.querySelector(`#admin_animals_update_form-${animalId} input[name="_token"]`)?.value
-                            },
-                            body: formData
-                        });
-                    }
-
-                    window.location.reload()
-                })
-            }
-        })
-    </script>
 @endsection

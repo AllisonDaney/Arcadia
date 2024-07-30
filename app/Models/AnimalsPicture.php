@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnimalsPicture extends Model
 {
-    use HasFactory;
+
 }

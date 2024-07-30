@@ -8,83 +8,38 @@
     <h1 class="text-4xl font-bold text-center font-title text-asparagus-500">
         Dashboard
     </h1>
-    <div class="grid grid-cols-2 gap-4 ml-6 mt-10">
-        @foreach ($dataSets as $dataSet)
+    <div class="grid grid-cols-1 gap-4 ml-6 mt-10">
+        @foreach ($dataHomes as $dataHome)
             <div>
-                <canvas class="chart-animal" data-set="{{ json_encode($dataSet) }}"></canvas>
+                <h2 class="text-2xl font-bold font-title text-asparagus-500">{{ $dataHome['label'] }}</h2>
+                <div class="relative overflow-x-auto mt-4">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Animal
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Nombre de visites
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($dataHome['animals'] as $animal)
+                                <tr class="bg-white border-b">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $animal['name'] }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        {{ $animal['count'] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         @endforeach
     </div>
 </main>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script type="module">
-    window.addEventListener('load', function() {
-        const MONTHS = [
-            'Janvier',
-            'Février',
-            'Mars',
-            'Avril',
-            'Mai',
-            'Juin',
-            'Juillet',
-            'Août',
-            'Septembre',
-            'Octobre',
-            'Novembre',
-            'Decembre'
-        ];
-
-        const months = (config) => {
-            var cfg = config || {};
-            var count = cfg.count || 12;
-            var section = cfg.section;
-            var values = [];
-            var i, value;
-
-            for (i = 0; i < count; ++i) {
-                value = MONTHS[Math.ceil(i) % 12];
-                values.push(value.substring(0, section));
-            }
-
-            return values;
-        }
-
-        const labels = months({ count: 12, section: 3 });
-
-        const chartAnimals = document.querySelectorAll('.chart-animal')
-
-        for(let chartAnimal of chartAnimals) {
-            const dataSets = chartAnimal.getAttribute('data-set')
-            let dataSetsParsed = []
-
-            for(let dataSet of JSON.parse(dataSets)) {
-                dataSetsParsed = [...dataSetsParsed, {
-                    label: dataSet.name,
-                    data: dataSet.data,
-                    fill: false,
-                    borderColor: `#${Math.floor(Math.random()*16777215).toString(16)}`,
-                    tension: 0.1
-                }]
-            }
-
-            new Chart(chartAnimal, {
-                type: "line",
-                data: {
-                    labels: labels,
-                    datasets: dataSetsParsed
-                },
-                options: {
-                    scales: {
-                        y: {
-                            ticks: {
-                                stepSize: 1
-                            }
-                        }
-                    }
-                }
-            });
-        }
-    })
-</script>
 @endsection

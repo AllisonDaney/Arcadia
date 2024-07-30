@@ -61,8 +61,11 @@
                                 >
                                     Modifier
                                 </button>
-                                <button type="button" data-id="{{ $home['id'] }}"
-                                    class="admin_homes_delete_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                <form action="{{ route('admin_homes_delete', ['homeId' => $home['id']]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -85,41 +88,45 @@
                             </svg>
                         </button>
                     </div>
-                    <form id="admin_homes_create_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                        action="#">
+                    <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="{{ route('admin_homes_create') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div>
-                            <label for="label" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                            <input name="label" id="label"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Nom">
-                        </div>
-                        <div>
-                            <label for="content" class="text-sm font-medium text-armadillo-900 block mb-2 ">Description</label>
-                            <textarea name="content" id="content" type="time"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Description" rows="4"></textarea>
-                        </div>
-                        <div>
-                            <label for="file"
-                                class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                            <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="image">
-                        </div>
-                        <div>
-                            <label for="animals" class="text-sm font-medium text-armadillo-900 block mb-2 ">Animaux</label>
-                            <select id="animals" name="animals" multiple
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                @foreach($animals as $animal)
-                                    <option value="{{ $animal['id'] }}">{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Nom',
+                            'name' => 'label',
+                            'required' => true, 
+                            'hasError' => !!$errors->first('label'),
+                        ])
+                        @include('partials.form.textarea', [
+                            'class' => 'w-full',
+                            'label' => 'Description',
+                            'name' => 'content',
+                            'required' => true,
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'hasError' => !!$errors->first('content'),
+                        ])
+                        @include('partials.form.input', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Image',
+                            'name' => 'file',
+                            'type' => 'file',
+                            'accept' => 'image/png,image/jpeg,image/jpg',
+                        ])
+                        @include('partials.form.select', [
+                            'class' => 'w-full',
+                            'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                            'label' => 'Animaux',
+                            'name' => 'animals[]',
+                            'options' => $animals,
+                            'multiple' => true,
+                            'itemValue' => 'id',
+                            'itemLabel' => 'name',
+                        ])
                         <div class="flex justify-end">
                             <div class="flex items-start">
-                                <button type="submit" id="admin_homes_create_button"
-                                    class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Enregistrer</button>
+                                <button class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Enregistrer</button>
                             </div>
                         </div>
                     </form>
@@ -143,42 +150,52 @@
                                 </svg>
                             </button>
                         </div>
-                        <form id="admin_homes_update_form-{{ $home['id'] }}" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
-                            action="#">
+                        <form class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8"
+                            action="{{ route('admin_homes_update', ['homeId' => $home['id']]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div>
-                                <label for="label" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                                <input name="label" id="label"
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                placeholder="Nom" value="{{ $home['label'] }}">
-                            </div>
-                            <div>
-                                <label for="content" class="text-sm font-medium text-armadillo-900 block mb-2 ">Description</label>
-                                <textarea name="content" id="content" type="time"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="Description" rows="4">{{ $home['content'] }}</textarea>
-                            </div>
-                            <div>
-                                <label for="file"
-                                    class="text-sm font-medium text-armadillo-900 block mb-2 ">Image(s)</label>
-                                <input type="file" accept="image/png,image/jpeg,image/jpg" name="file" id="file"
-                                    class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                                    placeholder="image">
-                            </div>
+                            @method('PUT')
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Nom',
+                                'name' => 'label',
+                                'required' => true,
+                                'value' => $home['label'],
+                                'hasError' => !!$errors->first('label'),
+                            ])
+                            @include('partials.form.textarea', [
+                                'class' => 'w-full',
+                                'label' => 'Description',
+                                'name' => 'content',
+                                'required' => true,
+                                'value' => $home['content'],
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'hasError' => !!$errors->first('content'),
+                            ])
+                            @include('partials.form.input', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Image',
+                                'name' => 'file',
+                                'type' => 'file',
+                                'accept' => 'image/png,image/jpeg,image/jpg',
+                            ])
                             @php
                                 $animalIds = $home['animals']->map(function ($animal) {
                                     return $animal['id'];
                                 });
                             @endphp
-                            <div>
-                                <label for="animals" class="text-sm font-medium text-armadillo-900 block mb-2 ">Animaux</label>
-                                <select id="animals" name="animals" multiple
-                                class="bg-gray-50 border border-gray-300 text-armadillo-900 text-sm rounded-lg focus:ring-armadillo-200 focus:border-asparagus-600 block w-full p-2.5 outline-asparagus-600 "required="">
-                                    @foreach($animals as $animal)
-                                        <option value="{{ $animal['id'] }}" {{ in_array($animal['id'], $animalIds->toArray()) ? 'selected' : '' }}>{{ $animal['name'] }} ({{ isset($animal['home']) ? $animal['home']['label'] : 'Non renseigné' }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            @include('partials.form.select', [
+                                'class' => 'w-full',
+                                'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                                'label' => 'Animaux',
+                                'name' => 'animals[]',
+                                'options' => $animals,
+                                'multiple' => true,
+                                'itemValue' => 'id',
+                                'itemLabel' => 'name',
+                                'value' => $animalIds->toArray(),
+                            ])
                             <div class="flex justify-end">
                                 <div class="flex items-start">
                                     <button type="submit"
@@ -193,7 +210,7 @@
         @endforeach
     </main>
 
-    <script>
+    <!-- <script>
         window.addEventListener('load', function() {
             const submitButton = document.querySelector('#admin_homes_create_button')
 
@@ -298,5 +315,5 @@
                 })
             }
         })
-    </script>
+    </script> -->
 @endsection

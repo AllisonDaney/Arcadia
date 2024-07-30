@@ -23,7 +23,7 @@
                         <th scope="col" class="px-6 py-3">
                             Statut
                         </th>
-                        @if (in_array(Auth::user()->role->id, [1]))
+                        @if (in_array(Auth::user()->role->id, [1, 2]))
                             <th scope="col" class="px-6 py-3">
                                 Actions
                             </th>
@@ -49,18 +49,24 @@
                                 <td id="csrf_row_{{ $feedback['id'] }}" class="px-6 py-4 w-1/5">
                                     @if($feedback['status'] === 'pending')
                                         @csrf
-                                        <button type="button"
-                                            data-id="{{ $feedback['id'] }}"
-                                            data-status="accepted"
-                                            class="admin_feedback_status_button focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                                        >
-                                            Valider
-                                        </button>
-                                        <button type="button" data-id="{{ $feedback['id'] }}"
-                                            data-status="refused"
-                                            class="admin_feedback_status_button focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                                            Refuser
-                                        </button>
+                                        <form action="{{ route('admin_feedbacks_update', $feedback['id']) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="accepted">
+                                            <button
+                                                class="focus:outline-none text-white bg-asparagus-600 hover:bg-asparagus-800 focus:ring-4 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                                                Valider
+                                            </button>
+                                        </form>
+                                        <form action="{{ route('admin_feedbacks_update', $feedback['id']) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="refused">
+                                            <button
+                                                class="focus:outline-none text-white bg-red-600 hover:bg-red-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                                                Refuser
+                                            </button>
+                                        </form>
                                     @endif
                                 </td>
                             @endif
@@ -70,33 +76,4 @@
             </table>
         </div>
     </main>
-
-    <script>
-        window.addEventListener('load', function() {
-            const updateButtons = document.querySelectorAll('.admin_feedback_status_button')
-
-            for (let button of updateButtons) {
-                button.addEventListener('click', async (e) => {
-                    e.preventDefault()
-
-                    const feedbackId = button.getAttribute('data-id')
-                    const feedbackStatus = button.getAttribute('data-status')
-
-                    await fetch(`/feedbacks/${feedbackId}`, {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "X-CSRF-Token": document.querySelector(`#csrf_row_${feedbackId} input[name="_token"]`)?.value
-                        },
-                        method: 'PUT',
-                        body: JSON.stringify({
-                            status: feedbackStatus
-                        })
-                    });
-
-                    window.location.reload()
-                })
-            }
-        })
-    </script>
 @endsection

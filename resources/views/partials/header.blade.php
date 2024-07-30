@@ -84,10 +84,13 @@
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Administration</a>
                             </li>
                             <li id="logout_button">
-                                @csrf
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
-                                    out</a>
+                                <form action="{{ route('auth_logout') }}" method="post">
+                                    @csrf
+                                    <button
+                                        class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                        Déconnexion
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -129,84 +132,39 @@
                         </svg>
                     </button>
                 </div>
-                <form id="login_form" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8" action="#">
+                <form action="{{ route('auth_login') }}" method="post" class="space-y-6 px-6 lg:px-8 pb-4 sm:pb-6 xl:pb-8">
+                    <div id="login-error-message" class="bg-red-400 text-white p-4 rounded-xl mb-6 hidden"></div>  
                     @csrf
                     <h3 class="text-xl font-medium text-asparagus-500">Connectez-vous</h3>
-                    <div>
-                        <label for="username" class="text-sm font-medium text-armadillo-900 block mb-2 ">Nom</label>
-                        <input type="email" name="username" id="username"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full p-2.5 outline-asparagus-600"
-                            placeholder="Nom utilisateur" required="">
-                    </div>
-                    <div>
-                        <label for="password" class="text-sm font-medium text-armadillo-900 block mb-2">Mot de
-                            passe</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••"
-                            class="bg-gray-50 border border-gray-300 text-armadillo-900 sm:text-sm rounded-lg  block w-full outline-asparagus-600 p-2.5 "
-                            required="">
-                    </div>
-                    <div class="flex justify-between">
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'label' => "Nom d'utilisateur",
+                        'name' => 'username',
+                        'required' => true,
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'hasError' => !!$errors->first('username'),
+                    ])
+                    @include('partials.form.input', [
+                        'class' => 'w-full',
+                        'label' => "Mot de passe",
+                        'name' => 'password',
+                        'required' => true, 
+                        'type' => 'password',
+                        'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
+                        'hasError' => !!$errors->first('password'),
+                    ])
+
+                    <button type="submit"
+                        class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Connexion</button> 
+                    <!-- <div class="flex justify-between">
                         <div class="flex items-start">
 
                         </div>
                         <a href="#" class="text-sm text-asparagus-500 hover:underline">mot de passe oublié?</a>
                     </div>
-                    <button id="login_button" type="submit"
-                        class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Connexion</button>
+                    <-->
                 </form>
             </div>
         </div>
     </div>
 @endif
-
-<script>
-    window.addEventListener('load', function() {
-        const submitButton = document.querySelector('#login_button')
-
-        submitButton?.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            const response = await fetch('/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector(
-                        '#login_form input[name="_token"]').value
-                },
-                body: JSON.stringify({
-                    username: document.querySelector(
-                        '#login_form input[name="username"]').value,
-                    password: document.querySelector(
-                        '#login_form input[name="password"]').value,
-                })
-            });
-
-            const {
-                redirectUrl
-            } = await response.json()
-
-            window.location.href = redirectUrl
-        })
-
-
-        const logoutButton = document.querySelector('#logout_button')
-
-        logoutButton?.addEventListener('click', async (e) => {
-            e.preventDefault()
-
-            await fetch('/auth/logout', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    "X-CSRF-Token": document.querySelector(
-                        '#logout_button input[name="_token"]').value
-                },
-                body: JSON.stringify({})
-            });
-
-            window.location.reload()
-        })
-    })
-</script>

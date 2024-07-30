@@ -26,13 +26,13 @@
                 <tbody>
                     <tr class="bg-armadillo-50 border-b ">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  ">
-                            {{ $hour['day'] }}
+                            {{ $hour->day }}
                         </th>
                         <td class="px-6 py-4 text-center">
-                            {{ $hour['opening_time'] }}
+                            {{ $hour->opening_time }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            {{ $hour['closing_time'] }}
+                            {{ $hour->closing_time }}
                         </td>
                     </tr>
                 </tbody>
