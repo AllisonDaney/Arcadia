@@ -53,7 +53,7 @@
                                 {{ $animalsReport['food'] }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $animalsReport['food_quantity'] }}
+                                {{ $animalsReport['food_quantity'] }}g
                             </td>
                             <td class="px-6 py-4">
                                 {{ $animalsReport['food_at'] }}

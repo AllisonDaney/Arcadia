@@ -11,25 +11,38 @@ class AdministrationController extends Controller
     public function admin_administrator(): View
     {
         $homes = Home::with(['animals'])->get();
-        $dataSets = [];
+        $dataHomes = [];
+        $mongodbConnection = DB::connection('mongodb');
+        $mongodbCollection = null;
+
 
         foreach($homes as $home) {
-            $dataSets[] = $home->animals->map(function($animal) {
-                /* $metrics = DB::connection('mongodb')
-                    ->collection('metrics')
-                    ->where('model', 'Animal')
-                    ->where('table_id', strval($animal['id']))
-                    ->get(); */
+            $animals = $home->animals->map(function($animal) use ($mongodbConnection) {
+                try {
+                    $metric = $mongodbConnection
+                        ->collection('metrics')
+                        ->where('model', 'Animal')
+                        ->where('table_id', strval($animal['id']))
+                        ->first();
+                } catch (\Throwable $th) {
+                    $metric = null;
+                }
 
                 return [
                     'id' => $animal['id'],
                     'name' => $animal['name'],
-                    'data' => []//$metrics->map(function($metric) { return $metric['count']; })
+                    'count' => isset($metric['count']) ? $metric['count'] : 0
                 ];
             });
+
+            $dataHomes[] = [
+                'id' => $home['id'],
+                'label' => $home['label'],
+                'animals' => $animals
+            ];
         }
 
-        return view('admins/administrator', ['dataSets' => $dataSets]);
+        return view('admins/administrator', ['dataHomes' => $dataHomes]);
     }
 
     public function admin_employee(): View
