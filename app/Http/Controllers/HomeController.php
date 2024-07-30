@@ -43,7 +43,7 @@ class HomeController extends Controller
 
     public function create(HomeFormRequest $request) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $home = Home::create($request->validated());
 
                 $file = $request->file('file');
@@ -77,7 +77,7 @@ class HomeController extends Controller
 
     public function update(HomeFormRequest $request, Int $homeId) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $home = Home::find($homeId);
 
                 $home->label = $request->input('label');

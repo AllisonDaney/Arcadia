@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function create(UserFormRequest $request) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $existUser = User::where('username', $request->input('username'))->first();
 
                 if ($existUser) {

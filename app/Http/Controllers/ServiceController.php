@@ -27,7 +27,7 @@ class ServiceController extends Controller
 
     public function create(ServiceFormRequest $request) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $newService = $request->validated();
                 $file = $request->file('file');
 
@@ -66,7 +66,7 @@ class ServiceController extends Controller
 
     public function update(ServiceFormRequest $request, Int $serviceId) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $service = Service::find($serviceId);
 
                 $service->label = $request->input('label');

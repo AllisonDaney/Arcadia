@@ -41,7 +41,7 @@ class AnimalsController extends Controller
 
     public function create(AnimalFormRequest $request) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $animal = Animal::create($request->validated());
 
                 $file = $request->file('file');
@@ -67,7 +67,7 @@ class AnimalsController extends Controller
 
     public function update(Request $request, Int $animalId) {
         try {
-            DB::transaction(function () {
+            DB::transaction(function () use ($request) {
                 $animal = Animal::find($animalId);
 
                 $animal->name = $request->input('name');
