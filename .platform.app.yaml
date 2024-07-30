@@ -9,6 +9,18 @@ name: app
 # to find the supported versions for the 'php' type.
 type: "php:8.2"
 
+dependencies:
+  php:
+    composer/composer: "^2"
+    ext-mongodb: "*"
+
+runtime:
+  extensions:
+    - mongodb
+
+build:
+  flavor: composer
+
 # The following block defines a single writable directory, 'web/uploads'
 # The 'source' specifies where the writable mount is. The 'local' source
 # indicates that the mount point will point to a local directory on the
@@ -40,5 +52,11 @@ hooks:
 web:
   locations:
     "/":
-      root: "web"
+      root: "public"
+      index:
+        - index.php
+      allow: true
       passthru: "/index.php"
+    "/storage":
+      root: "storage/app/public"
+      scripts: false
