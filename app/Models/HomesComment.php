@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class HomesComment extends Model
 {
-    use HasFactory;
 
     protected $fillable = ['user_id', 'home_id', 'content'];
 

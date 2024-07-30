@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class HomesPicture extends Model
 {
-    use HasFactory;
+ 
 }

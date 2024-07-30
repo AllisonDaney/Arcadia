@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Home extends Model
 {
-    use HasFactory;
+
 
     protected $fillable = ['label', 'content'];
 

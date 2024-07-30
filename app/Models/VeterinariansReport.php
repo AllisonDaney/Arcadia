@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VeterinariansReport extends Model
 {
-    use HasFactory;
+
 
     protected $fillable = ['user_id', 'animal_id', 'animal_condition', 'food', 'food_quantity', 'details', 'visit_at'];
 
