@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for arcadia on 2024-05-06T20:59:06+02:00
+# fly.toml app configuration file generated for arcadia on 2024-07-30T15:22:17+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -14,25 +14,19 @@ console_command = 'php /var/www/html/artisan tinker'
 
 [env]
   APP_ENV = 'production'
-  APP_URL = 'https://arcadia.fly.dev'
   LOG_CHANNEL = 'stderr'
   LOG_LEVEL = 'info'
   LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
   SESSION_DRIVER = 'cookie'
   SESSION_SECURE_COOKIE = 'true'
-  DB_CONNECTION = 'pgsql'
-  DB_HOST = 'arcadia-postgres.flycast'
-  DB_PORT = '5432'
-  DB_DATABASE = 'arcadia'
-  BREVO_API_KEY = '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'
-  DB_URI = 'mongodb+srv://daneyallison69:QW1UPQm9zkvgAW75@arcadia-metrics.wcwejom.mongodb.net/?retryWrites=true&w=majority&appName=arcadia-metrics'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
+  processes = ['app']
 
 [[vm]]
   memory = '1gb'
