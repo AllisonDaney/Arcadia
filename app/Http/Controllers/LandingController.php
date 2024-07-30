@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 class LandingController extends Controller
 {
     public function index(): View {
-        //dd(phpinfo());
         $feedbacks = DB::select('SELECT * FROM feedbacks WHERE status = ? LIMIT 10', ['accepted']);
 
         return view('landing', ["feedbacks" => $feedbacks]);
