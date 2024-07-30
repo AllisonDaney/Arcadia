@@ -27,9 +27,9 @@ disk: 512
 # The left-hand side is the name of the relationship as it will be exposed
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form '<service name>:<endpoint name>'.
-relationships:
-  mongodb: "mongodb:mongodb"
-  mariadb: "mariadb:mysql"
+# relationships:
+#   mongodb: "mongodb:mongodb"
+#   mariadb: "mariadb:mysql"
 
 hooks:
   build: |
@@ -42,3 +42,7 @@ web:
     "/":
       root: "web"
       passthru: "/index.php"
+
+runtime:
+  extensions:
+    - mongodb
