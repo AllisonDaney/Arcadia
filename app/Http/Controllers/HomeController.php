@@ -77,7 +77,7 @@ class HomeController extends Controller
 
     public function update(HomeFormRequest $request, Int $homeId) {
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $homeId) {
                 $home = Home::find($homeId);
 
                 $home->label = $request->input('label');
