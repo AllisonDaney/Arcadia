@@ -303,7 +303,7 @@ class SeederProvider extends Seeder
         [
             "role" => "ADMINISTRATOR",
             "username" => "m.jose.arcadia@yopmail.com",
-            "password" => "admin",
+            "password" => "MEcdTgCEK9nQhX!*uu53",
             "firstname" => "José",
             "lastname" => "Mendoza",
         ]
