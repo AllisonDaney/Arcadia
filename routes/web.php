@@ -10,13 +10,18 @@ use App\Http\Controllers\HomeCommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HourController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\MentionsLegalesController;
 use App\Http\Controllers\MetricController;
+use App\Http\Controllers\RgpdController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VeterinariansReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+Route::get('/mentions_legales', [MentionsLegalesController::class, 'index'])->name('mentions_legales');
+Route::get('/rgpds', [RgpdController::class, 'index'])->name('rgpd');
 
 Route::get('/homes', [HomeController::class, 'index'])->name('home');
 Route::get('/homes/{homeId}', [HomeController::class, 'show'])->name('home_show');

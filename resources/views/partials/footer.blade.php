@@ -34,8 +34,9 @@
         <!--Grid-->
         <div class="py-4 border-t border-armadillo-300">
             <div class="flex items-center justify-center gap-6">
-                <span class="text-armadillo-700 ">© Arcadia 2024 </span>
-                <span class="text-armadillo-700 ">CGU - Mentions légales</span>
+                <span href="{{ route('animals') }}"class="text-armadillo-700 ">© Arcadia 2024 </span>
+                <a href="{{ route('mentions_legales') }}" class="text-armadillo-700 ">Mentions légales</a>
+                <a href="{{ route('rgpd') }}"class="text-armadillo-700 ">Protection des données</a>
             </div>
         </div>
     </div>
