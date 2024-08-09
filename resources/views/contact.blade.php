@@ -24,7 +24,7 @@
                     'label' => 'Sujet',
                     'name' => 'subject',
                     'required' => true, 
-                    'hpasError' => !!$errors->first('subject'),
+                    'hasError' => !!$errors->first('subject'),
                 ])
                 @include('partials.form.textarea', [
                     'class' => 'w-full',
@@ -32,6 +32,13 @@
                     'name' => 'content',
                     'required' => true,
                     'hasError' => !!$errors->first('content'),
+                ])
+                @include('partials.form.checkbox', [
+                    'class' => 'w-full',
+                    'label' => "J'ai lu et accepte les conditions d'utilisation",
+                    'name' => 'conditions',
+                    'required' => true, 
+                    'hasError' => !!$errors->first('conditions'),
                 ])
                 <button class="w-3/4 py-3 my-8 text-lg bg-gradient-to-r from-asparagus-400 to-asparagus-600 rounded-xl text-asparagus-50">Envoyer</button>
             </form>

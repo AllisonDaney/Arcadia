@@ -41,6 +41,10 @@ Route::post('/metrics', [MetricController::class, 'create']);
 
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth_login');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth_logout');
+Route::get('/auth/reset_password', [AuthController::class, 'reset_password'])->name('reset_password');
+Route::post('/auth/reset_password', [AuthController::class, 'reset_password_post'])->name('reset_password_post');
+Route::get('/auth/change_password/{resetToken}', [AuthController::class, 'change_password'])->name('change_password');
+Route::post('/auth/change_password', [AuthController::class, 'change_password_post'])->name('change_password_post');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');
