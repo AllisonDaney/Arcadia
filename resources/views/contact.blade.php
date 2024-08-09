@@ -35,7 +35,9 @@
                 ])
                 @include('partials.form.checkbox', [
                     'class' => 'w-full',
-                    'label' => "J'ai lu et accepte les conditions d'utilisation",
+                    'label' => "J'ai lu et accepte les",
+                    'labelLink' => route('mentions_legales'),
+                    'labelLinkText' => 'conditions d\'utilisation', 
                     'name' => 'conditions',
                     'required' => true, 
                     'hasError' => !!$errors->first('conditions'),
