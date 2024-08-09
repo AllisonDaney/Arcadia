@@ -67,7 +67,7 @@ class AnimalsController extends Controller
 
     public function update(Request $request, Int $animalId) {
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $animalId) {
                 $animal = Animal::find($animalId);
 
                 $animal->name = $request->input('name');

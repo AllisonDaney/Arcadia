@@ -10,13 +10,18 @@ use App\Http\Controllers\HomeCommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HourController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\MentionsLegalesController;
 use App\Http\Controllers\MetricController;
+use App\Http\Controllers\RgpdController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VeterinariansReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
+
+Route::get('/mentions_legales', [MentionsLegalesController::class, 'index'])->name('mentions_legales');
+Route::get('/rgpds', [RgpdController::class, 'index'])->name('rgpd');
 
 Route::get('/homes', [HomeController::class, 'index'])->name('home');
 Route::get('/homes/{homeId}', [HomeController::class, 'show'])->name('home_show');
@@ -36,6 +41,10 @@ Route::post('/metrics', [MetricController::class, 'create']);
 
 Route::post('/auth/login', [AuthController::class, 'login'])->name('auth_login');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->name('auth_logout');
+Route::get('/auth/reset_password', [AuthController::class, 'reset_password'])->name('reset_password');
+Route::post('/auth/reset_password', [AuthController::class, 'reset_password_post'])->name('reset_password_post');
+Route::get('/auth/change_password/{resetToken}', [AuthController::class, 'change_password'])->name('change_password');
+Route::post('/auth/change_password', [AuthController::class, 'change_password_post'])->name('change_password_post');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/administration/homes_comments', [HomeCommentController::class, 'index_admin'])->name('admin_homes_comments');

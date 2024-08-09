@@ -153,16 +153,14 @@
                         'inputClass' => 'border border-gray-300 outline-asparagus-600 !p-3',
                         'hasError' => !!$errors->first('password'),
                     ])
-
-                    <button type="submit"
-                        class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Connexion</button> 
-                    <!-- <div class="flex justify-between">
+                    <div class="flex justify-between">
                         <div class="flex items-start">
 
                         </div>
-                        <a href="#" class="text-sm text-asparagus-500 hover:underline">mot de passe oublié?</a>
+                        <a href="{{ route('reset_password') }}" class="text-sm text-asparagus-500 hover:underline">Mot de passe oublié?</a>
                     </div>
-                    <-->
+                    <button type="submit"
+                        class="w-full text-asparagus-50 bg-gradient-to-r from-asparagus-400 to-asparagus-600  font-medium rounded-xl text-m px-5 py-2.5 text-center ">Connexion</button> 
                 </form>
             </div>
         </div>

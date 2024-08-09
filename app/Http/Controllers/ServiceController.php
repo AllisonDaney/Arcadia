@@ -66,7 +66,7 @@ class ServiceController extends Controller
 
     public function update(ServiceFormRequest $request, Int $serviceId) {
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, $serviceId) {
                 $service = Service::find($serviceId);
 
                 $service->label = $request->input('label');
