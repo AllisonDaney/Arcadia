@@ -4,6 +4,8 @@ WORKDIR /var/www/html
 
 COPY . .
 
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 RUN apk upgrade && apk update
 
 RUN apk add --no-cache mysql-client msmtp perl wget procps shadow libzip libpng libjpeg-turbo libwebp freetype icu curl-dev pkgconfig
