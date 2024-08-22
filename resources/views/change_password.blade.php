@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ env('VITE_APP_URL') }}/resources/css/app.css">
 </head>
 <body class="flex items-center justify-center h-full bg-armadillo-50">
   <main class="grid min-h-full place-items-center px-6 py-24 sm:py-32 lg:px-8">

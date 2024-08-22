@@ -11,7 +11,7 @@
             href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-        @vite('resources/css/app.css')
+        <link rel="stylesheet" href="{{ env('VITE_APP_URL') }}/resources/css/app.css">
         @yield('css')
     </head>
     <body class="flex flex-col bg-armadillo-50">
