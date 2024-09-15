@@ -2,7 +2,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <!--Grid-->
         <div class="py-4 flex justify-center items-center flex-col gap-14 lg:flex-row">
-            <img src="{{ asset('img/logo_footer.png') }}" alt="logo arcadia">
+            <img src="{{ asset('img/logo_footer.png') }}" alt="Logo Arcadia bas de page">
             <div class="flex  space-x-4 sm:justify-center ">
                 
                 <a href="javascript:;"  class="w-9 h-9 rounded-full bg-armadillo-700 flex justify-center items-center ">

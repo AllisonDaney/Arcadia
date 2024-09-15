@@ -18,7 +18,6 @@ class VeterinariansReportController extends Controller
         $filterAnimalId = FacadesRequest::query('animal_id');
         $filterStartDate = FacadesRequest::query('start_date');
         $filterEndDate = FacadesRequest::query('end_date');
-        $filterDate = '';
 
         $veterinariansReports = VeterinariansReport::select();
         $animals = Animal::get();
@@ -28,13 +27,10 @@ class VeterinariansReportController extends Controller
         }
 
         if($filterStartDate && !$filterEndDate) {
-            $filterDate = $filterStartDate . ' - ' . $filterEndDate;
             $veterinariansReports = $veterinariansReports->where('visit_at', '>=', $filterStartDate);
         } else if(!$filterStartDate && $filterEndDate) {
-            $filterDate = $filterStartDate . ' - ' . $filterEndDate;
             $veterinariansReports = $veterinariansReports->where('visit_at', '<=', $filterEndDate);
         } else if($filterStartDate && $filterEndDate) {
-            $filterDate = $filterStartDate . ' - ' . $filterEndDate;
             $veterinariansReports = $veterinariansReports->whereBetween('visit_at', [$filterStartDate, $filterEndDate]);
         }
 

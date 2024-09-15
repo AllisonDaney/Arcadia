@@ -46,10 +46,10 @@
                             </td>
                             <td class="flex flex-col gap-4 px-6 py-4">
                                 @if (!count($home['homePictures']))
-                                    <img src="{{ asset('/img/notfound.png') }}" class="w-12 h-12">
+                                    <img src="{{ asset('/img/notfound.png') }}" class="w-12 h-12" alt="Image erreur 404, pas non trouvée">
                                 @endif
                                 @foreach ($home['homePictures'] as $homePicture)
-                                    <img src="{{ asset(isset($homePicture['url']) ? $homePicture['url'] : '/img/notfound.png') }}" class="w-12 h-12" alt="" onerror="this.src = '/img/notfound.png'">
+                                    <img src="{{ asset(isset($homePicture['url']) ? $homePicture['url'] : '/img/notfound.png') }}" class="w-12 h-12" alt="Image de l'habitat {{ $home['label'] }}" onerror="this.src = '/img/notfound.png'">
                                 @endforeach
                             </td>
                             <td id="csrf_row_{{ $home['id'] }}" class="px-6 py-4 w-1/5">

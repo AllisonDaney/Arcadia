@@ -13,8 +13,6 @@ class AdministrationController extends Controller
         $homes = Home::with(['animals'])->get();
         $dataHomes = [];
         $mongodbConnection = DB::connection('mongodb');
-        $mongodbCollection = null;
-
 
         foreach($homes as $home) {
             $animals = $home->animals->map(function($animal) use ($mongodbConnection) {

@@ -19,7 +19,7 @@
                     data-id="{{ $animal['id'] }}"
                 >
                     @csrf
-                    <img src="{{ asset($animal['animalsPictures'][0]['url']) }}" class="w-60 rounded-full mx-auto" alt="logo arcadia">
+                    <img src="{{ asset($animal['animalsPictures'][0]['url']) }}" class="w-60 rounded-full mx-auto" alt="Image d'un animal nommé {{ $animal['name'] }}">
                     <p class="text-xl group-hover:text-asparagus-500 mb-2 text-center mt-4">{{ $animal['name'] }}</p>
                 </div>
             @endforeach
@@ -40,7 +40,7 @@
 
                 <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row mt-16">
                     <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-                        src="{{ asset($animal['animalsPictures'][0]['url']) }}" alt="">
+                        src="{{ asset($animal['animalsPictures'][0]['url']) }}" alt="Image d'un animal du zoo">
                     <div class="flex gap-3 flex-col justify-between p-4 leading-normal w-full">
                         <h4 class="text-center"> Carte d'identité<br></h4>
                         <p class="text-asparagus-500">
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row mt-16">
-                    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="{{ asset('img/veterinaire.jpeg') }}" alt="">
+                    <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="{{ asset('img/veterinaire.jpeg') }}" alt="Image du vétérinaire">
                     <div class="flex flex-col gap-3 justify-between p-4 leading-normal w-full">
                         <h4 class="text-center"> Carnet de santé<br></h4>
 

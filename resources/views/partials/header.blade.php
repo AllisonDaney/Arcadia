@@ -3,7 +3,7 @@
         <div class="w-full flex flex-col lg:flex-row">
             <div class="flex justify-between  lg:flex-row py-3">
                 <a href="{{ route('landing') }}" class="flex items-center">
-                    <img class="h-16" src="{{ asset('img/logo.png') }}" alt="logo arcadia">
+                    <img class="h-16" src="{{ asset('img/logo.png') }}" alt="Image du logo Arcadia">
                 </a>
                 <!--menu burger-->
                 <button data-collapse-toggle="navbar" type="button"

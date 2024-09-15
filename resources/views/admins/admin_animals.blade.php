@@ -43,10 +43,10 @@
                         <tr class="bg-armadillo-50 border-b  hover:bg-armadillo-100 ">
                             <td class="px-6 py-4">
                                 @if (!count($animal['animalsPictures']))
-                                    <img src="{{ asset('/img/notfound.png') }}" class="w-12 h-12">
+                                    <img src="{{ asset('/img/notfound.png') }}" class="w-12 h-12" alt="Image non trouvée">
                                 @endif
                                 @foreach ($animal['animalsPictures'] as $animalPicture)
-                                    <img src="{{ asset(isset($animalPicture['url']) ? $animalPicture['url'] : '/img/notfound.png') }}" class="w-12 h-12" alt="" onerror="this.src = '/img/notfound.png'">
+                                    <img src="{{ asset(isset($animalPicture['url']) ? $animalPicture['url'] : '/img/notfound.png') }}" class="w-12 h-12" alt="Image de l'animal {{ $animal['name'] }} " onerror="this.src = '/img/notfound.png'">
                                 @endforeach
                             </td>
                             <th scope="row" class="px-6 py-4 font-medium text-armadillo-800 whitespace-nowrap">

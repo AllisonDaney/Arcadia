@@ -58,7 +58,7 @@
                                 </ul>
                             </td>
                             <td class="px-6 py-4">
-                                <img src="{{ asset($service['url']) }}" class="w-12 h-12">
+                                <img src="{{ asset($service['url']) }}" class="w-12 h-12" alt="Image du service {{ $service['label'] }}">
                             </td>
                             <td id="csrf_row_{{ $service['id'] }}" class="px-6 py-4 w-1/5">
                                 <button type="submit"
