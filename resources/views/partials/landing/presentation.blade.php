@@ -6,7 +6,7 @@
         <div class="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-6 lg:grid-cols-3  max-w-xl mx-auto md:max-w-3xl lg:max-w-full gap-8 cursor-pointer">
             <a href="{{ route('home') }}" class="block group md:col-span-2 lg:col-span-1 ">
                 <div class="relative mb-6">
-                    <img src="{{ asset('img/savane.jpeg') }}" alt="habitat savane"
+                    <img src="{{ asset('img/savane.jpeg') }}" alt="Image de la savane"
                         class="w-40 h-40 rounded-full mx-auto transition-all duration-500 object-cover border border-solid border-transparent " />
                 </div>
                 <h4
@@ -18,7 +18,7 @@
             </a>
             <a href="{{ route('animals') }}"class="block group md:col-span-2 lg:col-span-1 ">
                 <div class="relative mb-6">
-                    <img src="{{ asset('img/zebre.jpeg') }}" alt="zebre"
+                    <img src="{{ asset('img/zebre.jpeg') }}" alt="Image du zèbre"
                         class="w-40 h-40 rounded-full mx-auto transition-all duration-500 object-cover border border-solid border-transparent " />
                 </div>
                 <h4
@@ -31,7 +31,7 @@
         </a>
         <a href="{{ route('services') }}"class="block group md:col-span-2 lg:col-span-1 ">
                 <div class="relative mb-6">
-                    <img src="{{ asset('img/petit_train.jpeg') }}" alt="petit train zoo"
+                    <img src="{{ asset('img/petit_train.jpeg') }}" alt="Image du petit train"
                         class="w-40 h-40 rounded-full mx-auto transition-all duration-500 object-cover border border-solid border-transparent " />
                 </div>
                 <h4

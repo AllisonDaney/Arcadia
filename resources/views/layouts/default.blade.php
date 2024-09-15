@@ -70,7 +70,7 @@
     @include("partials.header")
 
     <section class="hidden sm:block lg:mt-[60px]">
-        <img class="w-full" src="{{ asset('img/lion_header.png') }}" alt="logo arcadia">
+        <img class="w-full" src="{{ asset('img/lion_header.png') }}" alt="Image lion en-tête">
     </section>
 
     @yield("content")

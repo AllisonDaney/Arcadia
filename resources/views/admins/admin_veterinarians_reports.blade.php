@@ -177,7 +177,7 @@
                         'rows' => 2,
                         'hasError' => !!$errors->first('details'),
                     ])
-                    <div class="flex items-center w-full gap-4">
+     adm         <div class="flex items-center w-full gap-4">
                         <div class="w-2/3">
                             @include('partials.form.input', [
                                 'class' => 'w-full',

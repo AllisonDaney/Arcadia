@@ -17,7 +17,7 @@
                     data-drawer-placement="right"
                     aria-controls="drawer-service-{{ $service['id'] }}"
                 >
-                    <img class="rounded-t-lg h-[373px]" src="{{ asset($service['url']) }}" />
+                    <img class="rounded-t-lg h-[373px]" src="{{ asset($service['url']) }}" alt="Image du service {{ $service['name'] }} " />
                     <div class="p-5">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-asparagus-500 text-center  ">
                             {{ $service['label'] }} <br></h5>

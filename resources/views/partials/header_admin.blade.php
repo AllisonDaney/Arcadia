@@ -13,7 +13,7 @@
                         </path>
                     </svg>
                 </button>
-                <img src="{{ asset('img/logo.png') }}" class="h-8 me-3" alt="Logo Arcadia" />
+                <img src="{{ asset('img/logo.png') }}" class="h-8 me-3" alt="Image du logo Arcadia" />
             </div>
             <div class="flex items-center">
                 <div class="flex items-center">
